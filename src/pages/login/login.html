@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar color="primary" class="text-center">
+    <ion-title>Login</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-item class="mt-5 text-center">
+      <ion-img width="80" height="80" src="../../assets/imgs/usuario.png"></ion-img>
+    </ion-item>
+    <ion-item class="mt-5">
+      <ion-label class="text-primary">Email</ion-label>
+      <ion-input autocomplete="on" type="email" [(ngModel)]="account.email" name="email" placeholder="example@email.com"></ion-input>
+    </ion-item>
+
+    <ion-item class="mt-5">
+      <ion-label class="text-primary">Senha</ion-label>
+      <ion-input type="password" [(ngModel)]="account.password" name="password" placeholder="*******"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="loginErrorString" class="form-group" text-center>
+      <small class="text-danger">
+        {{loginErrorString}}
+      </small>
+    </ion-item>
+
+    <ion-footer padding>
+      <button ion-button class="btn btn-lg btn-outline-primary" block (click)="doLogin()">Log-in</button>
+      <button ion-button class="btn btn-lg btn-outline-primary" block (click)="registrar()">
+        Registrar-se
+      </button>
+    </ion-footer>
+  </ion-list>
+</ion-content>
