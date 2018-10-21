@@ -2,40 +2,48 @@
   <header [title]="'Minha Conta'" [subtitle]="false"></header>
 </ion-header>
 
-<ion-content class="mt-3" padding>
-  <ion-item class="mt-5 text-center">
+<ion-content>
+  <ion-item class="mt-2 text-center">
     <div *ngFor="let comp of perfis | async">
       <ion-card *ngIf="comp.email == email">
-        <ion-card-content>
+        <ion-card-content [ngStyle]="tamanho">
           <ion-row justify-content-center align-items-center>
             <img *ngIf="!comp.imagem" [ngStyle]="img" src="../../assets/imgs/usuario.png" />
             <img *ngIf="comp.imagem" [ngStyle]="img" src="{{comp.imagem}}" />
           </ion-row>
+          <!-- <ion-row justify-content-center align-items-center>
+              <ion-input type="file"></ion-input>
+          </ion-row> -->
           <ion-card-title>
             {{comp.nome}}
             <p *ngIf="comp.profissao">{{comp.profissao}}</p>
           </ion-card-title>
-          <p>
+          <p class="mt-2">
             Data de Nascimento: {{comp.data}}
           </p>
-          <p>
+          <p class="mt-2">
             {{comp.cidade}} - {{comp.estado}}
           </p>
-          <p>
+          <p class="mt-2">
             {{comp.email}}
           </p>
-          <p>
+          <p class="mt-2">
             Peso: {{comp.peso}}
           </p>
+          <div class="mt-2 text-center">
+            <ion-card-title>
+              Avaliação
+            </ion-card-title>
+            <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff" defaultColor="#f03d3d"
+              readonly="false" [rating]="3">
+            </ionic3-star-rating>
+          </div>
+          <ion-row justify-content-center align-items-center class="mt-2">
+            <button ion-button class="btn btn-outline-primary ml-2">Trocar Senha</button>
+            <button ion-button class="btn btn-outline-primary">Excluir Conta</button>
+          </ion-row>
         </ion-card-content>
       </ion-card>
     </div>
   </ion-item>
-  <!-- <ion-item class="mt-5 text-center">
-    <h3>{{usuario.emai}}l</h3>
-  </ion-item>
-  <ion-item class="mt-5 text-center">
-    <h3>{{usuario.peso}}</h3>
-  </ion-item> -->
-
 </ion-content>

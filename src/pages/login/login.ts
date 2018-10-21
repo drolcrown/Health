@@ -4,7 +4,6 @@ import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormsComponent } from '../../components/forms/forms';
-import { ListPage } from '../list/list';
 
 @IonicPage()
 @Component({
@@ -13,33 +12,37 @@ import { ListPage } from '../list/list';
 })
 export class LoginPage {
   private img = {
-    height: (window.screen.height * 0.15) + 'px',
-    width: (window.screen.height * 0.15) + 'px',
+    height: '',
+    width: '',
   }
   private account: { email: string, password: string } = {
     email: '',
     password: ''
   };
   private mostrarSenha = false;
-  private imagem;
   private loginErrorString: string = '';
+  private imagem;
 
   constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
     private authorization: AngularFireAuth, private menuCtrl: MenuController) {
     this.menuCtrl.enable(false);
+    let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
+    this.img.width = (tamanhoImg * 0.2) + 'px';
+    this.img.height = (tamanhoImg * 0.2) + 'px';
   }
 
   // Attempt to login in through our User service
   doLogin() {
     // this.navCtrl.setRoot(HomePage)
-    if (this.account.email && this.account.password) {
-      let login = this.authorization.auth.signInWithEmailAndPassword(this.account.email, this.account.password);
-      login.then(() => {
-        this.navCtrl.setRoot(HomePage)
+    let login= this.provider.doLogin(this.account);
+    if(login){
+      login.then((success) => {
+        this.loginErrorString = 'Sucesso';
+        this.navCtrl.setRoot(HomePage);
       }).catch(error => {
         this.loginErrorString = 'Email ou Senha Incorretos';
       });
-    } else {
+    }else{
       this.loginErrorString = 'Preencha os Campos';
     }
   }

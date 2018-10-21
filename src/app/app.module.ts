@@ -12,6 +12,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { environment } from '../environments/environment';
+import { StarRatingModule } from 'ionic3-star-rating';
 
 //Pages
 import { MyApp } from './app.component';
@@ -40,6 +41,7 @@ import { AcountPage } from '../pages/acount/acount';
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
+    StarRatingModule,
     IonicModule.forRoot(MyApp), 
     AngularFireModule.initializeApp(environment.FirebaseConfig),
     AngularFireDatabaseModule, AngularFireAuthModule

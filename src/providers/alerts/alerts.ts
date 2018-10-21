@@ -6,10 +6,11 @@ export class AlertsProvider {
   constructor(private alertCtrl: AlertController,
     private loadingCtrl: LoadingController) { }
 
-  presentLoading() {
+  presentLoading(valor) {
+    let duration = (valor*1000);
     const loader = this.loadingCtrl.create({
       content: "Carregando...",
-      duration: 2000
+      duration: duration
     });
     loader.present();
   }

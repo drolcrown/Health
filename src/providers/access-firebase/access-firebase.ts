@@ -16,8 +16,17 @@ export class AccessFirebaseProvider {
     public alert: AlertsProvider) {
   }
 
+  doLogin(account){
+    if (account.email && account.password) {
+      this.alert.presentLoading(1);
+      return this.authorization.auth.signInWithEmailAndPassword(account.email, account.password);
+    } else {
+      return null;
+    };
+  }
+
   getAll(PATH) {
-    this.alert.presentLoading();
+    this.alert.presentLoading(1);
     return this.db.list(PATH).valueChanges();
   }
 
