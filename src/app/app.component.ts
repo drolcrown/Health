@@ -5,9 +5,12 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
+<<<<<<< HEAD
 import { LoginPage } from '../pages/login/login';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AcountPage } from '../pages/acount/acount';
+=======
+>>>>>>> parent of c59af5c... Adicionando primeiras telas'
 
 @Component({
   templateUrl: 'app.html'
@@ -16,21 +19,27 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
+<<<<<<< HEAD
   // rootPage: any = LoginPage;
+=======
+>>>>>>> parent of c59af5c... Adicionando primeiras telas'
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, private authorization: AngularFireAuth,
-    public statusBar: StatusBar, public splashScreen: SplashScreen) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Home', component: HomePage },
+<<<<<<< HEAD
       { title: 'Configurações', component: ListPage },
       { title: 'Conta', component: AcountPage },
       { title: 'List', component: ListPage },
       { title: 'Sair', component: LoginPage }
+=======
+      { title: 'List', component: ListPage }
+>>>>>>> parent of c59af5c... Adicionando primeiras telas'
     ];
 
   }
@@ -45,9 +54,6 @@ export class MyApp {
   }
 
   openPage(page) {
-    if(page.title == 'Sair'){
-      this.authorization.auth.signOut();
-    }
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);

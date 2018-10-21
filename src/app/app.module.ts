@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+<<<<<<< HEAD
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
@@ -14,12 +14,13 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { environment } from '../environments/environment';
 
 //Pages
+=======
+>>>>>>> parent of c59af5c... Adicionando primeiras telas'
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
-import { LoginPage } from '../pages/login/login';
-import { AtendimentoPage } from '../pages/atendimento/atendimento';
 
+<<<<<<< HEAD
 //Components
 import { HeaderComponent } from '../components/core/header/header';
 import { FormsComponent } from '../components/forms/forms';
@@ -37,15 +38,24 @@ import { AcountPage } from '../pages/acount/acount';
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, PacienteComponent, ProfissionalComponent,
 
+=======
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
+
+@NgModule({
+  declarations: [
+    MyApp,
+    HomePage,
+    ListPage
+>>>>>>> parent of c59af5c... Adicionando primeiras telas'
   ],
   imports: [
-    BrowserModule, FormsModule, ReactiveFormsModule,
-    IonicModule.forRoot(MyApp), 
-    AngularFireModule.initializeApp(environment.FirebaseConfig),
-    AngularFireDatabaseModule, AngularFireAuthModule
+    BrowserModule,
+    IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
   entryComponents: [
+<<<<<<< HEAD
     MyApp, LoginPage, HeaderComponent,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, PacienteComponent, ProfissionalComponent,
@@ -56,6 +66,16 @@ import { AcountPage } from '../pages/acount/acount';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AccessFirebaseProvider,
     AlertsProvider
+=======
+    MyApp,
+    HomePage,
+    ListPage
+  ],
+  providers: [
+    StatusBar,
+    SplashScreen,
+    {provide: ErrorHandler, useClass: IonicErrorHandler}
+>>>>>>> parent of c59af5c... Adicionando primeiras telas'
   ]
 })
-export class AppModule { }
+export class AppModule {}
