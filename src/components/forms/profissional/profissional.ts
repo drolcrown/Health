@@ -28,13 +28,14 @@ export class ProfissionalComponent {
     private alerta: AlertsProvider,
     private db: AccessFirebaseProvider, private authorization: AngularFireAuth) {
       this.form = this.builder.group( {
+        avaliacao: [5],
         nome: ['', Validators.required],
         data: ['', Validators.required],
         imagem: [''],
         cidade: ['', Validators.required],
         estado: ['', Validators.required],
-        profissao: ['', Validators.required],
-        cr: ['', Validators.required],
+        profissao: [''],
+        cr: [''],
         email: ['', Validators.required],
         senha: ['', Validators.required],
         confirmarSenha: ['', Validators.required],

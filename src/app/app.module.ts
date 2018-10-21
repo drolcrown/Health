@@ -25,7 +25,6 @@ import { AtendimentoPage } from '../pages/atendimento/atendimento';
 import { HeaderComponent } from '../components/core/header/header';
 import { FormsComponent } from '../components/forms/forms';
 import { ProfissionalComponent } from '../components/forms/profissional/profissional';
-import { PacienteComponent } from '../components/forms/paciente/paciente';
 
 //Providers
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
@@ -36,7 +35,7 @@ import { AcountPage } from '../pages/acount/acount';
   declarations: [
     MyApp, LoginPage, HeaderComponent,
     HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, PacienteComponent, ProfissionalComponent,
+    FormsComponent, ProfissionalComponent,
 
   ],
   imports: [
@@ -50,7 +49,7 @@ import { AcountPage } from '../pages/acount/acount';
   entryComponents: [
     MyApp, LoginPage, HeaderComponent,
     HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, PacienteComponent, ProfissionalComponent,
+    FormsComponent, ProfissionalComponent,
   ],
   providers: [
     StatusBar,

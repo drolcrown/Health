@@ -8,7 +8,10 @@
       <ion-card *ngIf="comp.email == email">
         <ion-card-content [ngStyle]="tamanho">
           <ion-row justify-content-center align-items-center>
-            <img *ngIf="!comp.imagem" [ngStyle]="img" src="../../assets/imgs/usuario.png" />
+            <div *ngIf="!comp.imagem">
+              <img *ngIf="!comp.profissao" [ngStyle]="img" src="../../assets/imgs/usuario.png" />
+              <img *ngIf="comp.profissao" [ngStyle]="img" src="../../assets/imgs/profissional.png" />
+            </div>
             <img *ngIf="comp.imagem" [ngStyle]="img" src="{{comp.imagem}}" />
           </ion-row>
           <!-- <ion-row justify-content-center align-items-center>
@@ -16,8 +19,9 @@
           </ion-row> -->
           <ion-card-title>
             {{comp.nome}}
-            <p *ngIf="comp.profissao">{{comp.profissao}}</p>
           </ion-card-title>
+          <p *ngIf="comp.profissao">{{comp.profissao}}</p>
+          <p *ngIf="comp.crm">CRM: {{comp.crm}}</p>
           <p class="mt-2">
             Data de Nascimento: {{comp.data}}
           </p>
@@ -35,7 +39,7 @@
               Avaliação
             </ion-card-title>
             <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff" defaultColor="#f03d3d"
-              readonly="false" [rating]="3">
+              readonly="false" [rating]="comp.avaliacao">
             </ionic3-star-rating>
           </div>
           <ion-row justify-content-center align-items-center class="mt-2">
