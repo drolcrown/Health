@@ -8,8 +8,8 @@ export class AlertsProvider {
 
   presentLoading() {
     const loader = this.loadingCtrl.create({
-      content: "Aguarde...",
-      duration: 3000
+      content: "Carregando...",
+      duration: 2000
     });
     loader.present();
   }

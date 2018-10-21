@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -21,12 +21,13 @@ export class LoginPage {
   private loginErrorString: string = '';
 
   constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
-    private authorization: AngularFireAuth) {
+    private authorization: AngularFireAuth, private menuCtrl: MenuController) {
+    this.menuCtrl.enable(false);
   }
 
   // Attempt to login in through our User service
   doLogin() {
-        this.navCtrl.setRoot(HomePage)
+    // this.navCtrl.setRoot(HomePage)
     if (this.account.email && this.account.password) {
       let login = this.authorization.auth.signInWithEmailAndPassword(this.account.email, this.account.password);
       login.then(() => {
@@ -51,7 +52,7 @@ export class LoginPage {
       confirmarSenha: '123123123',
     }
     console.log(nov.imagem)
-    this.provider.upload(nov);
+    // this.provider.upload(nov);
   }
 
   registrar() {
