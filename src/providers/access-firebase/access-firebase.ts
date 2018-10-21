@@ -4,7 +4,7 @@ import { FirebaseApp } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
-import * as firebase from 'firebase';
+// import * as firebase from 'firebase';
 import { AlertsProvider } from '../alerts/alerts';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class AccessFirebaseProvider {
     public alert: AlertsProvider) {
   }
 
-  doLogin(account){
+  doLogin(account) {
     if (account.email && account.password) {
       this.alert.presentLoading(1);
       return this.authorization.auth.signInWithEmailAndPassword(account.email, account.password);
@@ -31,19 +31,9 @@ export class AccessFirebaseProvider {
   }
 
   get(PATH: any, key: string) {
+    this.alert.presentLoading(1);
     return this.db.object(PATH + '/' + key).valueChanges();
   }
-
-  // getPerfilByEmail(email : string) {
-  //   this.db.list('perfil/').valueChanges().pipe().subscribe( resp => {
-  //     this.perfis = resp;
-  //   });
-  //   this.perfis.forEach( (obj) => {
-  //     if(email == obj.email){
-  //       return this.perfis;
-  //     }
-  //   });
-  // }
 
   save(PATH: any, object: any) {
     if (object.key) {
@@ -57,33 +47,16 @@ export class AccessFirebaseProvider {
     return this.db.list(PATH).remove(key);
   }
 
-  // upload(usuario) {
-  //   let storage = this.fp.storage().ref();
-  //   let ref = storage.child('Usuarios/profissional.png');
-  //   var message = '41682102_1406592266152427_7612888278722674688_n.jpg';
-  //   ref.putString(message, 'base64url').then(function(snapshot) {
-  //     console.log('Uploaded a base64url string!');
-  //   });
-  //   // let basePath = '/Usuarios/' + this.authorization.auth.currentUser.uid;
-  //   // let fullPath = basePath + usuario.nome + '.jpg';
-  //   // let uploadT = storage.child(fullPath).putString(usuario.imagem, 'base64');
-  //   // console.log(uploadT)
-  //   // let uploadT = storage.child('/Usuarios').putString('41682102_1406592266152427_7612888278722674688_n.jpg', 'base64');
-  //   console.log()
-  //   // uploadT.on(firebase.storage.TaskEvent.STATE_CHANGED,
-  //   //   (snapshot) => {
-  //   //     let respost = (uploadT.snapshot.bytesTransferred / uploadT.snapshot.totalBytes) * 100; 
-  //   //     console.log(respost + '% done');
-  //   //   },
-  //   //   (error) => {
-  //   //     console.error(error);
-  //   //   },
-  //   //   () => {
-  //   //     usuario.imagem = uploadT.snapshot.downloadURL;
-  //   //     this.save("perfil/", usuario);
-  //   //   }
-  //   // );
-  // }
+  upload(usuario, arq) {
+    let result = usuario.nome + '-' + usuario.imagem.substring(12, usuario.imagem.lenght);
+    let arquivo = arq.target.files[0];
+    let reader = new FileReader();
+    reader.onload = (e: any) => {
+      let picture = storage().ref(`/Usuarios/${result}`);
+      picture.putString(e.target.result, 'data_url');
+    };
+    reader.readAsDataURL(arquivo);
+  }
 
   // async takePhoto() {
   //   try {

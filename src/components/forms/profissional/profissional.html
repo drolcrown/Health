@@ -12,7 +12,7 @@
     </ion-item>
     <ion-item class="form-group">
       <ion-label class="text-primary">Imagem:</ion-label>
-      <ion-input formControlName="imagem" type="file">
+      <ion-input formControlName="imagem" type="file" (change)="salvarArquivo($event)">
       </ion-input>
     </ion-item>
     <ion-item class="form-group">

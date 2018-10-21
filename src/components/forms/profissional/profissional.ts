@@ -14,6 +14,7 @@ import { AlertsProvider } from '../../../providers/alerts/alerts';
 export class ProfissionalComponent {
   private form: FormGroup;
   private _usuario;
+  private arquivo;
   private _estados = new UF().estados;
   private _msg = '';
   private senhaInvalida = false;
@@ -26,7 +27,7 @@ export class ProfissionalComponent {
 
   constructor(private builder: FormBuilder, private navCtrl: NavController,
     private alerta: AlertsProvider,
-    private db: AccessFirebaseProvider, private authorization: AngularFireAuth) {
+    private provider: AccessFirebaseProvider, private authorization: AngularFireAuth) {
       this.form = this.builder.group( {
         avaliacao: [5],
         nome: ['', Validators.required],
@@ -42,19 +43,25 @@ export class ProfissionalComponent {
     });
   }
 
+  private salvarArquivo(e){
+    this.arquivo = e;
+  }
+
   private registrar() {
-    if (this.form.valid) {
-      if (this.form.controls.senha.value === this.form.controls.confirmarSenha.value) {
-        this.authorization.auth.createUserWithEmailAndPassword(this.form.controls.email.value, this.form.controls.senha.value);
-        this.db.save('perfil/', this.form.value);
-        this.alerta.cadastroOkAlert();
-        this.goPage();
-      } else {
-        this.senhaInvalida = true;
-      }
-    }else{
-      this.formInvalido = true;
-    }
+    console.log(this.arquivo)
+    this.provider.upload(this.form.value, this.arquivo);
+    // if (this.form.valid) {
+    //   if (this.form.controls.senha.value === this.form.controls.confirmarSenha.value) {
+    //     this.authorization.auth.createUserWithEmailAndPassword(this.form.controls.email.value, this.form.controls.senha.value);
+    //     this.provider.save('perfil/', this.form.value);
+    //     this.alerta.cadastroOkAlert();
+    //     this.goPage();
+    //   } else {
+    //     this.senhaInvalida = true;
+    //   }
+    // }else{
+    //   this.formInvalido = true;
+    // }
   }
   
   private goPage() {
