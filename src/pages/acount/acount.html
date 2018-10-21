@@ -7,17 +7,25 @@
     <div *ngFor="let comp of perfis | async">
       <ion-card *ngIf="comp.email == email">
         <ion-card-content>
-          <img [ngStyle]="img" src="../../assets/imgs/usuario.png" />
-
-          <!-- <img [ngStyle]="img" src="{{comp.imagem}}" /> -->
+          <ion-row justify-content-center align-items-center>
+            <img *ngIf="!comp.imagem" [ngStyle]="img" src="../../assets/imgs/usuario.png" />
+            <img *ngIf="comp.imagem" [ngStyle]="img" src="{{comp.imagem}}" />
+          </ion-row>
           <ion-card-title>
             {{comp.nome}}
+            <p *ngIf="comp.profissao">{{comp.profissao}}</p>
           </ion-card-title>
+          <p>
+            Data de Nascimento: {{comp.data}}
+          </p>
+          <p>
+            {{comp.cidade}} - {{comp.estado}}
+          </p>
           <p>
             {{comp.email}}
           </p>
           <p>
-            {{comp.peso}}
+            Peso: {{comp.peso}}
           </p>
         </ion-card-content>
       </ion-card>

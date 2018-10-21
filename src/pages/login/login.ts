@@ -12,6 +12,10 @@ import { ListPage } from '../list/list';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  private img = {
+    height: (window.screen.height * 0.15) + 'px',
+    width: (window.screen.height * 0.15) + 'px',
+  }
   private account: { email: string, password: string } = {
     email: '',
     password: ''
@@ -47,7 +51,7 @@ export class LoginPage {
       imagem: '41682102_1406592266152427_7612888278722674688_n.jpg',
       cidade: 'Brasilia',
       estado: 'Distrito Federal',
-      email: 'rafa@hotmail.com',
+      email: 'rafa.jones@hotmail.com',
       senha: '123123123',
       confirmarSenha: '123123123',
     }
