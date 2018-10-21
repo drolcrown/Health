@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { SituacaoClinica } from '../../Models/situacaoClinica';
+import { AlertsProvider } from '../../providers/alerts/alerts';
 
 @IonicPage()
 @Component({
@@ -25,7 +26,7 @@ export class AtendimentoPage {
   ionViewDidLoad() {
   }
 
-  popularSituacoes() {
+  public popularSituacoes() {
     switch (this.name) {
       case 'Assistencia em Saúde':
         this.options = this.sit.assistencia;

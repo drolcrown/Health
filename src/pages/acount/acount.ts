@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the AcountPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { take } from 'rxjs/operator/take';
 
 @IonicPage()
 @Component({
@@ -14,12 +10,17 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'acount.html',
 })
 export class AcountPage {
+  private conta;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public provider: AccessFirebaseProvider, public authorization: AngularFireAuth) {
+    let email = this.authorization.auth.currentUser.email;
+    this.conta = this.provider.getPerfilByEmail('perfil/', email);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad AcountPage');
+    console.log(this.conta);
+    console.log(this.email);
   }
 
 }

@@ -12,11 +12,12 @@ import { ListPage } from '../list/list';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  account: { email: string, password: string } = {
+  private account: { email: string, password: string } = {
     email: '',
     password: ''
   };
-
+  private mostrarSenha = false;
+  private imagem;
   private loginErrorString: string = '';
 
   constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
@@ -25,16 +26,32 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
+        this.navCtrl.setRoot(HomePage)
     if (this.account.email && this.account.password) {
       let login = this.authorization.auth.signInWithEmailAndPassword(this.account.email, this.account.password);
       login.then(() => {
         this.navCtrl.setRoot(HomePage)
       }).catch(error => {
-      });
         this.loginErrorString = 'Email ou Senha Incorretos';
-    }else{
+      });
+    } else {
       this.loginErrorString = 'Preencha os Campos';
     }
+  }
+
+  teste() {
+    let nov = {
+      nome: 'rafa',
+      data: '1994-03-03',
+      imagem: '41682102_1406592266152427_7612888278722674688_n.jpg',
+      cidade: 'Brasilia',
+      estado: 'Distrito Federal',
+      email: 'rafa@hotmail.com',
+      senha: '123123123',
+      confirmarSenha: '123123123',
+    }
+    console.log(nov.imagem)
+    this.provider.upload(nov);
   }
 
   registrar() {

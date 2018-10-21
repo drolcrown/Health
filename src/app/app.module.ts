@@ -5,10 +5,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { Camera } from '@ionic-native/camera';
 
 import { AngularFireModule } from 'angularfire2';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 import { environment } from '../environments/environment';
 
@@ -28,11 +29,12 @@ import { PacienteComponent } from '../components/forms/paciente/paciente';
 //Providers
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
 import { AlertsProvider } from '../providers/alerts/alerts';
+import { AcountPage } from '../pages/acount/acount';
 
 @NgModule({
   declarations: [
     MyApp, LoginPage, HeaderComponent,
-    HomePage, AtendimentoPage, ListPage,
+    HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, PacienteComponent, ProfissionalComponent,
 
   ],
@@ -45,12 +47,12 @@ import { AlertsProvider } from '../providers/alerts/alerts';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp, LoginPage, HeaderComponent,
-    HomePage, AtendimentoPage, ListPage,
+    HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, PacienteComponent, ProfissionalComponent,
   ],
   providers: [
     StatusBar,
-    SplashScreen,
+    SplashScreen, Camera,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AccessFirebaseProvider,
     AlertsProvider

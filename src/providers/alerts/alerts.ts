@@ -1,17 +1,22 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AlertController } from 'ionic-angular';
+import { AlertController, LoadingController } from 'ionic-angular';
 
 @Injectable()
 export class AlertsProvider {
+  constructor(private alertCtrl: AlertController,
+    private loadingCtrl: LoadingController) { }
 
-
-  constructor(private alertCtrl: AlertController) {
-  
+  presentLoading() {
+    const loader = this.loadingCtrl.create({
+      content: "Aguarde...",
+      duration: 3000
+    });
+    loader.present();
   }
+
   msgAlert(comp, msg) {
   }
-  
+
   cadastroOkAlert() {
     let alert = this.alertCtrl.create({
       title: 'Cadastrado com Sucesso!',
@@ -26,7 +31,7 @@ export class AlertsProvider {
     });
     alert.present();
   }
-  
+
   presentConfirm() {
     let alert = this.alertCtrl.create({
       title: 'Confirm purchase',

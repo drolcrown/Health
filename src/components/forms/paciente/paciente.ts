@@ -29,6 +29,7 @@ export class PacienteComponent {
     private db: AccessFirebaseProvider, private authorization: AngularFireAuth) {
     this.form = this.builder.group({
       nome: ['', Validators.required],
+      imagem: [''],
       data: ['', Validators.required],
       peso: ['', Validators.required],
       cidade: ['', Validators.required],

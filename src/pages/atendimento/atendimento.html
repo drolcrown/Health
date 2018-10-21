@@ -13,7 +13,7 @@
     <ion-slides pager>
       <ion-slide *ngFor="let comp of profissionais | async">
         <ion-card>
-          <img src="../../assets/imgs/fisio.jpg" />
+          <img src="{{comp.imagem}}" />
           <ion-card-content>
             <ion-card-title>
               {{comp.nome}}

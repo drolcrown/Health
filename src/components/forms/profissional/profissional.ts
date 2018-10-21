@@ -30,6 +30,7 @@ export class ProfissionalComponent {
       this.form = this.builder.group( {
         nome: ['', Validators.required],
         data: ['', Validators.required],
+        imagem: [''],
         cidade: ['', Validators.required],
         estado: ['', Validators.required],
         profissao: ['', Validators.required],

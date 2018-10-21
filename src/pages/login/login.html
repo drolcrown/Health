@@ -5,7 +5,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-list>
+  <ion-list padding>
     <ion-item class="mt-5 text-center">
       <ion-img width="80" height="80" src="../../assets/imgs/usuario.png"></ion-img>
     </ion-item>
@@ -16,19 +16,22 @@
 
     <ion-item class="mt-5">
       <ion-label class="text-primary">Senha</ion-label>
-      <ion-input type="password" [(ngModel)]="account.password" name="password" placeholder="*******"></ion-input>
+      <ion-input *ngIf="!mostrarSenha" type="password" [(ngModel)]="account.password" name="password" placeholder="*******">
+      </ion-input>
+      <ion-input *ngIf="mostrarSenha" type="text" [(ngModel)]="account.password" name="password" placeholder="*******">
+      </ion-input>
+      <ion-toggle [(ngModel)]="mostrarSenha" checked="false"></ion-toggle>
     </ion-item>
-    <ion-item *ngIf="loginErrorString" class="form-group" text-center>
+    <small class="float-right text-primary">Mostrar Senha</small>
+    <ion-item *ngIf="loginErrorString" class="form-group mb-5" text-center>
       <small class="text-danger">
         {{loginErrorString}}
       </small>
     </ion-item>
 
-    <ion-footer padding>
-      <button ion-button class="btn btn-lg btn-outline-primary" block (click)="doLogin()">Log-in</button>
-      <button ion-button class="btn btn-lg btn-outline-primary" block (click)="registrar()">
-        Registrar-se
-      </button>
-    </ion-footer>
+    <button ion-button class="btn btn-lg btn-outline-primary mt-5" block (click)="doLogin()">Log-in</button>
+    <button ion-button class="btn btn-lg btn-outline-primary" block (click)="registrar()">
+      Registrar-se
+    </button>
   </ion-list>
 </ion-content>
