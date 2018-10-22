@@ -7,16 +7,16 @@
     <div *ngFor="let comp of perfis | async">
       <ion-card *ngIf="comp.email == email">
         <ion-card-content [ngStyle]="tamanho">
-          <ion-row justify-content-center align-items-center>
+          <ion-row justify-content-center align-items-center class="btn-wrap">
             <div *ngIf="!comp.imagem">
               <img *ngIf="!comp.profissao" [ngStyle]="img" src="../../assets/imgs/usuario.png" />
               <img *ngIf="comp.profissao" [ngStyle]="img" src="../../assets/imgs/profissional.png" />
             </div>
             <img *ngIf="comp.imagem" [ngStyle]="img" src="{{comp.imagem}}" />
+            <!-- <button>Play</button> -->
+            <input  id="img" class="form-group" type="file" (change)="salvarArquivo(comp, $event)"/>
           </ion-row>
-          <!-- <ion-row justify-content-center align-items-center>
-              <ion-input type="file"></ion-input>
-          </ion-row> -->
+
           <ion-card-title>
             {{comp.nome}}
           </ion-card-title>

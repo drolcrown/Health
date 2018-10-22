@@ -10,11 +10,11 @@
       <ion-input formControlName="data" type="date" max="9999-12-12">
       </ion-input>
     </ion-item>
-    <ion-item class="form-group">
+    <!-- <ion-item class="form-group">
       <ion-label class="text-primary">Imagem:</ion-label>
       <ion-input formControlName="imagem" type="file" (change)="salvarArquivo($event)">
       </ion-input>
-    </ion-item>
+    </ion-item> -->
     <ion-item class="form-group" *ngIf="_usuario == 'paciente'">
       <ion-label class="text-primary">Peso:</ion-label>
       <ion-input formControlName="peso" type="text" autocomplete="on" placeholder="78"></ion-input>

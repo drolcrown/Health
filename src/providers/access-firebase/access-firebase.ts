@@ -51,19 +51,18 @@ export class AccessFirebaseProvider {
     return newObject;
   }
 
-  async save(PATH: any, object: any) {
-    let objeto;
-    if (object.$key) {
-      objeto = this.db.list(PATH).update(object.$key, object);
-    } else {
-      objeto = this.db.list(PATH).push(object)
-    }
-    objeto.then((e) => {
-      this.alert.showToast('Ação Concluída com Sucesso!');
-    }).catch(error => {
+  save(PATH: any, object: any) {
+    this.getKey(PATH, object).subscribe(obj => {
+      if (obj.key) {
+        this.db.list(PATH).update(obj.key, obj.value);
+      } else {
+        this.db.list(PATH).push(obj.value)
+      }
+    }, ((error) => {
       this.alert.showToast('Falha na Operação!');
-    });
-    return await objeto;
+    }), (() => {
+      this.alert.showToast('Ação Concluída com Sucesso!');
+    }));
   }
 
   remove(PATH: any, usuario) {
@@ -77,21 +76,21 @@ export class AccessFirebaseProvider {
     })
   }
 
-  async upload(usuario, arq) {
+  upload(usuario, arq) {
     let PATH = '/Usuarios/' + usuario.email + '.jpg';
-    let urlDowload = await storage().ref(PATH).getDownloadURL();
+    let arquivo = arq.target.files[0];
+    let reader = new FileReader();
+    reader.onload = (e: any) => {
+      let picture = storage().ref(PATH);
+      picture.putString(e.target.result, 'data_url');
+    };
+    reader.readAsDataURL(arquivo);
+    let urlDowload = storage().ref(PATH).getDownloadURL();
     urlDowload.then(success => {
-      console.log('Upload ', success);
-    }).catch(() => {
-      let arquivo = arq.target.files[0];
-      let reader = new FileReader();
-      reader.onload = (e: any) => {
-        let picture = storage().ref(PATH);
-        picture.putString(e.target.result, 'data_url');
-      };
-      reader.readAsDataURL(arquivo);
-    });
-    return urlDowload;
+      usuario.imagem = success;
+      this.save('perfil/', usuario);
+      this.alert.presentLoading(2);
+    }).catch(() => { console.log('falha') });
   }
 
   // async takePhoto() {

@@ -36,6 +36,10 @@ export class AcountPage {
     this.perfis = this.provider.getAll('perfil/');
   }
 
+  private salvarArquivo(perfil, e) {
+    this.provider.upload(perfil, e);
+  }
+
   public trocarSenha(perfil) {
     this.alerta.updatePassword(perfil);
   }
