@@ -56,7 +56,7 @@ import { AcountPage } from '../pages/acount/acount';
     SplashScreen, Camera,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AccessFirebaseProvider,
-    AlertsProvider
+    AlertsProvider, 
   ]
 })
 export class AppModule { }

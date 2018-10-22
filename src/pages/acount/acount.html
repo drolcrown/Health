@@ -39,12 +39,12 @@
               Avaliação
             </ion-card-title>
             <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff" defaultColor="#f03d3d"
-              readonly="false" [rating]="comp.avaliacao">
+              readonly="true" [rating]="comp.avaliacao">
             </ionic3-star-rating>
           </div>
-          <ion-row justify-content-center align-items-center class="mt-2">
-            <button ion-button class="btn btn-outline-primary ml-2">Trocar Senha</button>
-            <button ion-button class="btn btn-outline-primary">Excluir Conta</button>
+          <ion-row justify-content-center align-items-center class="mt-5">
+            <button ion-button class="btn btn-outline-primary ml-2" (click)="trocarSenha(comp)">Trocar Senha</button>
+            <button ion-button class="btn btn-outline-primary" (click)="excluirConta(comp)">Excluir Conta</button>
           </ion-row>
         </ion-card-content>
       </ion-card>

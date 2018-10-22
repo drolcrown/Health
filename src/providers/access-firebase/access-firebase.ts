@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, snapshotChanges } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { FirebaseApp } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
-// import * as firebase from 'firebase';
+import * as firebase from 'firebase';
 import { AlertsProvider } from '../alerts/alerts';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class AccessFirebaseProvider {
@@ -18,7 +19,7 @@ export class AccessFirebaseProvider {
 
   doLogin(account) {
     if (account.email && account.password) {
-      this.alert.presentLoading(1);
+      this.alert.presentLoading(2);
       return this.authorization.auth.signInWithEmailAndPassword(account.email, account.password);
     } else {
       return null;
@@ -35,27 +36,62 @@ export class AccessFirebaseProvider {
     return this.db.object(PATH + '/' + key).valueChanges();
   }
 
-  save(PATH: any, object: any) {
-    if (object.key) {
-      return this.db.list(PATH).update(object.key, object)
+  getKey(PATH: any, object): Subject<any> {
+    let childData;
+    let newObject = new Subject();
+    let starCountRef = firebase.database().ref(PATH);
+    starCountRef.on('value', (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        childData = childSnapshot.val().email;
+        if (object.email == childData) {
+          newObject.next({ key: childSnapshot.key, value: childData });
+        }
+      });
+    });
+    return newObject;
+  }
+
+  async save(PATH: any, object: any) {
+    let objeto;
+    if (object.$key) {
+      objeto = this.db.list(PATH).update(object.$key, object);
     } else {
-      return this.db.list(PATH).push(object)
+      objeto = this.db.list(PATH).push(object)
     }
+    objeto.then((e) => {
+      this.alert.showToast('Ação Concluída com Sucesso!');
+    }).catch(error => {
+      this.alert.showToast('Falha na Operação!');
+    });
+    return await objeto;
   }
 
-  remove(PATH: any, key: string) {
-    return this.db.list(PATH).remove(key);
+  remove(PATH: any, usuario) {
+    this.getKey(PATH, usuario).subscribe(resp => {
+      let objeto = this.db.list(PATH).remove(resp.key);
+      objeto.then((e) => {
+        this.alert.showToast('Ação Concluída com Sucesso!');
+      }).catch(error => {
+        this.alert.showToast('Falha na Operação!');
+      });
+    })
   }
 
-  upload(usuario, arq) {
-    let result = usuario.nome + '-' + usuario.imagem.substring(12, usuario.imagem.lenght);
-    let arquivo = arq.target.files[0];
-    let reader = new FileReader();
-    reader.onload = (e: any) => {
-      let picture = storage().ref(`/Usuarios/${result}`);
-      picture.putString(e.target.result, 'data_url');
-    };
-    reader.readAsDataURL(arquivo);
+  async upload(usuario, arq) {
+    let PATH = '/Usuarios/' + usuario.email + '.jpg';
+    let urlDowload = await storage().ref(PATH).getDownloadURL();
+    urlDowload.then(success => {
+      console.log('Upload ', success);
+    }).catch(() => {
+      let arquivo = arq.target.files[0];
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        let picture = storage().ref(PATH);
+        picture.putString(e.target.result, 'data_url');
+      };
+      reader.readAsDataURL(arquivo);
+    });
+    return urlDowload;
   }
 
   // async takePhoto() {

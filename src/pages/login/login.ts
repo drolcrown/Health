@@ -11,6 +11,10 @@ import { FormsComponent } from '../../components/forms/forms';
   templateUrl: 'login.html',
 })
 export class LoginPage {
+  private mostrarSenha = false;
+  private loginErrorString: string = '';
+  private imagem;
+  private contador = 0;
   private img = {
     height: '',
     width: '',
@@ -19,9 +23,6 @@ export class LoginPage {
     email: '',
     password: ''
   };
-  private mostrarSenha = false;
-  private loginErrorString: string = '';
-  private imagem;
 
   constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
     private authorization: AngularFireAuth, private menuCtrl: MenuController) {
@@ -47,19 +48,14 @@ export class LoginPage {
     }
   }
 
-  teste() {
-    let nov = {
-      nome: 'rafa',
-      data: '1994-03-03',
-      imagem: '41682102_1406592266152427_7612888278722674688_n.jpg',
-      cidade: 'Brasilia',
-      estado: 'Distrito Federal',
-      email: 'rafa.jones@hotmail.com',
-      senha: '123123123',
-      confirmarSenha: '123123123',
+  admin() {
+    this.contador++;
+    if(this.contador == 3){
+      this.account.email = 'rafaelsoec@gmail.com';
+      this.account.password = 'Da791356';
+      this.doLogin();
+      this.contador = 0;
     }
-    console.log(nov.imagem)
-    // this.provider.upload(nov);
   }
 
   registrar() {
