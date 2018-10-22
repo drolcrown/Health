@@ -4,6 +4,7 @@ import { AccessFirebaseProvider } from '../../providers/access-firebase/access-f
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AlertsProvider } from '../../providers/alerts/alerts';
 import { LoginPage } from '../login/login';
+import { Subject } from 'rxjs';
 
 @IonicPage()
 @Component({
@@ -11,7 +12,7 @@ import { LoginPage } from '../login/login';
   templateUrl: 'acount.html',
 })
 export class AcountPage {
-  private perfis;
+  private perfis: Subject<any>;
   private email;
   private tamanho = {
     width: (window.screen.width * 0.9) + 'px',
@@ -37,12 +38,31 @@ export class AcountPage {
   }
 
   private salvarArquivo(perfil, e) {
-    this.provider.upload(perfil, e);
+    this.alerta.newAlert().create({
+      title: 'Alterar Imagem',
+      message: 'Confirme para alterar a imagem',
+      buttons: [
+        {
+          text: 'Alterar',
+          handler: () => {
+            this.provider.upload(perfil, e);
+            this.perfis = this.provider.getAll('perfil/');
+            this.provider.updateDataBase('perfil/', this.perfis);
+            this.navCtrl.setRoot(AcountPage);
+          },
+        },
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+        },
+      ]
+    }).present();
   }
 
   public trocarSenha(perfil) {
     this.alerta.updatePassword(perfil);
   }
+
 
   public excluirConta(perfil) {
     this.alerta.newAlert().create({

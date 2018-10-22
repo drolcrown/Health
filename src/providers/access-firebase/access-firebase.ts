@@ -16,24 +16,39 @@ export class AccessFirebaseProvider {
     public authorization: AngularFireAuth, public camera: Camera,
     public alert: AlertsProvider) {
   }
+  updateDataBase(model, values) {
+    this.db.database.ref(model).update(values);
+  }
 
   doLogin(account) {
     if (account.email && account.password) {
-      this.alert.presentLoading(2);
-      return this.authorization.auth.signInWithEmailAndPassword(account.email, account.password);
+      this.alert.presentLoading(10);
+      return this.authorization.auth
+        .signInWithEmailAndPassword(account.email, account.password)
+        .then((resp) => {
+        }).catch(error => {
+          this.alert.showToast('Falha no Login!');
+        });
     } else {
       return null;
     };
   }
 
-  getAll(PATH) {
-    this.alert.presentLoading(1);
-    return this.db.list(PATH).valueChanges();
+  getAll(PATH): Subject<any> {
+    let subject = new Subject();
+    this.db.list(PATH).valueChanges().subscribe((obj: any) => {
+      this.alert.presentLoading(3);
+      subject.next(obj);
+    }, ((error) => {
+      this.alert.showToast('Falha na Operação!');
+    }), (() => {
+      this.alert.showToast('Ação Concluída com Sucesso!');
+    }));
+    return subject;
   }
 
   get(PATH: any, key: string) {
-    this.alert.presentLoading(1);
-    return this.db.object(PATH + '/' + key).valueChanges();
+    return this.getAll(PATH + '/' + key);
   }
 
   getKey(PATH: any, object): Subject<any> {
@@ -83,14 +98,14 @@ export class AccessFirebaseProvider {
     reader.onload = (e: any) => {
       let picture = storage().ref(PATH);
       picture.putString(e.target.result, 'data_url');
+      this.alert.presentLoading(3);
     };
     reader.readAsDataURL(arquivo);
     let urlDowload = storage().ref(PATH).getDownloadURL();
     urlDowload.then(success => {
       usuario.imagem = success;
       this.save('perfil/', usuario);
-      this.alert.presentLoading(2);
-    }).catch(() => { console.log('falha') });
+    }).catch(() => { this.alert.showToast('Falha no Upload de Imagem') });
   }
 
   // async takePhoto() {

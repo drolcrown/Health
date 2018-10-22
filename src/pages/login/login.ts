@@ -38,7 +38,6 @@ export class LoginPage {
     let login= this.provider.doLogin(this.account);
     if(login){
       login.then((success) => {
-        this.loginErrorString = 'Sucesso';
         this.navCtrl.setRoot(HomePage);
       }).catch(error => {
         this.loginErrorString = 'Email ou Senha Incorretos';

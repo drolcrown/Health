@@ -22,7 +22,8 @@ export class AlertsProvider {
     let duration = (valor * 1000);
     const loader = this.loadingCtrl.create({
       content: "Carregando...",
-      duration: duration
+      duration: duration,
+      dismissOnPageChange: true,
     });
     loader.present();
   }
