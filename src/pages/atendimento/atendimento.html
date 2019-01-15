@@ -13,11 +13,11 @@
     <ion-slides pager>
       <ion-slide *ngFor="let comp of profissionais | async">
         <ion-card>
+          <ion-card-title>
+            {{comp.nome}}
+          </ion-card-title>
           <img src="{{comp.imagem}}" />
           <ion-card-content>
-            <ion-card-title>
-              {{comp.nome}}
-            </ion-card-title>
             <p>
               {{comp.descricao}}
             </p>

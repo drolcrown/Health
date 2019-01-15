@@ -10,6 +10,7 @@ import { Camera } from '@ionic-native/camera';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment';
 import { StarRatingModule } from 'ionic3-star-rating';
@@ -30,10 +31,11 @@ import { ProfissionalComponent } from '../components/forms/profissional/profissi
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
 import { AlertsProvider } from '../providers/alerts/alerts';
 import { AcountPage } from '../pages/acount/acount';
+import { TestPage } from '../pages/test/test';
 
 @NgModule({
   declarations: [
-    MyApp, LoginPage, HeaderComponent,
+    MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent,
 
@@ -41,13 +43,14 @@ import { AcountPage } from '../pages/acount/acount';
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
     StarRatingModule,
+    AngularFirestoreModule,
     IonicModule.forRoot(MyApp), 
     AngularFireModule.initializeApp(environment.FirebaseConfig),
     AngularFireDatabaseModule, AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, LoginPage, HeaderComponent,
+    MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent,
   ],
@@ -56,7 +59,7 @@ import { AcountPage } from '../pages/acount/acount';
     SplashScreen, Camera,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AccessFirebaseProvider,
-    AlertsProvider, 
+    AlertsProvider,
   ]
 })
 export class AppModule { }

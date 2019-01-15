@@ -18,11 +18,11 @@ export class HomePage {
   }
 
   constructor(public navCtrl: NavController, private menuCtrl: MenuController) {
-  this.menuCtrl.enable(true);
-}
+    this.menuCtrl.enable(true);
+  }
 
-goPage(nome) {
-  this.navCtrl.setRoot(AtendimentoPage, { name: nome })
-}
+  goPage(nome) {
+    this.navCtrl.setRoot(AtendimentoPage, { name: nome })
+  }
 
 }

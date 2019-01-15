@@ -16,6 +16,20 @@ export class AccessFirebaseProvider {
     public authorization: AngularFireAuth, public camera: Camera,
     public alert: AlertsProvider) {
   }
+
+  teste() {
+    // let databaseRef = firebase.database().ref().child('perfil');
+    // let databaseRef = firebase.database().ref().child('perfil');
+    // const querybaseRef = querybase.ref(databaseRef, ['name', 'age', 'location']);
+    // console.log(databaseRef.where(""))
+    //   let d = firebase.firestore();;
+    //   // Create a reference to the cities collection
+    // let citiesRef = d.collection("perfil");
+    // // Create a query against the collection.
+    // let query = citiesRef.where("state", "==", "CA");
+    // console.log(d)
+  }
+
   updateDataBase(model, values) {
     this.db.database.ref(model).update(values);
   }
@@ -35,60 +49,79 @@ export class AccessFirebaseProvider {
   }
 
   getAll(PATH): Subject<any> {
-    let subject = new Subject();
-    this.db.list(PATH).valueChanges().subscribe((obj: any) => {
+    let data: Subject<any>;
+    this.db.list(PATH).valueChanges().subscribe(valor => {
+      data.next(valor);
       this.alert.presentLoading(3);
-      subject.next(obj);
-    }, ((error) => {
-      this.alert.showToast('Falha na Operação!');
-    }), (() => {
-      this.alert.showToast('Ação Concluída com Sucesso!');
-    }));
-    return subject;
+    });
+    return data;
   }
 
   get(PATH: any, key: string) {
     return this.getAll(PATH + '/' + key);
   }
 
-  getKey(PATH: any, object): Subject<any> {
-    let childData;
+  findObject(path: string, key: string, value: string): Subject<any> {
+    let newObject = new Subject();
+    let ref = this.db.database.ref(path);
+    ref.orderByChild(key).equalTo(value)
+      .on("child_added", (snapshot) => {
+        this.get(path, snapshot.key).subscribe(response => {
+          newObject.next(response);
+        });
+      });
+
+    return newObject;
+  }
+
+  getKey(PATH: any, object: any): Subject<any> {
+    // object = (object.length ? object : Object.entries(object)[1]);
+    let childData, idEncontrado = false;
     let newObject = new Subject();
     let starCountRef = firebase.database().ref(PATH);
     starCountRef.on('value', (snapshot) => {
       snapshot.forEach((childSnapshot) => {
-        childData = childSnapshot.val().email;
-        if (object.email == childData) {
-          newObject.next({ key: childSnapshot.key, value: childData });
+        childData = (childSnapshot.val().email != null ? childSnapshot.val().email : childSnapshot.val().nome);
+        if (!idEncontrado) {
+          for (let i = 0; i < object.length; i++) {
+            if (object[i] == childData) {
+              newObject.next({ key: childSnapshot.key, value: childData });
+              i = object.length;
+              idEncontrado = true;
+            }
+          };
         }
       });
     });
+
     return newObject;
   }
 
-  save(PATH: any, object: any) {
+  update(PATH: any, object: any) {
     this.getKey(PATH, object).subscribe(obj => {
       if (obj.key) {
-        this.db.list(PATH).update(obj.key, obj.value);
-      } else {
-        this.db.list(PATH).push(obj.value)
+        this.db.list(PATH).update(obj.key, object);
       }
     }, ((error) => {
-      this.alert.showToast('Falha na Operação!');
+      return this.alert.showToast('Falha na Operação!');
     }), (() => {
-      this.alert.showToast('Ação Concluída com Sucesso!');
+      return this.alert.showToast('Ação Concluída com Sucesso!');
     }));
   }
 
+  save(PATH: any, object: any) {
+    this.db.list(PATH).push(object);
+    return this.alert.showToast('Ação Concluída com Sucesso!');
+  }
+
   remove(PATH: any, usuario) {
-    this.getKey(PATH, usuario).subscribe(resp => {
-      let objeto = this.db.list(PATH).remove(resp.key);
-      objeto.then((e) => {
-        this.alert.showToast('Ação Concluída com Sucesso!');
-      }).catch(error => {
-        this.alert.showToast('Falha na Operação!');
-      });
-    })
+    this.getKey(PATH, usuario).subscribe(obj => {
+      this.db.list(PATH).remove(obj.key);
+    }, ((error) => {
+      return this.alert.showToast('Falha na Operação!');
+    }), (() => {
+      return this.alert.showToast('Ação Concluída com Sucesso!');
+    }));
   }
 
   upload(usuario, arq) {
@@ -105,7 +138,7 @@ export class AccessFirebaseProvider {
     urlDowload.then(success => {
       usuario.imagem = success;
       this.save('perfil/', usuario);
-    }).catch(() => { this.alert.showToast('Falha no Upload de Imagem') });
+    }).catch(() => { return this.alert.showToast('Falha no Upload de Imagem') });
   }
 
   // async takePhoto() {
