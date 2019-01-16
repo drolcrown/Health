@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, NavParams } from 'ionic-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { IonicStorageModule } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Camera } from '@ionic-native/camera';
@@ -32,6 +33,10 @@ import { AccessFirebaseProvider } from '../providers/access-firebase/access-fire
 import { AlertsProvider } from '../providers/alerts/alerts';
 import { AcountPage } from '../pages/acount/acount';
 import { TestPage } from '../pages/test/test';
+import { CacheProvider } from '../providers/cache/cache';
+import { DatePipe } from '@angular/common';
+import { CriptProvider } from '../providers/cript/cript';
+import { LoadsProvider } from '../providers/loads/loads';
 
 @NgModule({
   declarations: [
@@ -45,6 +50,7 @@ import { TestPage } from '../pages/test/test';
     StarRatingModule,
     AngularFirestoreModule,
     IonicModule.forRoot(MyApp), 
+    IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(environment.FirebaseConfig),
     AngularFireDatabaseModule, AngularFireAuthModule
   ],
@@ -60,6 +66,10 @@ import { TestPage } from '../pages/test/test';
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     AccessFirebaseProvider,
     AlertsProvider,
+    CacheProvider,
+    DatePipe,
+    CriptProvider,
+    LoadsProvider
   ]
 })
 export class AppModule { }

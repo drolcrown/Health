@@ -1,9 +1,11 @@
-<ion-navbar color="primary">
-  <ion-item color="primary" class="text-center">
-    <ion-icon *ngIf="_activeIcon" color="danger" name="heart"></ion-icon>
-    <b>{{_title}}</b>
-    <h5>{{_subtitle}}</h5>
-  </ion-item>
+<ion-navbar color="dark">
+  <ion-grid color="dark">
+    <ion-row class="box">
+      <ion-icon *ngIf="_activeIcon" color="danger" name="heart"></ion-icon>
+      <b class="ml-4">{{_title}}</b>
+    </ion-row>
+    <!-- <h5>{{_subtitle}}</h5> -->
+  </ion-grid>
 
   <button ion-button menuToggle>
     <ion-icon name="menu"></ion-icon>

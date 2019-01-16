@@ -4,50 +4,72 @@
 
 <ion-content>
   <ion-item class="mt-2 text-center">
-    <div *ngFor="let comp of perfis | async">
-      <ion-card *ngIf="comp.email == email">
-        <ion-card-content [ngStyle]="tamanho">
-          <ion-row justify-content-center align-items-center class="btn-wrap">
-            <div *ngIf="!comp.imagem">
-              <img *ngIf="!comp.profissao" [ngStyle]="img" src="../../assets/imgs/usuario.png" />
-              <img *ngIf="comp.profissao" [ngStyle]="img" src="../../assets/imgs/profissional.png" />
-            </div>
-            <img *ngIf="comp.imagem" [ngStyle]="img" src="{{comp.imagem}}" />
-            <!-- <button>Play</button> -->
-            <input  id="img" class="form-group" type="file" (change)="salvarArquivo(comp, $event)"/>
+    <ion-card *ngIf="perfil">
+      <ion-card-content [ngStyle]="tamanho">
+        <ion-grid [ngStyle]="box">
+          <ion-row class="btn-wrap">
+            <ion-col *ngIf="!perfil.imagem">
+              <label for="selecao-arquivo">
+                <img *ngIf="!perfil.profissao" [ngStyle]="img" src="../../assets/imgs/usuario.png" alt="Alterar Imagem"/>
+                <img *ngIf="perfil.profissao" [ngStyle]="img" src="../../assets/imgs/profissional.png" alt="Alterar Imagem"/>
+              </label>
+            </ion-col>
+            <ion-col>
+              <label for="selecao-arquivo">
+                <img *ngIf="perfil.imagem" [ngStyle]="img" src="{{perfil.imagem}}" alt="Alterar Imagem"/>
+              </label>
+            </ion-col>
           </ion-row>
-
-          <ion-card-title>
-            {{comp.nome}}
-          </ion-card-title>
-          <p *ngIf="comp.profissao">{{comp.profissao}}</p>
-          <p *ngIf="comp.crm">CRM: {{comp.crm}}</p>
-          <p class="mt-2">
-            Data de Nascimento: {{comp.data}}
-          </p>
-          <p class="mt-2">
-            {{comp.cidade}} - {{comp.estado}}
-          </p>
-          <p class="mt-2">
-            {{comp.email}}
-          </p>
-          <p class="mt-2">
-            Peso: {{comp.peso}}
-          </p>
-          <div class="mt-2 text-center">
+          <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
+          <ion-row>
             <ion-card-title>
-              Avaliação
+              {{perfil.nome}}
             </ion-card-title>
-            <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff" defaultColor="#f03d3d"
-              readonly="true" [rating]="comp.avaliacao">
-            </ionic3-star-rating>
-          </div>
-          <ion-row justify-content-center align-items-center class="mt-5">
-            <button ion-button class="btn btn-outline-primary ml-2" (click)="trocarSenha(comp)">Trocar Senha</button>
-            <button ion-button class="btn btn-outline-primary" (click)="excluirConta(comp)">Excluir Conta</button>
           </ion-row>
-        </ion-card-content>
-      </ion-card>
-    </div>
+          <ion-row>
+            <p *ngIf="perfil.profissao">{{perfil.profissao}}</p>
+          </ion-row>
+          <ion-row>
+            <p *ngIf="perfil.crm">CRM: {{perfil.crm}}</p>
+          </ion-row>
+          <ion-row>
+            <p class="mt-2">
+              Data de Nascimento: {{perfil.data}}
+            </p>
+          </ion-row>
+          <ion-row>
+            <p class="mt-2">
+              {{perfil.cidade}} - {{perfil.estado}}
+            </p>
+          </ion-row>
+          <ion-row>
+            <p class="mt-2">
+              {{perfil.email}}
+            </p>
+          </ion-row>
+          <ion-row>
+            <p class="mt-2">
+              Peso: {{perfil.peso}}
+            </p>
+          </ion-row>
+          <ion-row>
+            <ion-col col-5>
+              <ion-card-title>
+                Avaliação
+              </ion-card-title>
+            </ion-col>
+            <ion-col col-5>
+              <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff"
+                defaultColor="#f03d3d" readonly="true" [rating]="perfil.avaliacao">
+              </ionic3-star-rating>
+            </ion-col>
+          </ion-row>
+          <ion-row class="mt-5">
+            <button ion-button class="btn btn-outline-primary ml-2" (click)="trocarSenha(perfil)">Trocar Senha</button>
+            <button ion-button class="btn btn-outline-primary" (click)="excluirConta(perfil)">Excluir Conta</button>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
   </ion-item>
 </ion-content>

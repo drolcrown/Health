@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, NavParams } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -9,6 +9,7 @@ import { LoginPage } from '../pages/login/login';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AcountPage } from '../pages/acount/acount';
 import { TestPage } from '../pages/test/test';
+import { CacheProvider } from '../providers/cache/cache';
 
 @Component({
   templateUrl: 'app.html'
@@ -17,13 +18,14 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // rootPage: any = HomePage;
-  // rootPage: any = LoginPage;
-  rootPage: any = TestPage;
+  rootPage: any = LoginPage;
+  // rootPage: any = TestPage;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
   constructor(public platform: Platform, private authorization: AngularFireAuth,
-    public statusBar: StatusBar, public splashScreen: SplashScreen) {
+    public statusBar: StatusBar, public splashScreen: SplashScreen,
+    public cache: CacheProvider) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -50,8 +52,9 @@ export class MyApp {
   }
 
   openPage(page) {
-    if(page.title == 'Sair'){
+    if (page.title == 'Sair') {
       this.authorization.auth.signOut();
+      this.cache.clear();
     }
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario

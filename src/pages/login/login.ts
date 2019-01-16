@@ -4,6 +4,7 @@ import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormsComponent } from '../../components/forms/forms';
+import { CacheProvider } from '../../providers/cache/cache';
 
 @IonicPage()
 @Component({
@@ -11,10 +12,9 @@ import { FormsComponent } from '../../components/forms/forms';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  private mostrarSenha = false;
   private loginErrorString: string = '';
-  private imagem;
-  private contador = 0;
+  private imagem: any;
+  private contador: number = 0;
   private img = {
     height: '',
     width: '',
@@ -24,8 +24,9 @@ export class LoginPage {
     password: ''
   };
 
-  constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
-    private authorization: AngularFireAuth, private menuCtrl: MenuController) {
+  constructor(private navCtrl: NavController, private provider: AccessFirebaseProvider,
+    private authorization: AngularFireAuth, private menuCtrl: MenuController,
+    private providerCache: CacheProvider) {
     this.menuCtrl.enable(false);
     let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
     this.img.width = (tamanhoImg * 0.2) + 'px';
@@ -35,21 +36,24 @@ export class LoginPage {
   // Attempt to login in through our User service
   doLogin() {
     // this.navCtrl.setRoot(HomePage)
-    let login= this.provider.doLogin(this.account);
-    if(login){
+    let login = this.provider.doLogin(this.account);
+    if (login) {
       login.then((success) => {
         this.navCtrl.setRoot(HomePage);
+        this.provider.findObject('perfil', 'email', this.account.email).subscribe(resp => {
+          this.providerCache.save('perfil', resp);
+        });
       }).catch(error => {
         this.loginErrorString = 'Email ou Senha Incorretos';
       });
-    }else{
+    } else {
       this.loginErrorString = 'Preencha os Campos';
     }
   }
 
   admin() {
     this.contador++;
-    if(this.contador == 3){
+    if (this.contador == 3) {
       this.account.email = 'rafaelsoec@gmail.com';
       this.account.password = 'Da791356';
       this.doLogin();

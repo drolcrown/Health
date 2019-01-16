@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { AlertsProvider } from '../../providers/alerts/alerts';
 import { LoginPage } from '../login/login';
-import { Subject } from 'rxjs';
+import { CacheProvider } from '../../providers/cache/cache';
+import { HomePage } from '../home/home';
 
 @IonicPage()
 @Component({
@@ -12,43 +11,54 @@ import { Subject } from 'rxjs';
   templateUrl: 'acount.html',
 })
 export class AcountPage {
-  private perfis: Subject<any>;
-  private email;
+  private perfil: any;
+  private email: string;
+  private PATH = 'perfil';
   private tamanho = {
     width: (window.screen.width * 0.9) + 'px',
-    height: (window.screen.height * 0.9) + 'px',
+    height: (window.screen.height * 0.82) + 'px',
   };
+
+  private box = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+  }
+
   private img = {
     height: '',
     width: '',
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
-    public alerta: AlertsProvider,
-    public provider: AccessFirebaseProvider,
-    public authorization: AngularFireAuth) {
+  constructor(private navCtrl: NavController, private navParams: NavParams,
+    private provider: AccessFirebaseProvider, private providerCache: CacheProvider) {
     let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
     this.img.width = (window.screen.width * 0.6) + 'px';
     this.img.height = (tamanhoImg * 0.3) + 'px';
+    this.providerCache.get(this.PATH).then(response =>{
+      this.perfil = response;
+    });
   }
 
-  ionViewDidLoad() {
-    this.email = this.authorization.auth.currentUser.email;
-    this.perfis = this.provider.getAll('perfil/');
+  ionViewWillEnter() {
   }
 
   private salvarArquivo(perfil, e) {
-    this.alerta.newAlert().create({
+    this.provider.alert.newAlert().create({
       title: 'Alterar Imagem',
       message: 'Confirme para alterar a imagem',
       buttons: [
         {
           text: 'Alterar',
           handler: () => {
-            this.provider.upload(perfil, e);
-            this.perfis = this.provider.getAll('perfil/');
-            this.provider.updateDataBase('perfil/', this.perfis);
-            this.navCtrl.setRoot(AcountPage);
+            this.providerCache.remove(this.PATH);
+            let loading = this.provider.loadingCtrl.presentLoadingDefault();
+            this.provider.upload(perfil, e).subscribe( response => {
+              loading.dismiss();
+              this.providerCache.save(this.PATH, perfil);
+              this.navCtrl.setRoot(HomePage)
+            });
           },
         },
         {
@@ -60,12 +70,13 @@ export class AcountPage {
   }
 
   public trocarSenha(perfil) {
-    this.alerta.updatePassword(perfil);
+    this.provider.alert.updatePassword(perfil);
+    this.providerCache.save(this.PATH, perfil);
   }
 
 
   public excluirConta(perfil) {
-    this.alerta.newAlert().create({
+    this.provider.alert.newAlert().create({
       title: 'Excluir Conta',
       inputs: [
         {
@@ -81,13 +92,13 @@ export class AcountPage {
           cssClass: 'btn btn-primary',
           handler: (data) => {
             if (data.senha == perfil.senha) {
-              this.authorization.auth.currentUser.delete()
+              this.provider.authorization.auth.currentUser.delete()
                 .then(() => {
                   this.provider.remove('perfil/', perfil);
-                  this.alerta.showToast('Conta excluída com sucesso!!');
+                  this.provider.alert.showToast('Conta excluída com sucesso!!');
                   this.navCtrl.setRoot(LoginPage);
                 }).catch(() => {
-                  this.alerta.showToast('Falha na Exclusão de Conta!! Tente Novamente!!');
+                  this.provider.alert.showToast('Falha na Exclusão de Conta!! Tente Novamente!!');
                 });
             }
           }
@@ -101,5 +112,6 @@ export class AcountPage {
         },
       ],
     }).present();
+    this.providerCache.remove(this.PATH);
   }
 }

@@ -6,32 +6,16 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import * as firebase from 'firebase';
 import { AlertsProvider } from '../alerts/alerts';
-import { Subject } from 'rxjs';
+import { Subject} from 'rxjs';
+import { LoadsProvider } from '../loads/loads';
 
 @Injectable()
 export class AccessFirebaseProvider {
   private perfis = [];
 
-  constructor(public db: AngularFireDatabase, public fp: FirebaseApp,
-    public authorization: AngularFireAuth, public camera: Camera,
-    public alert: AlertsProvider) {
-  }
-
-  teste() {
-    // let databaseRef = firebase.database().ref().child('perfil');
-    // let databaseRef = firebase.database().ref().child('perfil');
-    // const querybaseRef = querybase.ref(databaseRef, ['name', 'age', 'location']);
-    // console.log(databaseRef.where(""))
-    //   let d = firebase.firestore();;
-    //   // Create a reference to the cities collection
-    // let citiesRef = d.collection("perfil");
-    // // Create a query against the collection.
-    // let query = citiesRef.where("state", "==", "CA");
-    // console.log(d)
-  }
-
-  updateDataBase(model, values) {
-    this.db.database.ref(model).update(values);
+  constructor(private db: AngularFireDatabase, private fp: FirebaseApp,
+    public authorization: AngularFireAuth, private camera: Camera,
+    public alert: AlertsProvider, public loadingCtrl: LoadsProvider) {
   }
 
   doLogin(account) {
@@ -48,20 +32,18 @@ export class AccessFirebaseProvider {
     };
   }
 
-  getAll(PATH): Subject<any> {
-    let data: Subject<any>;
+  getAll(PATH): any {
     this.db.list(PATH).valueChanges().subscribe(valor => {
-      data.next(valor);
       this.alert.presentLoading(3);
     });
-    return data;
+    return this.db.list(PATH).valueChanges();
   }
 
-  get(PATH: any, key: string) {
-    return this.getAll(PATH + '/' + key);
+  get(PATH: any, key: string): any {
+    return this.db.object(PATH + '/' + key).valueChanges();
   }
 
-  findObject(path: string, key: string, value: string): Subject<any> {
+  findObject(path: string, key: string, value: string): any {
     let newObject = new Subject();
     let ref = this.db.database.ref(path);
     ref.orderByChild(key).equalTo(value)
@@ -99,9 +81,8 @@ export class AccessFirebaseProvider {
 
   update(PATH: any, object: any) {
     this.getKey(PATH, object).subscribe(obj => {
-      if (obj.key) {
+      console.log(obj)
         this.db.list(PATH).update(obj.key, object);
-      }
     }, ((error) => {
       return this.alert.showToast('Falha na Operação!');
     }), (() => {
@@ -109,9 +90,12 @@ export class AccessFirebaseProvider {
     }));
   }
 
-  save(PATH: any, object: any) {
-    this.db.list(PATH).push(object);
-    return this.alert.showToast('Ação Concluída com Sucesso!');
+  save(PATH: any, object: any): any {
+    this.db.list(PATH).push(object)
+      .then((response) => {
+        this.alert.cadastroOkAlert();
+      })
+    // return this.alert.showToast('Ação Concluída com Sucesso!');
   }
 
   remove(PATH: any, usuario) {
@@ -124,21 +108,28 @@ export class AccessFirebaseProvider {
     }));
   }
 
-  upload(usuario, arq) {
+  upload(usuario, arq): Subject<any> {
+    let subject = new Subject();
     let PATH = '/Usuarios/' + usuario.email + '.jpg';
     let arquivo = arq.target.files[0];
     let reader = new FileReader();
     reader.onload = (e: any) => {
       let picture = storage().ref(PATH);
       picture.putString(e.target.result, 'data_url');
-      this.alert.presentLoading(3);
     };
     reader.readAsDataURL(arquivo);
     let urlDowload = storage().ref(PATH).getDownloadURL();
-    urlDowload.then(success => {
-      usuario.imagem = success;
-      this.save('perfil/', usuario);
-    }).catch(() => { return this.alert.showToast('Falha no Upload de Imagem') });
+    urlDowload
+      .then(success => {
+        usuario.imagem = success;
+        this.update('perfil/', usuario);
+        subject.next(success);
+      })
+      .catch((erro) => {
+        subject.next(erro);
+      });
+
+      return subject;
   }
 
   // async takePhoto() {

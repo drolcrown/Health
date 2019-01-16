@@ -20,7 +20,10 @@ export class AtendimentoPage {
     public provider: AccessFirebaseProvider) {
     this.name = navParams.get('name');
     this.popularSituacoes();
-    this.profissionais = this.provider.getAll('profissional');
+    this.provider.getAll('profissional').subscribe( r =>{
+      console.log(r)
+    })
+    this.profissionais = this.provider.getAll('profissional')
   }
 
   ionViewDidLoad() {

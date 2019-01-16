@@ -1,37 +1,23 @@
-<ion-header>
+<!-- <ion-header>
   <ion-navbar color="primary" class="text-center">
     <ion-title>Login</ion-title>
   </ion-navbar>
-</ion-header>
+</ion-header> -->
 
-<ion-content>
-  <ion-list padding>
-    <ion-item class="mt-5 mb-5 text-center">
-      <img [ngStyle]="img" src="../../assets/imgs/usuario.png" (click)="admin()"/>
-    </ion-item>
-    <ion-item class="mt-5">
-      <ion-label class="text-primary">Email</ion-label>
-      <ion-input autocomplete="on" type="email" [(ngModel)]="account.email" name="email" placeholder="example@email.com"></ion-input>
-    </ion-item>
-
-    <ion-item class="mt-5">
-      <ion-label class="text-primary">Senha</ion-label>
-      <ion-input *ngIf="!mostrarSenha" type="password" [(ngModel)]="account.password" name="password" placeholder="*******">
+<ion-content class="bg-login">
+  <ion-grid padding class="box-login">
+    <div class="container-fluid">
+      <img src="../../assets/imgs/respect.svg" [ngStyle]="img">
+      <h1 (click)="admin()" class="text-white mb-5">Health</h1>
+      <ion-input block autocomplete="on" type="text" [(ngModel)]="account.email" name="email" placeholder="Email">
       </ion-input>
-      <ion-input *ngIf="mostrarSenha" type="text" [(ngModel)]="account.password" name="password" placeholder="*******">
+      <ion-input type="password" [(ngModel)]="account.password" name="password" placeholder="Senha">
       </ion-input>
-      <ion-toggle [(ngModel)]="mostrarSenha" checked="false"></ion-toggle>
-    </ion-item>
-    <small class="float-right text-primary">Mostrar Senha</small>
-    <ion-item *ngIf="loginErrorString" class="form-group mb-5" text-center>
-      <small class="text-danger">
-        {{loginErrorString}}
-      </small>
-    </ion-item>
 
-    <button ion-button class="btn btn-lg btn-outline-primary mt-5" block (click)="doLogin()">Log-in</button>
-    <button ion-button class="btn btn-lg btn-outline-primary" block (click)="registrar()">
-      Registrar-se
-    </button>
-  </ion-list>
+      <button ion-button color="dark" block (click)="doLogin()" class="borda-circular">Log-in</button>
+    </div>
+    <a class="text-white footer" (click)="registrar()">
+      <u>Ainda não tem uma conta? Registre-se</u>
+    </a>
+  </ion-grid>
 </ion-content>

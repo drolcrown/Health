@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { AlertsProvider } from '../../providers/alerts/alerts';
+import { CriptProvider } from '../../providers/cript/cript';
 
 /**
  * Generated class for the TestPage page.
@@ -31,7 +32,9 @@ export class TestPage {
     profissao: ""
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: AccessFirebaseProvider, public alert: AlertsProvider) {
+  constructor(public navCtrl: NavController, private storage: Storage, 
+    public service: AccessFirebaseProvider, public alert: AlertsProvider,
+    public cript: CriptProvider) {
   }
 
   private pages = [
@@ -41,27 +44,19 @@ export class TestPage {
     { name: 'Pets', image: "../../assets/imgs/pets3.jpg", icon: 'paw' },
   ];
 
-  private buttons = {
-    display: 'flex',
-    height:  window.screen.height * 0.42 + 'px',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
+    private buttons = {
+      display: 'flex',
+      height:  window.screen.height * 0.42 + 'px',
+      alignItems: 'center',
+      justifyContent: 'center',
+      alignSelf: 'center',
     // border: '1px solid blue'
   }
 
 
   ionViewWillEnter() {
-    this.buttons.height = window.screen.height * 0.42 + 'px';
-    // console.log(this.service.getAll("perfil"));
-
-    // this.service.getAll("perfil").subscribe(resp => console.log(resp))
-    // this.service.get("perfil", "-LPPPS3r3ResCBlMkJvl").subscribe(resp => {
-    //   console.log(resp)
-    //   this.service.getKey("perfil", resp).subscribe(outro => console.log(outro));
-    // })
-
-    // this.save("perfil", this.perfil);
+    // this.buttons.height = window.screen.height * 0.42 + 'px';
+    this.cript.encriptar();
   }
 
   save(path, objeto: any) {

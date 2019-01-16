@@ -1,3 +1,36 @@
 page-login {
-    // color: rgb(240, 61, 61);
+    .bg-login{
+        background-image: linear-gradient( to  bottom right, rgb(169, 197, 233),  rgb(47, 146, 163));
+        // background-image: linear-gradient( to  bottom right, rgb(102, 206, 107),  rgb(41, 242, 192));
+    }
+    
+    .box-login{
+        position: fixed;
+        top:25%;
+        bottom: 25%;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
+        text-align: center;
+      }
+    
+      ion-input {
+        ::placeholder{
+        text-align: center;
+        }
+        // color: white;
+        border-radius: 20px 20px;
+        background: rgb(179, 204, 236);
+        margin-top: 5%;
+      }
+
+      .borda-circular{
+        border-radius: 20px 20px;
+        margin-top: 15%;
+      }
+
+      .footer{
+          position: fixed;
+          bottom:0;
+      }
 }

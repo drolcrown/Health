@@ -1,7 +1,11 @@
-header {
-
-}
-
 b, p{
-    color: black;
+    color: white;
 }
+
+.box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+  }

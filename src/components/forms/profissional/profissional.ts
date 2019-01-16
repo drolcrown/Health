@@ -6,6 +6,7 @@ import { UF } from '../../../models/uf';
 import { LoginPage } from '../../../pages/login/login';
 import { NavController } from 'ionic-angular';
 import { AlertsProvider } from '../../../providers/alerts/alerts';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'profissional-form',
@@ -26,7 +27,7 @@ export class ProfissionalComponent {
   }
 
   constructor(private builder: FormBuilder, private navCtrl: NavController,
-    private alerta: AlertsProvider,
+    private alerta: AlertsProvider, private datePipe: DatePipe,
     private provider: AccessFirebaseProvider, private authorization: AngularFireAuth) {
     this.form = this.builder.group({
       avaliacao: [5],
@@ -47,10 +48,18 @@ export class ProfissionalComponent {
   private registrar() {
     if (this.form.valid) {
       if (this.form.controls.senha.value === this.form.controls.confirmarSenha.value) {
-        this.authorization.auth.createUserWithEmailAndPassword(this.form.controls.email.value, this.form.controls.senha.value);
-        this.alerta.cadastroOkAlert();
-        this.provider.save('perfil/', this.form.value);
-        this.goPage();
+        this.authorization.auth.createUserWithEmailAndPassword(this.form.controls.email.value,
+          this.form.controls.senha.value)
+          .then(resposta => {
+            let objeto = this.form.value;
+            // objeto.senha = sha256(this.form.controls.senha.value);
+            objeto.confirmarSenha = objeto.senha;
+            objeto.data = this.datePipe.transform(this.form.controls.data.value, 'dd/MM/yyyy');
+            this.provider.save('perfil/', objeto);
+            this.goPage();
+          }).catch(error => {
+            this.provider.alert.showToast('Email em uso.')
+          });
       } else {
         this.senhaInvalida = true;
       }
