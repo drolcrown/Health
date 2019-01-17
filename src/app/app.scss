@@ -28,3 +28,7 @@
 
 @import "node_modules/bootstrap/scss/bootstrap.scss";
 
+.bg-login{
+    background-image: linear-gradient( to  bottom right, rgb(179, 233, 169),  rgb(47, 146, 163));
+    // background-image: linear-gradient( to  bottom right, rgb(102, 206, 107),  rgb(41, 242, 192));
+}

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule, NavParams } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicStorageModule } from '@ionic/storage';
@@ -35,19 +35,19 @@ import { AcountPage } from '../pages/acount/acount';
 import { TestPage } from '../pages/test/test';
 import { CacheProvider } from '../providers/cache/cache';
 import { DatePipe } from '@angular/common';
-import { CriptProvider } from '../providers/cript/cript';
 import { LoadsProvider } from '../providers/loads/loads';
+import { BrMaskerModule } from 'brmasker-ionic-3';
 
 @NgModule({
   declarations: [
     MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, ProfissionalComponent,
-
+    FormsComponent, ProfissionalComponent
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
     StarRatingModule,
+    BrMaskerModule,
     AngularFirestoreModule,
     IonicModule.forRoot(MyApp), 
     IonicStorageModule.forRoot(),
@@ -58,7 +58,7 @@ import { LoadsProvider } from '../providers/loads/loads';
   entryComponents: [
     MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, ProfissionalComponent,
+    FormsComponent, ProfissionalComponent, 
   ],
   providers: [
     StatusBar,
@@ -68,7 +68,6 @@ import { LoadsProvider } from '../providers/loads/loads';
     AlertsProvider,
     CacheProvider,
     DatePipe,
-    CriptProvider,
     LoadsProvider
   ]
 })

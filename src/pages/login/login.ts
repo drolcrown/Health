@@ -35,11 +35,12 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
-    // this.navCtrl.setRoot(HomePage)
-    let login = this.provider.doLogin(this.account);
-    if (login) {
+    if (this.account.email != '' && this.account.password != '') {
+      let login = this.provider.doLogin(this.account);
       login.then((success) => {
-        this.navCtrl.setRoot(HomePage);
+        this.loginErrorString = '';
+        // this.navCtrl.setRoot(HomePage);
+        this.navCtrl.push(HomePage);
         this.provider.findObject('perfil', 'email', this.account.email).subscribe(resp => {
           this.providerCache.save('perfil', resp);
         });
@@ -55,13 +56,14 @@ export class LoginPage {
     this.contador++;
     if (this.contador == 3) {
       this.account.email = 'rafaelsoec@gmail.com';
-      this.account.password = 'Da791356';
+      this.account.password = '123456';
       this.doLogin();
       this.contador = 0;
     }
   }
 
   registrar() {
-    this.navCtrl.setRoot(FormsComponent)
+    // this.navCtrl.setRoot(FormsComponent);
+    this.navCtrl.push(FormsComponent);
   }
 }

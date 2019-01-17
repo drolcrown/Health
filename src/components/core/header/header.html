@@ -1,13 +1,20 @@
-<ion-navbar color="dark">
+<ion-navbar hideBackButton color="dark">
   <ion-grid color="dark">
-    <ion-row class="box">
-      <ion-icon *ngIf="_activeIcon" color="danger" name="heart"></ion-icon>
-      <b class="ml-4">{{_title}}</b>
+    <ion-row>
+      <ion-col>
+        <button ion-button color="dark" class="border border-light">
+          <ion-icon name="menu" color="light"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col class="box">
+        <ion-icon *ngIf="_activeIcon" color="danger" name="heart"></ion-icon>
+        <b class="ml-4">{{_title}}</b>
+      </ion-col>
     </ion-row>
     <!-- <h5>{{_subtitle}}</h5> -->
   </ion-grid>
-
-  <button ion-button menuToggle>
-    <ion-icon name="menu"></ion-icon>
-  </button>
+  <!-- 
+  <button right ion-button menuToggle>
+    <ion-icon right name="menu" color="light"></ion-icon>
+  </button> -->
 </ion-navbar>

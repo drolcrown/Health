@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { MenuController } from 'ionic-angular';
 
 @Component({
   selector: 'header',
@@ -24,7 +25,11 @@ export class HeaderComponent {
     }
   }
 
-  constructor() {
+  constructor(private menuCtrl: MenuController) {
   }
 
+  toogle() {
+    this.menuCtrl.toggle();
+  }
+ 
 }

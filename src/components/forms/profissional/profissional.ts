@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { AccessFirebaseProvider } from '../../../providers/access-firebase/access-firebase';
 import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { UF } from '../../../models/uf';
+import { UFs } from '../../../models/uf';
 import { LoginPage } from '../../../pages/login/login';
 import { NavController } from 'ionic-angular';
 import { AlertsProvider } from '../../../providers/alerts/alerts';
@@ -16,10 +16,11 @@ export class ProfissionalComponent {
   private form: FormGroup;
   private _usuario;
   private arquivo;
-  private _estados = new UF().estados;
+  private _estados = UFs;
   private _msg = '';
   private senhaInvalida = false;
-  private formInvalido = false;
+  private emailInvalido = false;
+  private formInvalido = "";
 
   @Input()
   private set usuario(value) {
@@ -33,42 +34,47 @@ export class ProfissionalComponent {
       avaliacao: [5],
       nome: ['', Validators.required],
       data: ['', Validators.required],
-      peso: [''],
+      peso: ['', (this._usuario == 'paciente' ? Validators.required : null)],
+      cpf: ['', Validators.required],
+      telefone: ['', Validators.required],
       imagem: [''],
       cidade: ['', Validators.required],
       estado: ['', Validators.required],
-      profissao: [''],
-      cr: [''],
+      profissao: ['', (this._usuario == 'profissional' ? Validators.required : null)],
+      cr: ['', (this._usuario == 'profissional' ? Validators.required : null)],
       email: ['', Validators.required],
       senha: ['', Validators.required],
       confirmarSenha: ['', Validators.required],
     });
+
   }
 
   private registrar() {
     if (this.form.valid) {
-      if (this.form.controls.senha.value === this.form.controls.confirmarSenha.value) {
-        this.authorization.auth.createUserWithEmailAndPassword(this.form.controls.email.value,
-          this.form.controls.senha.value)
+      let objeto = this.form.value;
+      objeto.senha = this.provider.encripty(this.form.controls.senha.value);
+      objeto.confirmarSenha = this.provider.encripty(this.form.controls.confirmarSenha.value);
+      if (objeto.confirmarSenha === objeto.senha) {
+        this.authorization.auth.createUserWithEmailAndPassword(objeto.email, objeto.senha)
           .then(resposta => {
-            let objeto = this.form.value;
-            // objeto.senha = sha256(this.form.controls.senha.value);
-            objeto.confirmarSenha = objeto.senha;
             objeto.data = this.datePipe.transform(this.form.controls.data.value, 'dd/MM/yyyy');
-            this.provider.save('perfil/', objeto);
-            this.goPage();
+            this.provider.save('perfil/', objeto).subscribe(resp => {
+              this.goPage();
+            }), (error => {
+              this.alerta.showToast('Falha no Cadastro!! Tente Novamente')
+            });
           }).catch(error => {
-            this.provider.alert.showToast('Email em uso.')
+            this.formInvalido = "Email em Uso!!";
           });
       } else {
-        this.senhaInvalida = true;
+        this.formInvalido = "Senha Diferentes!!";
       }
     } else {
-      this.formInvalido = true;
+      this.formInvalido = "Preencha Todos os Campos!!";
     }
   }
 
   private goPage() {
-    this.navCtrl.setRoot(LoginPage)
+    this.navCtrl.push(LoginPage)
   }
 }

@@ -15,8 +15,8 @@ export class AcountPage {
   private email: string;
   private PATH = 'perfil';
   private tamanho = {
-    width: (window.screen.width * 0.9) + 'px',
-    height: (window.screen.height * 0.82) + 'px',
+    width: (window.screen.width * 0.95) + 'px',
+    height: (window.screen.height * 0.85) + 'px',
   };
 
   private box = {
@@ -36,7 +36,8 @@ export class AcountPage {
     let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
     this.img.width = (window.screen.width * 0.6) + 'px';
     this.img.height = (tamanhoImg * 0.3) + 'px';
-    this.providerCache.get(this.PATH).then(response =>{
+    this.provider.alert.presentLoading(2);
+    this.providerCache.get(this.PATH).then(response => {
       this.perfil = response;
     });
   }
@@ -54,11 +55,17 @@ export class AcountPage {
           handler: () => {
             this.providerCache.remove(this.PATH);
             let loading = this.provider.loadingCtrl.presentLoadingDefault();
-            this.provider.upload(perfil, e).subscribe( response => {
-              loading.dismiss();
-              this.providerCache.save(this.PATH, perfil);
-              this.navCtrl.setRoot(HomePage)
-            });
+            this.provider.upload(perfil, e)
+              .then(response => {
+                perfil.imagem = response;
+                this.provider.updateParams(this.PATH, 'email', perfil.email, perfil);
+                this.providerCache.save(this.PATH, perfil);
+                loading.dismiss();
+                this.navCtrl.push(HomePage);
+              })
+              .catch((erro) => {
+                this.provider.alert.showToast('Falha na Alteração da Imagem!!');
+              });
           },
         },
         {
@@ -70,48 +77,15 @@ export class AcountPage {
   }
 
   public trocarSenha(perfil) {
-    this.provider.alert.updatePassword(perfil);
-    this.providerCache.save(this.PATH, perfil);
+    this.providerCache.remove(this.PATH);
+    perfil = this.provider.updatePassword(perfil);
+    this.providerCache.save('perfil', perfil);
   }
 
 
   public excluirConta(perfil) {
-    this.provider.alert.newAlert().create({
-      title: 'Excluir Conta',
-      inputs: [
-        {
-          placeholder: 'Digite a senha',
-          type: 'password',
-          min: '8',
-          name: 'senha',
-        },
-      ],
-      buttons: [
-        {
-          text: 'Excluir',
-          cssClass: 'btn btn-primary',
-          handler: (data) => {
-            if (data.senha == perfil.senha) {
-              this.provider.authorization.auth.currentUser.delete()
-                .then(() => {
-                  this.provider.remove('perfil/', perfil);
-                  this.provider.alert.showToast('Conta excluída com sucesso!!');
-                  this.navCtrl.setRoot(LoginPage);
-                }).catch(() => {
-                  this.provider.alert.showToast('Falha na Exclusão de Conta!! Tente Novamente!!');
-                });
-            }
-          }
-        },
-        {
-          text: 'Cancelar',
-          cssClass: 'btn btn-primary',
-          role: 'cancel',
-          handler: () => {
-          },
-        },
-      ],
-    }).present();
-    this.providerCache.remove(this.PATH);
+    this.provider.excluirConta(perfil);
+    this.providerCache.clear();
+    this.navCtrl.push(LoginPage);
   }
 }

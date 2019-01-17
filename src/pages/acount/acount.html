@@ -3,20 +3,20 @@
 </ion-header>
 
 <ion-content>
-  <ion-item class="mt-2 text-center">
+  <ion-grid class="text-center">
     <ion-card *ngIf="perfil">
       <ion-card-content [ngStyle]="tamanho">
         <ion-grid [ngStyle]="box">
           <ion-row class="btn-wrap">
             <ion-col *ngIf="!perfil.imagem">
               <label for="selecao-arquivo">
-                <img *ngIf="!perfil.profissao" [ngStyle]="img" src="../../assets/imgs/usuario.png" alt="Alterar Imagem"/>
-                <img *ngIf="perfil.profissao" [ngStyle]="img" src="../../assets/imgs/profissional.png" alt="Alterar Imagem"/>
+                <img *ngIf="!perfil.profissao" [ngStyle]="img" src="../../assets/imgs/usuario.png" alt="Alterar Imagem" />
+                <img *ngIf="perfil.profissao" [ngStyle]="img" src="../../assets/imgs/profissional.png" alt="Alterar Imagem" />
               </label>
             </ion-col>
-            <ion-col>
+            <ion-col *ngIf="perfil.imagem" >
               <label for="selecao-arquivo">
-                <img *ngIf="perfil.imagem" [ngStyle]="img" src="{{perfil.imagem}}" alt="Alterar Imagem"/>
+                <img [ngStyle]="img" src="{{perfil.imagem}}" alt="Alterar Imagem" />
               </label>
             </ion-col>
           </ion-row>
@@ -53,23 +53,21 @@
             </p>
           </ion-row>
           <ion-row>
-            <ion-col col-5>
-              <ion-card-title>
-                Avaliação
-              </ion-card-title>
-            </ion-col>
-            <ion-col col-5>
-              <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff"
-                defaultColor="#f03d3d" readonly="true" [rating]="perfil.avaliacao">
-              </ionic3-star-rating>
-            </ion-col>
+            <ion-card-title>
+              Avaliação
+            </ion-card-title>
           </ion-row>
-          <ion-row class="mt-5">
+          <ion-row>
+            <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff" defaultColor="#f03d3d"
+              readonly="true" [rating]="perfil.avaliacao">
+            </ionic3-star-rating>
+          </ion-row>
+          <ion-row class="margin">
             <button ion-button class="btn btn-outline-primary ml-2" (click)="trocarSenha(perfil)">Trocar Senha</button>
             <button ion-button class="btn btn-outline-primary" (click)="excluirConta(perfil)">Excluir Conta</button>
           </ion-row>
         </ion-grid>
       </ion-card-content>
     </ion-card>
-  </ion-item>
+  </ion-grid>
 </ion-content>

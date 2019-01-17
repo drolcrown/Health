@@ -26,11 +26,12 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
-    this.buttons.height = window.screen.height * 0.4 + 'px';
+    this.buttons.height = window.screen.height * 0.38 + 'px';
   }
 
   goPage(nome) {
-    this.navCtrl.setRoot(AtendimentoPage, { name: nome })
+    this.navCtrl.setRoot(AtendimentoPage, { name: nome });
+    // this.navCtrl.push(AtendimentoPage);
   }
 
 }

@@ -1,5 +1,5 @@
-<form *ngIf="form" [formGroup]="form">
-  <ion-list class=" mt-3">
+<form *ngIf="form" [formGroup]="form" class="container-fluid mt-3 form">
+  <div class="container">
     <ion-item class="form-group">
       <ion-label class="text-primary">Nome:</ion-label>
       <ion-input formControlName="nome" type="text" autocomplete="on" placeholder="Digite seu nome">
@@ -7,19 +7,22 @@
     </ion-item>
     <ion-item class="form-group">
       <ion-label class="text-primary">Data de Nascimento:</ion-label>
-      <ion-datetime min="1940" max="2080-10-31" displayFormat="DD/MM/YYYY" doneText="Confirmar" cancelText="Cancelar"
-        formControlName="data"></ion-datetime>
-      <!-- <ion-input formControlName="data" type="date" max="9999-12-12">
-      </ion-input> -->
-    </ion-item>
-    <!-- <ion-item class="form-group">
-      <ion-label class="text-primary">Imagem:</ion-label>
-      <ion-input formControlName="imagem" type="file" (change)="salvarArquivo($event)">
+      <!-- <ion-datetime min="1940" max="2080-10-31" displayFormat="DD/MM/YYYY" doneText="Confirmar" cancelText="Cancelar"
+        formControlName="data"></ion-datetime> -->
+      <ion-input formControlName="data" type="date" max="9999-12-12">
       </ion-input>
-    </ion-item> -->
+    </ion-item>
+    <ion-item>
+        <ion-label class="text-primary">Telefone:</ion-label>
+        <ion-input type="text" formControlName="telefone" placeholder="(xx) xxxxx-xxxx" [brmasker]="{phone: true}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label class="text-primary">CPF:</ion-label>
+      <ion-input type="text" formControlName="cpf" placeholder="000.000.000-00" [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+    </ion-item>
     <ion-item class="form-group" *ngIf="_usuario == 'paciente'">
       <ion-label class="text-primary">Peso:</ion-label>
-      <ion-input formControlName="peso" type="number" max-length="3" autocomplete="on" placeholder="78"></ion-input>
+      <ion-input formControlName="peso" type="text" [brmasker]="{money: true, decimal: 1}" autocomplete="on" placeholder="78.5"></ion-input>
     </ion-item>
     <ion-item class="form-group">
       <ion-label class="text-primary">Município:</ion-label>
@@ -28,7 +31,7 @@
     <ion-item class="form-group">
       <ion-label class="text-primary">Estado</ion-label>
       <ion-select formControlName="estado">
-        <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.sigla}}</ion-option>
+        <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item class="form-group" *ngIf="_usuario == 'profissional'">
@@ -51,19 +54,19 @@
       <ion-label class="text-primary">Confirmar Senha:</ion-label>
       <ion-input formControlName="confirmarSenha" max-lenght="8" type="password" autocomplete="off" placeholder="*****"></ion-input>
     </ion-item>
-    <ion-item *ngIf="senhaInvalida" class="form-group" text-center>
+    <!-- <ion-item *ngIf="senhaInvalida" class="form-group" text-center>
       <small class="text-danger">
         Senhas diferentes
       </small>
-    </ion-item>
-    <ion-item *ngIf="formInvalido" class="form-group text-center">
+    </ion-item> -->
+    <ion-item *ngIf="formInvalido != ''" class="form-group text-center">
       <small class="text-danger">
-        Preencha os Campos Obrigatórios!!
+        {{formInvalido}}
       </small>
     </ion-item>
-  </ion-list>
-  <div class="text-center mt-5 mb-3">
-    <button type="button" class="btn btn-primary mr-2" (click)="registrar()">Cadastrar-se</button>
-    <button type="button" class="btn btn-primary" (click)="goPage()">Sair</button>
+  </div>
+  <div class="text-center mt-5">
+    <button ion-button class="btn btn-primary mr-2" (click)="registrar()">Cadastrar-se</button>
+    <button ion-button class="btn btn-primary" (click)="goPage()">Sair</button>
   </div>
 </form>

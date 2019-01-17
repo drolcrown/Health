@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, NavParams } from 'ionic-angular';
+import { Nav, Platform, NavParams, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -10,6 +10,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AcountPage } from '../pages/acount/acount';
 import { TestPage } from '../pages/test/test';
 import { CacheProvider } from '../providers/cache/cache';
+import { FormsComponent } from '../components/forms/forms';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,6 +21,7 @@ export class MyApp {
   // rootPage: any = HomePage;
   rootPage: any = LoginPage;
   // rootPage: any = TestPage;
+  // rootPage: any = FormsComponent;
 
   pages: Array<{ title: string, component: any }>;
 
@@ -40,6 +42,9 @@ export class MyApp {
   }
 
   initializeApp() {
+    this.platform.registerBackButtonAction(() => {
+      this.nav.pop();
+    });
     this.platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -58,6 +63,7 @@ export class MyApp {
     }
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+    this.nav.push(page.component);
+    // this.nav.setRoot(page.component);
   }
 }
