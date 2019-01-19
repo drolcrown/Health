@@ -26,10 +26,11 @@ export class HeaderComponent {
   }
 
   constructor(private menuCtrl: MenuController) {
+    this.menuCtrl.enable(false);
   }
 
-  toogle() {
-    this.menuCtrl.toggle();
+  enableMenu() {
+    this.menuCtrl.enable(true);
   }
  
 }

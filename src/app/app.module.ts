@@ -37,12 +37,13 @@ import { CacheProvider } from '../providers/cache/cache';
 import { DatePipe } from '@angular/common';
 import { LoadsProvider } from '../providers/loads/loads';
 import { BrMaskerModule } from 'brmasker-ionic-3';
+import { ListComponent } from '../components/list/list';
 
 @NgModule({
   declarations: [
     MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, ProfissionalComponent
+    FormsComponent, ProfissionalComponent, ListComponent
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
@@ -58,7 +59,7 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
   entryComponents: [
     MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, ProfissionalComponent, 
+    FormsComponent, ProfissionalComponent, ListComponent
   ],
   providers: [
     StatusBar,

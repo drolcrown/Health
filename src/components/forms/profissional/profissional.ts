@@ -75,6 +75,6 @@ export class ProfissionalComponent {
   }
 
   private goPage() {
-    this.navCtrl.push(LoginPage)
+    this.navCtrl.push(LoginPage);
   }
 }

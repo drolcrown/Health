@@ -7,21 +7,18 @@ import { storage } from 'firebase';
 import * as firebase from 'firebase';
 import { AlertsProvider } from '../alerts/alerts';
 import { Subject } from 'rxjs';
+import { timeout } from 'rxjs/operators';
 import { LoadsProvider } from '../loads/loads';
-// import { Cripty } from '../../utils/Cripty';
 import { sha256, sha224 } from 'js-sha256';
 // import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class AccessFirebaseProvider {
   private perfis = [];
-  // private cripty: Cripty = new Cripty();
-
   constructor(private db: AngularFireDatabase, private fp: FirebaseApp,
     public authorization: AngularFireAuth, private camera: Camera,
     public alert: AlertsProvider, public loadingCtrl: LoadsProvider) {
   }
-
 
   encripty(key: string) {
     let hash = sha256.create();
@@ -29,22 +26,23 @@ export class AccessFirebaseProvider {
     return hash.hex();
   }
 
-  doLogin(account) {
+  async doLogin(account) {
     let loading = this.loadingCtrl.presentLoadingDefault();
     let password = this.encripty(account.password);
-    this.authorization.auth.signInWithEmailAndPassword(account.email, password)
+    setTimeout(() => { loading.dismiss(); }, 10000);
+    await this.authorization.auth.signInWithEmailAndPassword(account.email, password)
       .then((resp) => {
         loading.dismiss();
       }).catch(error => {
         loading.dismiss();
       });
-
     return this.authorization.auth.signInWithEmailAndPassword(account.email, password);
   }
 
   getAll(PATH): any {
+    let loading = this.loadingCtrl.presentLoadingDefault();
     this.db.list(PATH).valueChanges().subscribe(valor => {
-      this.alert.presentLoading(3);
+      loading.dismiss();
     });
     return this.db.list(PATH).valueChanges();
   }

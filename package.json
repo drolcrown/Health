@@ -69,9 +69,7 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-camera": {},
-      "cordova-plugin-aes256-encryption": {},
-      "cordova-safe": {}
+      "cordova-plugin-camera": {}
     },
     "platforms": [
       "android",

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 import { AtendimentoPage } from '../atendimento/atendimento';
+import { CacheProvider } from '../../providers/cache/cache';
 
 @Component({
   selector: 'page-home',
@@ -15,23 +16,22 @@ export class HomePage {
   ];
   private buttons = {
     display: 'flex',
-    height:  window.screen.height * 0.40 + 'px',
+    height: window.screen.height * 0.40 + 'px',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
   }
 
-  constructor(public navCtrl: NavController, private menuCtrl: MenuController) {
-    this.menuCtrl.enable(true);
-  }
-
-  ionViewWillEnter() {
-    this.buttons.height = window.screen.height * 0.38 + 'px';
+  constructor(public navCtrl: NavController, private menuCtrl: MenuController,
+    private providerCache: CacheProvider) {
+      this.menuCtrl.enable(false);
+      this.buttons.height = window.screen.height * 0.38 + 'px';
   }
 
   goPage(nome) {
-    this.navCtrl.setRoot(AtendimentoPage, { name: nome });
-    // this.navCtrl.push(AtendimentoPage);
+    // this.navCtrl.push(ListComponent, { name: nome });
+    this.providerCache.save("page", "AtendimentoPage");
+    this.navCtrl.push(AtendimentoPage, { name: nome });
   }
 
 }

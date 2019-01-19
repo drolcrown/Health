@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, MenuController, Platform } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormsComponent } from '../../components/forms/forms';
 import { CacheProvider } from '../../providers/cache/cache';
+import { AlertsProvider } from '../../providers/alerts/alerts';
 
 @IonicPage()
 @Component({
@@ -26,7 +27,7 @@ export class LoginPage {
 
   constructor(private navCtrl: NavController, private provider: AccessFirebaseProvider,
     private authorization: AngularFireAuth, private menuCtrl: MenuController,
-    private providerCache: CacheProvider) {
+    private providerCache: CacheProvider, private platform: Platform) {
     this.menuCtrl.enable(false);
     let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
     this.img.width = (tamanhoImg * 0.2) + 'px';
@@ -35,25 +36,28 @@ export class LoginPage {
 
   // Attempt to login in through our User service
   doLogin() {
+    this.loginErrorString = '';
     if (this.account.email != '' && this.account.password != '') {
       let login = this.provider.doLogin(this.account);
-      login.then((success) => {
-        this.loginErrorString = '';
-        // this.navCtrl.setRoot(HomePage);
-        this.navCtrl.push(HomePage);
-        this.provider.findObject('perfil', 'email', this.account.email).subscribe(resp => {
-          this.providerCache.save('perfil', resp);
+      if (login) {
+        login.then((success) => {
+          this.providerCache.save('page', "HomePage");
+          this.navCtrl.push(HomePage);
+          this.provider.findObject('perfil', 'email', this.account.email).subscribe(resp => {
+            this.providerCache.save('perfil', resp);
+          });
+        }).catch(error => {
+          this.loginErrorString = this.provider.alert.loginAlert(error.code);
         });
-      }).catch(error => {
-        this.loginErrorString = 'Email ou Senha Incorretos';
-      });
+      }
     } else {
-      this.loginErrorString = 'Preencha os Campos';
+      this.loginErrorString = 'Preencha Todos Campos';
     }
   }
 
   admin() {
     this.contador++;
+    this.loginErrorString = '';
     if (this.contador == 3) {
       this.account.email = 'rafaelsoec@gmail.com';
       this.account.password = '123456';
@@ -63,7 +67,7 @@ export class LoginPage {
   }
 
   registrar() {
-    // this.navCtrl.setRoot(FormsComponent);
+    this.providerCache.save('page',"FormsComponent");
     this.navCtrl.push(FormsComponent);
   }
 }

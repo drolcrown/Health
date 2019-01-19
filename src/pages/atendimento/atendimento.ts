@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { SituacaoClinica } from '../../Models/situacaoClinica';
-import { AlertsProvider } from '../../providers/alerts/alerts';
 
 @IonicPage()
 @Component({
@@ -12,15 +11,17 @@ import { AlertsProvider } from '../../providers/alerts/alerts';
 export class AtendimentoPage {
   private name: string;
   private select = '';
-  private sit = new SituacaoClinica();
-  private options = [];
+  private sit = SituacaoClinica;
+  private options: any;
   private profissionais;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public provider: AccessFirebaseProvider) {
     this.name = navParams.get('name');
     this.popularSituacoes();
-    this.profissionais = this.provider.getAll('profissional')
+    // this.provider.getAll('profissional').subscribe(resp => {
+    //   this.profissionais = resp;
+    // });
   }
 
   ionViewDidLoad() {
@@ -38,7 +39,10 @@ export class AtendimentoPage {
         this.options = this.sit.estetica;
         break;
       case 'Pets':
-        this.options = this.sit.pets;
+        // this.options = this.sit.pets;
+        this.provider.getAll('profissional').subscribe(resp => {
+          this.options = resp;
+        });
         break;
     }
   }

@@ -15,6 +15,21 @@ export class AlertsProvider {
     private toastCtrl: ToastController) { 
     }
 
+  loginAlert(code){
+    if(code.indexOf('auth/invalid-email') >= 0){
+      return 'Email Invalido';
+    }
+    else if(code.indexOf('auth/user-not-found') >= 0){
+      return 'Usuario Não encontrado';
+    }
+    else if(code.indexOf('auth/wrong-password') >= 0){
+      return 'Email ou Senha Incorretos';
+    }
+    else if(code.indexOf('auth/network-request-failed') >=  0){
+      return 'Falha no Login!! Tente Novamente';
+    }
+  }
+
 
   newAlert() {
     return this.alertCtrl;
