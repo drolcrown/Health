@@ -1,26 +1,40 @@
-<ion-header menuToggle>
-  <header [title]="" [subtitle]=""></header>
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>Home</ion-title>
+  </ion-navbar>
 </ion-header>
+
 <ion-content padding>
-  <ion-grid>
-    <ion-row class="text-center">
-      <ion-col col-6 col-sm class="border border-info" [ngStyle]="buttons" (click)="goPage(pages[0].name)">
-        <img src={{pages[0].image}} />
-        <!-- <h4>{{pages[0].name}}</h4> -->
+  <ion-grid class="container">
+    <ion-row justify-content-center [ngStyle]="render.getMedidas(0.3 , 1)">
+      <ion-col col-lg-6 col-md-5 class="ml-2 border border-primary mr-3">
+        <ion-row justify-content-center>
+          <ion-col col-7 class="text-center">
+            <h1>Assistencia em Saude</h1>
+            <img src="../../assets/imgs/healthcare-and-medical.svg">
+          </ion-col>
+        </ion-row>
       </ion-col>
-      <ion-col col-6 col-sm class="border border-info" [ngStyle]="buttons" (click)="goPage(pages[1].name)">
-        <img src={{pages[1].image}} />
-        <!-- <h4>{{pages[1].name}}</h4> -->
+      <ion-col col-lg-6 col-md-5 class="border border-primary mr-4">
+        <img src="../../assets/imgs/images.jpg">
       </ion-col>
     </ion-row>
-    <ion-row class="text-center">
-      <ion-col col-6 col-sm class="border border-info" [ngStyle]="buttons" (click)="goPage(pages[2].name)">
-        <img src={{pages[2].image}} />
-        <!-- <h4>{{pages[2].name}}</h4> -->
+    <ion-row class="mt-3" justify-content-center [ngStyle]="render.getMedidas(0.3, 1)">
+      <ion-col col-lg-6 col-md-5 class="ml-2 border border-primary mr-3">
+        <ion-row justify-content-center>
+          <ion-col col-7 class="text-center">
+            <h1>Pets</h1>
+            <img src="../../assets/imgs/makeover.svg">
+          </ion-col>
+        </ion-row>
       </ion-col>
-      <ion-col col-6 col-sm class="border border-info" [ngStyle]="buttons" (click)="goPage(pages[3].name)">
-        <img src={{pages[3].image}} />
-        <!-- <h4>{{pages[3].name}}</h4> -->
+      <ion-col col-lg-6 col-md-5 class="border border-primary mr-4">
+        <ion-row justify-content-center>
+          <ion-col col-7 class="text-center">
+            <h1>Pets</h1>
+            <img src="../../assets/imgs/fish-bowl.svg">
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>

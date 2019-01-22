@@ -1,11 +1,11 @@
-<ion-content class="bg-login">
+<ion-content class="bg-blue">
   <ion-grid padding class="box-login">
     <div class="container-fluid">
       <img src="../../assets/imgs/respect.svg" [ngStyle]="img">
       <h1 (click)="admin()" class="text-white mb-5">Health</h1>
-      <ion-input block autocomplete="on" type="text" [(ngModel)]="account.email" name="email" placeholder="Email">
+      <ion-input autofocus float autocomplete="on" type="text" [(ngModel)]="account.email" name="email" placeholder="Email">
       </ion-input>
-      <ion-input type="password" [(ngModel)]="account.password" name="password" placeholder="Senha">
+      <ion-input autofocus float type="password" [(ngModel)]="account.password" name="password" placeholder="Senha">
       </ion-input>
       <small class="text-danger">{{loginErrorString}}</small>
       <button ion-button color="dark" block (click)="doLogin()" class="borda-circular">Log-in</button>

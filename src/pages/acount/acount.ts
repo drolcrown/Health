@@ -1,9 +1,10 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { LoginPage } from '../login/login';
 import { CacheProvider } from '../../providers/cache/cache';
 import { HomePage } from '../home/home';
+import { ConfigurationPage } from '../configuration/configuration';
 
 @IonicPage()
 @Component({
@@ -14,30 +15,15 @@ export class AcountPage {
   private perfil: any;
   private email: string;
   private PATH = 'perfil';
-  private tamanho = {
-    width: (window.screen.width * 0.95) + 'px',
-    height: (window.screen.height * 0.85) + 'px',
-  };
 
-  private box = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
+  constructor(private navCtrl: NavController, private provider: AccessFirebaseProvider, 
+    private providerCache: CacheProvider, private menuCtrl: MenuController) {
+    this.provider.alert.presentLoading(2);
+    this.initAccount();
   }
 
-  private img = {
-    height: '',
-    width: '',
-  };
-
-  constructor(private navCtrl: NavController, private navParams: NavParams,
-    private provider: AccessFirebaseProvider, private providerCache: CacheProvider) {
-    let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
-    this.img.width = (window.screen.width * 0.6) + 'px';
-    this.img.height = (tamanhoImg * 0.3) + 'px';
-    this.provider.alert.presentLoading(2);
-    this.providerCache.get(this.PATH).then(response => {
+  async initAccount() {
+    await this.providerCache.get(this.PATH).then(response => {
       this.perfil = response;
     });
   }
@@ -59,12 +45,14 @@ export class AcountPage {
               .then(response => {
                 perfil.imagem = response;
                 this.provider.updateParams(this.PATH, 'email', perfil.email, perfil);
-                this.providerCache.save(this.PATH, perfil);
                 loading.dismiss();
                 this.navCtrl.push(HomePage);
+                this.providerCache.save(this.PATH, perfil);
+                this.providerCache.save("page", "HomePage");
               })
               .catch((erro) => {
                 this.provider.alert.showToast('Falha na Alteração da Imagem!!');
+                loading.dismiss();
               });
           },
         },
@@ -86,6 +74,12 @@ export class AcountPage {
   public excluirConta(perfil) {
     this.provider.excluirConta(perfil);
     this.providerCache.clear();
+    this.providerCache.save("page", "LoginPage");
+    this.navCtrl.popAll();
     this.navCtrl.push(LoginPage);
+  }
+
+  public onPage(){
+    this.navCtrl.push(ConfigurationPage);
   }
 }

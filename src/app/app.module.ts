@@ -1,75 +1,78 @@
+import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
+import { MyApp } from './app.component';
+
+import { AboutPage } from '../pages/about/about';
+import { ContactPage } from '../pages/contact/contact';
+import { HomePage } from '../pages/home/home';
+import { TabsPage } from '../pages/tabs/tabs';
+
+import { StarRatingModule } from 'ionic3-star-rating';
+import { environment } from '../environments/environment';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { Camera } from '@ionic-native/camera';
 
+//Firebase
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
-import { environment } from '../environments/environment';
-import { StarRatingModule } from 'ionic3-star-rating';
-
-//Pages
-import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { LoginPage } from '../pages/login/login';
-import { AtendimentoPage } from '../pages/atendimento/atendimento';
-
-//Components
-import { HeaderComponent } from '../components/core/header/header';
-import { FormsComponent } from '../components/forms/forms';
-import { ProfissionalComponent } from '../components/forms/profissional/profissional';
-
 //Providers
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
 import { AlertsProvider } from '../providers/alerts/alerts';
 import { AcountPage } from '../pages/acount/acount';
-import { TestPage } from '../pages/test/test';
 import { CacheProvider } from '../providers/cache/cache';
 import { DatePipe } from '@angular/common';
 import { LoadsProvider } from '../providers/loads/loads';
-import { BrMaskerModule } from 'brmasker-ionic-3';
-import { ListComponent } from '../components/list/list';
+import { RenderProvider } from '../providers/render/render';
+import { Camera } from '@ionic-native/camera';
+import { LoginPage } from '../pages/login/login';
+import { ConfigurationPage } from '../pages/configuration/configuration';
 
 @NgModule({
   declarations: [
-    MyApp, LoginPage, HeaderComponent,TestPage,
-    HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, ProfissionalComponent, ListComponent
+    MyApp,
+    AboutPage,
+    ContactPage,
+    HomePage,
+    AcountPage,
+    ConfigurationPage,
+    LoginPage,
+    TabsPage,
   ],
   imports: [
-    BrowserModule, FormsModule, ReactiveFormsModule,
-    StarRatingModule,
-    BrMaskerModule,
-    AngularFirestoreModule,
-    IonicModule.forRoot(MyApp), 
+    BrowserModule,
+    IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
+    StarRatingModule,
+    AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.FirebaseConfig),
     AngularFireDatabaseModule, AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, LoginPage, HeaderComponent,TestPage,
-    HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, ProfissionalComponent, ListComponent
+    MyApp,
+    AboutPage,
+    ContactPage,
+    AcountPage,
+    LoginPage,
+    HomePage,
+    TabsPage,
+    ConfigurationPage,
   ],
   providers: [
     StatusBar,
     SplashScreen, Camera,
-    { provide: ErrorHandler, useClass: IonicErrorHandler },
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    RenderProvider,
     AccessFirebaseProvider,
     AlertsProvider,
-    CacheProvider,
     DatePipe,
-    LoadsProvider
+    LoadsProvider,
+    CacheProvider
   ]
 })
-export class AppModule { }
+export class AppModule {}

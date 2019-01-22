@@ -29,7 +29,10 @@ export class AccessFirebaseProvider {
   async doLogin(account) {
     let loading = this.loadingCtrl.presentLoadingDefault();
     let password = this.encripty(account.password);
-    setTimeout(() => { loading.dismiss(); }, 10000);
+    setTimeout(() => {
+      loading.dismiss();
+      return this.authorization.auth.signInWithEmailAndPassword(account.email, password);
+    }, 10000);
     await this.authorization.auth.signInWithEmailAndPassword(account.email, password)
       .then((resp) => {
         loading.dismiss();

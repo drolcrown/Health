@@ -15,18 +15,11 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
-@import "~@ionic/angular/css/core.css";
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
-
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
-
-.bg-login{
+.bg-blue{
     background-image: linear-gradient( to  bottom right, rgb(195, 219, 223),  rgb(47, 146, 163));
     // background-image: linear-gradient( to  bottom right, rgb(102, 206, 107),  rgb(41, 242, 192));
+}
+
+.img-circular{
+    border-radius: 50%;
 }

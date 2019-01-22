@@ -11,11 +11,9 @@ $font-path: "../assets/fonts";
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
 
-@import "node_modules/bootstrap/scss/bootstrap.scss";
-
 
 @import "ionic.globals";
-
+@import "node_modules/bootstrap/scss/bootstrap.scss";
 
 // Shared Variables
 // --------------------------------------------------
@@ -42,7 +40,6 @@ $colors: (
   light:      #f4f4f4,
   dark:       #222
 );
-
 
 // App iOS Variables
 // --------------------------------------------------
@@ -88,36 +85,3 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
-
-$grid-columns:               12 !default;
-
-$grid-padding-width:         10px !default;
-
-$grid-padding-widths: (
-  xs: $grid-padding-width,
-  sm: $grid-padding-width,
-  md: $grid-padding-width,
-  lg: $grid-padding-width,
-  xl: $grid-padding-width
-) !default;
-
-$grid-breakpoints: (
-  sm: 0,
-  md: 768px,
-  lg: 1024px
-);
-
-$grid-max-widths: (
-  sm: 420px,
-  md: 720px,
-  lg: 960px
-);
-
-$colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-  yellow:    yellow
-  );

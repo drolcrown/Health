@@ -3,9 +3,9 @@ import { IonicPage, NavController, MenuController, Platform } from 'ionic-angula
 import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { FormsComponent } from '../../components/forms/forms';
+// import { FormsComponent } from '../../components/forms/forms';
 import { CacheProvider } from '../../providers/cache/cache';
-import { AlertsProvider } from '../../providers/alerts/alerts';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -38,11 +38,12 @@ export class LoginPage {
   doLogin() {
     this.loginErrorString = '';
     if (this.account.email != '' && this.account.password != '') {
+      this.account.email = this.account.email.toLowerCase();
       let login = this.provider.doLogin(this.account);
       if (login) {
         login.then((success) => {
           this.providerCache.save('page', "HomePage");
-          this.navCtrl.push(HomePage);
+          this.navCtrl.push(TabsPage);
           this.provider.findObject('perfil', 'email', this.account.email).subscribe(resp => {
             this.providerCache.save('perfil', resp);
           });
@@ -68,6 +69,6 @@ export class LoginPage {
 
   registrar() {
     this.providerCache.save('page',"FormsComponent");
-    this.navCtrl.push(FormsComponent);
+    // this.navCtrl.push(FormsComponent);
   }
 }

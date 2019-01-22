@@ -1,73 +1,60 @@
-<ion-header menuToggle>
-  <header [title]="'Minha Conta'" [subtitle]="false"></header>
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-row align-items-end>
+      <ion-col col-10>
+        <ion-title>
+          Perfil
+        </ion-title>
+      </ion-col>
+      <ion-col col-2>
+        <ion-title>
+          <ion-icon name="md-settings" color="light" (click)="onPage()"></ion-icon>
+        </ion-title>
+      </ion-col>
+    </ion-row>
+  </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-grid class="text-center">
-    <ion-card *ngIf="perfil">
-      <ion-card-content [ngStyle]="tamanho">
-        <ion-grid [ngStyle]="box">
-          <ion-row class="btn-wrap">
-            <ion-col *ngIf="!perfil.imagem">
-              <label for="selecao-arquivo">
-                <img *ngIf="!perfil.profissao" [ngStyle]="img" src="../../assets/imgs/usuario.png" alt="Alterar Imagem" />
-                <img *ngIf="perfil.profissao" [ngStyle]="img" src="../../assets/imgs/profissional.png" alt="Alterar Imagem" />
-              </label>
-            </ion-col>
-            <ion-col *ngIf="perfil.imagem" >
-              <label for="selecao-arquivo">
-                <img [ngStyle]="img" src="{{perfil.imagem}}" alt="Alterar Imagem" />
-              </label>
-            </ion-col>
-          </ion-row>
-          <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
-          <ion-row>
-            <ion-card-title>
-              {{perfil.nome}}
-            </ion-card-title>
-          </ion-row>
-          <ion-row>
-            <p *ngIf="perfil.profissao">{{perfil.profissao}}</p>
-          </ion-row>
-          <ion-row>
-            <p *ngIf="perfil.crm">CRM: {{perfil.crm}}</p>
-          </ion-row>
-          <ion-row>
-            <p class="mt-2">
-              Data de Nascimento: {{perfil.data}}
-            </p>
-          </ion-row>
-          <ion-row>
-            <p class="mt-2">
-              {{perfil.cidade}} - {{perfil.estado}}
-            </p>
-          </ion-row>
-          <ion-row>
-            <p class="mt-2">
-              {{perfil.email}}
-            </p>
-          </ion-row>
-          <ion-row>
-            <p class="mt-2">
-              Peso: {{perfil.peso}}
-            </p>
-          </ion-row>
-          <ion-row>
-            <ion-card-title>
-              Avaliação
-            </ion-card-title>
-          </ion-row>
-          <ion-row>
-            <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff" defaultColor="#f03d3d"
-              readonly="true" [rating]="perfil.avaliacao">
-            </ionic3-star-rating>
-          </ion-row>
-          <ion-row class="margin">
-            <button ion-button class="btn btn-outline-primary ml-2" (click)="trocarSenha(perfil)">Trocar Senha</button>
-            <button ion-button class="btn btn-outline-primary" (click)="excluirConta(perfil)">Excluir Conta</button>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
-  </ion-grid>
+<ion-content padding class="mt-5 text-center">
+  <ion-scroll scrollY="true" style="width:100%; height:100%">
+    <ion-grid *ngIf="perfil">
+      <ion-row justify-content-center>
+        <ion-col col-4 *ngIf="!perfil.imagem">
+          <label for="selecao-arquivo">
+            <img *ngIf="!perfil.profissao" src="../../assets/imgs/usuario.png" alt="Alterar Imagem" class="img-circular" />
+            <img *ngIf="perfil.profissao" src="../../assets/imgs/profissional.png" alt="Alterar Imagem" class="img-circular" />
+          </label>
+        </ion-col>
+        <ion-col col-4 *ngIf="perfil.imagem">
+          <label for="selecao-arquivo">
+            <img src="{{perfil.imagem}}" alt="Alterar Imagem" class="img-circular" />
+          </label>
+        </ion-col>
+      </ion-row>
+      <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
+      <ion-row justify-content-center>
+        <ion-col col-12>
+          <h1>{{perfil.nome}}</h1>
+        </ion-col>
+        <ion-col col-12 class="mt-2">
+          <h3>{{perfil.cidade}} - {{perfil.estado}}</h3>
+        </ion-col>
+        <ion-col col-12>
+          <h3>{{perfil.email}}</h3>
+        </ion-col>
+        <ion-col col-12 class="mt-1">
+          <h1>Avaliação </h1>
+        </ion-col>
+        <ion-col col-12>
+          <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff" defaultColor="#f03d3d"
+            readonly="true" [rating]="perfil.avaliacao">
+          </ionic3-star-rating>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center>
+        <button ion-button class="btn btn-outline-primary ml-2" (click)="trocarSenha(perfil)">Trocar Senha</button>
+        <button ion-button class="btn btn-outline-primary" (click)="excluirConta(perfil)">Excluir Conta</button>
+      </ion-row>
+    </ion-grid>
+  </ion-scroll>
 </ion-content>
