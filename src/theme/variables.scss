@@ -10,7 +10,7 @@ $font-path: "../assets/fonts";
 // rtl styles in your app. For more info, please see:
 // http://ionicframework.com/docs/theming/rtl-support/
 $app-direction: ltr;
-
+$app-background: linear-gradient(rgb(195, 219, 223),  rgb(47, 146, 163));
 
 @import "ionic.globals";
 @import "node_modules/bootstrap/scss/bootstrap.scss";
@@ -38,7 +38,8 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  blue:       rgb(23, 171, 197),
 );
 
 // App iOS Variables

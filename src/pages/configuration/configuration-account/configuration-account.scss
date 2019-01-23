@@ -1,0 +1,24 @@
+page-configuration-account {
+    ion-datetime::placeholder{
+        color: black;
+    }
+    h5{
+        // font: sans-serif;
+        font-style: oblique;
+        // font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-size: 1.5rem;
+        color: rgb(134, 129, 129);
+    }
+    h4{
+        color: rgb(134, 129, 129);
+        font-size: 1.9rem;
+        font-style: oblique;
+    }
+    i{
+        font-size:1.9rem;
+        color: black;
+    }
+    input[type='file'] {
+        display: none
+    }
+}

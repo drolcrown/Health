@@ -1,0 +1,84 @@
+<!--
+  Generated template for the ConfigurationAccountPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="blue">
+    <ion-title>Perfil do usuário</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-grid *ngIf="perfil">
+    <ion-row align-items-center>
+      <ion-col col-4>
+        <label for="selecao-arquivo">
+          <img src="{{perfil.imagem}}" class="img-circular">
+        </label>
+        <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
+      </ion-col>
+      <ion-col col-8>
+        <h5 color="primary">NOME</h5>
+        <ion-input [value]="perfil.nome" autofocus type="text" class="border-bottom border-dark"></ion-input>
+        <h5 color="primary" fixed>SOBRENOME</h5>
+        <ion-input [value]="perfil.nome" autofocus type="text" class="border-bottom border-dark"></ion-input>
+      </ion-col>
+      <ion-col col-12 class="mt-3">
+        <ion-row padding class="mb-2 border-bottom border-secundary">
+          <ion-col col-6>
+            <ion-row align-items-center>
+              <ion-col col-2>
+                <ion-icon color="primary" name="man" class="col-12 icone-md">
+                </ion-icon>
+              </ion-col>
+              <ion-col col-7 class="ml-3">
+                <h5>Masculino</h5>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+          <ion-col col-6>
+            <ion-row align-items-center>
+              <ion-col col-2>
+                <ion-icon color="primary" name="woman" class="col-12 icone-md">
+                </ion-icon>
+              </ion-col>
+              <ion-col col-7 class="ml-3">
+                <h5>Feminino</h5>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+      <ion-col col-12>
+        <h5 color="primary">E-MAIL</h5>
+        <ion-input [value]="perfil.email" autofocus type="text" class="border-bottom border-dark"></ion-input>
+      </ion-col>
+      <ion-col col-12>
+        <h5 color="primary">Estado</h5>
+        <ion-input [value]="perfil.estado" autofocus type="text" class="border-bottom border-dark"></ion-input>
+      </ion-col>
+      <ion-col col-12>
+        <h5 color="dark">NASCIMENTO</h5>
+        <ion-datetime placeholder="{{perfil.data}}" cancelText="Cancelar" doneText="Confirmar" displayFormat="DD de MMM de YYYY"
+          pickerFormat="DD/MM/YYYY" class="border-bottom border-dark"></ion-datetime>
+      </ion-col>
+      <ion-col col-12>
+        <h5 color="dark">ALTURA </h5>
+        <ion-input [value]="perfil.peso" autofocus type="text" class="border-bottom border-dark"></ion-input>
+      </ion-col>
+      <ion-col col-12>
+        <h5 color="dark">PESO</h5>
+        <ion-input [value]="perfil.peso" autofocus type="text" class="border-bottom border-dark"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center class="mt-3">
+      <button ion-button color="blue" class="ml-2" (click)="trocarSenha(perfil)">Trocar Senha</button>
+      <button ion-button color="blue" (click)="excluirConta(perfil)">Excluir Conta</button>
+    </ion-row>
+  </ion-grid>
+</ion-content>

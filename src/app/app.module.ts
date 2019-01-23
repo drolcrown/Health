@@ -31,6 +31,9 @@ import { RenderProvider } from '../providers/render/render';
 import { Camera } from '@ionic-native/camera';
 import { LoginPage } from '../pages/login/login';
 import { ConfigurationPage } from '../pages/configuration/configuration';
+import { ConfigurationAccountPage } from '../pages/configuration/configuration-account/configuration-account';
+import { ScreenOrientation } from '@ionic-native/screen-orientation';
+import { ProfissionaisPage } from '../pages/profissionais/profissionais';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,8 @@ import { ConfigurationPage } from '../pages/configuration/configuration';
     HomePage,
     AcountPage,
     ConfigurationPage,
+    ConfigurationAccountPage,
+    ProfissionaisPage,
     LoginPage,
     TabsPage,
   ],
@@ -50,7 +55,7 @@ import { ConfigurationPage } from '../pages/configuration/configuration';
     StarRatingModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.FirebaseConfig),
-    AngularFireDatabaseModule, AngularFireAuthModule
+    AngularFireDatabaseModule, AngularFireAuthModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -61,10 +66,13 @@ import { ConfigurationPage } from '../pages/configuration/configuration';
     LoginPage,
     HomePage,
     TabsPage,
+    ProfissionaisPage,
+    ConfigurationAccountPage,
     ConfigurationPage,
   ],
   providers: [
     StatusBar,
+    ScreenOrientation,
     SplashScreen, Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RenderProvider,

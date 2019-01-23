@@ -18,7 +18,7 @@ export class AcountPage {
 
   constructor(private navCtrl: NavController, private provider: AccessFirebaseProvider, 
     private providerCache: CacheProvider, private menuCtrl: MenuController) {
-    this.provider.alert.presentLoading(2);
+    this.provider.alert.presentLoading(3);
     this.initAccount();
   }
 
@@ -29,54 +29,6 @@ export class AcountPage {
   }
 
   ionViewWillEnter() {
-  }
-
-  private salvarArquivo(perfil, e) {
-    this.provider.alert.newAlert().create({
-      title: 'Alterar Imagem',
-      message: 'Confirme para alterar a imagem',
-      buttons: [
-        {
-          text: 'Alterar',
-          handler: () => {
-            this.providerCache.remove(this.PATH);
-            let loading = this.provider.loadingCtrl.presentLoadingDefault();
-            this.provider.upload(perfil, e)
-              .then(response => {
-                perfil.imagem = response;
-                this.provider.updateParams(this.PATH, 'email', perfil.email, perfil);
-                loading.dismiss();
-                this.navCtrl.push(HomePage);
-                this.providerCache.save(this.PATH, perfil);
-                this.providerCache.save("page", "HomePage");
-              })
-              .catch((erro) => {
-                this.provider.alert.showToast('Falha na Alteração da Imagem!!');
-                loading.dismiss();
-              });
-          },
-        },
-        {
-          text: 'Cancelar',
-          role: 'cancel',
-        },
-      ]
-    }).present();
-  }
-
-  public trocarSenha(perfil) {
-    this.providerCache.remove(this.PATH);
-    perfil = this.provider.updatePassword(perfil);
-    this.providerCache.save('perfil', perfil);
-  }
-
-
-  public excluirConta(perfil) {
-    this.provider.excluirConta(perfil);
-    this.providerCache.clear();
-    this.providerCache.save("page", "LoginPage");
-    this.navCtrl.popAll();
-    this.navCtrl.push(LoginPage);
   }
 
   public onPage(){

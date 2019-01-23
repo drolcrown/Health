@@ -1,17 +1,27 @@
-<ion-content class="bg-blue">
-  <ion-grid padding class="box-login">
-    <div class="container-fluid">
-      <img src="../../assets/imgs/respect.svg" [ngStyle]="img">
-      <h1 (click)="admin()" class="text-white mb-5">Health</h1>
-      <ion-input autofocus float autocomplete="on" type="text" [(ngModel)]="account.email" name="email" placeholder="Email">
-      </ion-input>
-      <ion-input autofocus float type="password" [(ngModel)]="account.password" name="password" placeholder="Senha">
-      </ion-input>
+<ion-content padding class="bg-blue">
+  <ion-grid class="container">
+    <ion-row justify-content-center>
+      <ion-col col-4 class="text-center mt-5">
+        <img src="../../assets/imgs/respect.svg" [ngStyle]="img">
+        <h1 (click)="admin()" class="text-white mb-5">Health</h1>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center class="container">
+      <ion-col col-12>
+        <ion-input autofocus float autocomplete="on" type="text" [(ngModel)]="account.email" name="email" placeholder="Email">
+        </ion-input>
+      </ion-col>
+      <ion-col col-12>
+        <ion-input autofocus float type="password" [(ngModel)]="account.password" name="password" placeholder="Senha">
+        </ion-input>
+      </ion-col>
       <small class="text-danger">{{loginErrorString}}</small>
       <button ion-button color="dark" block (click)="doLogin()" class="borda-circular">Log-in</button>
-    </div>
-    <a class="text-white footer" (click)="registrar()">
-      <u>Ainda não tem uma conta? Registre-se</u>
-    </a>
+    </ion-row>
+    <ion-row justify-content-center>
+      <a class="text-white footer" (click)="registrar()">
+        <u>Ainda não tem uma conta? Registre-se</u>
+      </a>
+    </ion-row>
   </ion-grid>
 </ion-content>
