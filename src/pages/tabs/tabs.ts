@@ -19,6 +19,6 @@ export class TabsPage {
   tab4Root = AcountPage;
 
   constructor(public providerCache: CacheProvider) {
-    // this.providerCache.save('perfil', mocks.perfil);
+    this.providerCache.save('perfil', mocks.perfil);
   }
 }

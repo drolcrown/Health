@@ -12,17 +12,12 @@
 
 <ion-content padding>
   <ion-grid>
-    <ion-row>
-      <ion-col *ngFor="let comp of profissionais | async" col-6>
-        <ion-card>
-          <img src="{{comp.imagem}}" />
+    <ion-row justify-content-center>
+      <ion-col *ngFor="let comp of profissionais" col-6>
+        <ion-card >
+          <img src="{{comp.imagem}}" [ngStyle]="render.getMedidas(0.2, 1)" />
           <ion-card-content>
-            <ion-card-title>
-              {{comp.nome}}
-            </ion-card-title>
-            <p>
-              {{comp.descricao}}
-            </p>
+            <h2 >{{comp.nome}}</h2>
           </ion-card-content>
         </ion-card>
       </ion-col>

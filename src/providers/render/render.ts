@@ -10,17 +10,17 @@ import { Injectable } from '@angular/core';
 export class RenderProvider {
   public heightMobile: any;
   public widthMobile: any;
-  
+
   constructor() {
     this.heightMobile = window.screen.height;
     this.widthMobile = window.screen.width;
   }
 
 
-  public getMedidas(percentHeight: any, percentWidth: any): any{
+  public getMedidas(percentHeight: any, percentWidth: any): any {
     return {
-        height: this.heightMobile * percentHeight + 'px',
-        width: this.widthMobile * percentWidth + 'px'
+      height: this.heightMobile * percentHeight + 'px',
+      width: this.widthMobile * percentWidth + 'px'
     }
   }
 

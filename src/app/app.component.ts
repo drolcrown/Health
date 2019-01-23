@@ -14,16 +14,16 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
   templateUrl: 'app.html'
 })
 export class MyApp {
-  rootPage: any = LoginPage;
+  // rootPage: any = LoginPage;
   // rootPage:any = ConfigurationAccountPage;
-  // rootPage:any = TabsPage;
+  rootPage:any = TabsPage;
 
   constructor(screenOrientation: ScreenOrientation, platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       // statusBar.styleDefault();
-      screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT);
+      // screenOrientation.lock(screenOrientation.ORIENTATIONS.PORTRAIT);
       statusBar.show();
       // splashScreen.hide();
     });
