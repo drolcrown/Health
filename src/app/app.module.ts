@@ -7,7 +7,6 @@ import { MyApp } from './app.component';
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
-import { TabsPage } from '../pages/tabs/tabs';
 
 import { StarRatingModule } from 'ionic3-star-rating';
 import { environment } from '../environments/environment';
@@ -34,6 +33,7 @@ import { ConfigurationPage } from '../pages/configuration/configuration';
 import { ConfigurationAccountPage } from '../pages/configuration/configuration-account/configuration-account';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { ProfissionaisPage } from '../pages/profissionais/profissionais';
+import { TabsPage } from '../pages/tabs/tabs';
 
 @NgModule({
   declarations: [

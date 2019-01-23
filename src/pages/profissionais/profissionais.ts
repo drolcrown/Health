@@ -20,6 +20,7 @@ export class ProfissionaisPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public provider: AccessFirebaseProvider) {
     this.profissionais = this.provider.getAll("profissional");
+    console.log(this.profissionais)
   }
 
   ionViewDidLoad() {
