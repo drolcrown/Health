@@ -5,7 +5,6 @@ import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 
 import { StarRatingModule } from 'ionic3-star-rating';
@@ -22,30 +21,25 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 //Providers
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
 import { AlertsProvider } from '../providers/alerts/alerts';
-import { AcountPage } from '../pages/acount/acount';
 import { CacheProvider } from '../providers/cache/cache';
 import { DatePipe } from '@angular/common';
 import { LoadsProvider } from '../providers/loads/loads';
 import { RenderProvider } from '../providers/render/render';
 import { Camera } from '@ionic-native/camera';
-import { LoginPage } from '../pages/login/login';
 import { ConfigurationPage } from '../pages/configuration/configuration';
-import { ConfigurationAccountPage } from '../pages/configuration/configuration-account/configuration-account';
 import { ScreenOrientation } from '@ionic-native/screen-orientation';
-import { ProfissionaisPage } from '../pages/profissionais/profissionais';
 import { TabsPage } from '../pages/tabs/tabs';
+import { ChildrenPage } from '../pages/children/children';
+import { ChildrenRenderPage } from '../pages/children-render/children-render';
 
 @NgModule({
   declarations: [
     MyApp,
     AboutPage,
-    ContactPage,
+    ChildrenPage,
+    ChildrenRenderPage,
     HomePage,
-    AcountPage,
     ConfigurationPage,
-    ConfigurationAccountPage,
-    ProfissionaisPage,
-    LoginPage,
     TabsPage,
   ],
   imports: [
@@ -61,13 +55,10 @@ import { TabsPage } from '../pages/tabs/tabs';
   entryComponents: [
     MyApp,
     AboutPage,
-    ContactPage,
-    AcountPage,
-    LoginPage,
+    ChildrenPage,
+    ChildrenRenderPage,
     HomePage,
     TabsPage,
-    ProfissionaisPage,
-    ConfigurationAccountPage,
     ConfigurationPage,
   ],
   providers: [

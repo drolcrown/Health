@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 /**
- * Generated class for the ConfigurationPage page.
+ * Generated class for the ChildrenRenderPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -10,17 +10,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 @IonicPage()
 @Component({
-  selector: 'page-configuration',
-  templateUrl: 'configuration.html',
+  selector: 'page-children-render',
+  templateUrl: 'children-render.html',
 })
-export class ConfigurationPage {
+export class ChildrenRenderPage {
+  private objeto;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
-  
-  ionViewDidLoad() {
+    this.objeto = this.navParams.get("objeto");
   }
 
-  public onPage(page: any){
-    // this.navCtrl.push(page)
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad ChildrenRenderPage');
   }
+
 }
