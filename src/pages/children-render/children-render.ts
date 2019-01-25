@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { RenderProvider } from '../../providers/render/render';
+import { ImageViewerController } from 'ionic-img-viewer';
 
 /**
  * Generated class for the ChildrenRenderPage page.
@@ -14,14 +16,26 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'children-render.html',
 })
 export class ChildrenRenderPage {
+  private _imageViewerCtrl: ImageViewerController;
   private objeto;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     public render: RenderProvider, imageViewerCtrl: ImageViewerController) {
     this.objeto = this.navParams.get("objeto");
+    this._imageViewerCtrl = imageViewerCtrl;
+  }
+ 
+  ionViewDidLoad() {
+  }
+  
+  presentImage(myImage) {
+    const imageViewer = this._imageViewerCtrl.create(myImage);
+    imageViewer.present();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ChildrenRenderPage');
+  openPage(object: any){
+    this.navCtrl.push(ChildrenRenderPage, {objeto: object});
   }
+
 
 }

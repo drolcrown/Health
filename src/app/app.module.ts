@@ -2,8 +2,9 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { MyApp } from './app.component';
-
+ 
 import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
 
@@ -50,6 +51,7 @@ import { ChildrenRenderPage } from '../pages/children-render/children-render';
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.FirebaseConfig),
     AngularFireDatabaseModule, AngularFireAuthModule,
+    IonicImageViewerModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -65,7 +67,7 @@ import { ChildrenRenderPage } from '../pages/children-render/children-render';
     StatusBar,
     ScreenOrientation,
     SplashScreen, Camera,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     RenderProvider,
     AccessFirebaseProvider,
     AlertsProvider,
@@ -74,4 +76,4 @@ import { ChildrenRenderPage } from '../pages/children-render/children-render';
     CacheProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }
