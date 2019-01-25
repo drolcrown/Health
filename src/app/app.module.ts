@@ -20,7 +20,6 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 //Providers
-import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
 import { AlertsProvider } from '../providers/alerts/alerts';
 import { CacheProvider } from '../providers/cache/cache';
 import { DatePipe } from '@angular/common';
@@ -52,9 +51,9 @@ import { InfoPage } from '../pages/info/info';
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     StarRatingModule,
-    AngularFirestoreModule,
-    AngularFireModule.initializeApp(environment.FirebaseConfig),
-    AngularFireDatabaseModule, AngularFireAuthModule,
+    // AngularFirestoreModule,
+    // AngularFireModule.initializeApp(environment.FirebaseConfig),
+    // AngularFireDatabaseModule, AngularFireAuthModule,
     IonicImageViewerModule
   ],
   bootstrap: [IonicApp],
@@ -75,7 +74,6 @@ import { InfoPage } from '../pages/info/info';
     SplashScreen, Camera,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     RenderProvider,
-    AccessFirebaseProvider,
     AlertsProvider,
     DatePipe,
     LoadsProvider,

@@ -1,7 +1,6 @@
 import { Component, Renderer } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { RenderProvider } from '../../providers/render/render';
-import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { atlas } from '../../models/atlas';
 import { ChildrenPage } from '../children/children';
 import { ChildrenRenderPage } from '../children-render/children-render';
@@ -17,7 +16,7 @@ export class HomePage {
   public itemExpanded = false;
 
   constructor(public navCtrl: NavController, public render: RenderProvider,
-    public renderer: Renderer, public database: AccessFirebaseProvider) {
+    public renderer: Renderer) {
     let objetos = atlas;
     this.listAll = this.recuperarItens(atlas);
     this.objectList = objetos;

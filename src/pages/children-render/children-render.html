@@ -15,16 +15,18 @@
   <ion-scroll scrollY="true" style="width:100%; height:100%">
     <ion-grid>
       <ion-row justify-content-center>
-        <ion-col *ngIf="objeto.imagem" class="mb-3">
-          <img src="{{objeto.imagem}}" [ngStyle]="render.getMedidas(0.3, 1)" #myImage (click)="presentImage(myImage)" >
-        </ion-col>
-        <ion-col *ngIf="objeto.descricao" col-12 >
+        <ion-row *ngIf="objeto.imagem" justify-content-center>
+          <ion-col col-6 *ngFor="let object of objeto.imagem" class="mb-3">
+            <img *ngIf="object" src="{{object}}" [ngStyle]="render.getMedidas(0.3, 1)" #myImage (click)="presentImage(myImage)">
+          </ion-col>
+        </ion-row>
+        <ion-col *ngIf="objeto.descricao" col-12>
           <p class="text-center text-white mb-3 mt-3">{{objeto.descricao}}</p>
         </ion-col>
         <ion-col col-12>
           <ion-list *ngIf="objeto.filhos" class="mb-5">
-            <ion-item  no-lines *ngFor="let object of objeto.filhos" color="violet" class="mb-2" (click)="openPage(object)">
-              <ion-icon name="contrast" color="light">  {{object.nome}}</ion-icon>
+            <ion-item no-lines *ngFor="let object of objeto.filhos" color="violet" class="mb-2" (click)="openPage(object)">
+              <ion-icon name="contrast" color="light"> {{object.nome}}</ion-icon>
             </ion-item>
           </ion-list>
         </ion-col>

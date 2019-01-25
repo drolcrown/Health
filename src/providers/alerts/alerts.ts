@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from 'ionic-angular';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AccessFirebaseProvider } from '../access-firebase/access-firebase';
 import { CacheProvider } from '../cache/cache';
 
 @Injectable()
