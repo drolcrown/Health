@@ -32,14 +32,18 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { TabsPage } from '../pages/tabs/tabs';
 import { ChildrenPage } from '../pages/children/children';
 import { ChildrenRenderPage } from '../pages/children-render/children-render';
+import { ExpandableComponent } from '../components/expandable/expandable';
+import { InfoPage } from '../pages/info/info';
 
 @NgModule({
   declarations: [
     MyApp,
+    InfoPage,
     AboutPage,
     ChildrenPage,
     ChildrenRenderPage,
     HomePage,
+    ExpandableComponent,
     ConfigurationPage,
     TabsPage,
   ],
@@ -57,8 +61,10 @@ import { ChildrenRenderPage } from '../pages/children-render/children-render';
   entryComponents: [
     MyApp,
     AboutPage,
+    InfoPage,
     ChildrenPage,
     ChildrenRenderPage,
+    ExpandableComponent,
     HomePage,
     TabsPage,
     ConfigurationPage,

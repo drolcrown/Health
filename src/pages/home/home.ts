@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, Renderer } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { RenderProvider } from '../../providers/render/render';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { atlas } from '../../models/atlas';
 import { ChildrenPage } from '../children/children';
+import { ChildrenRenderPage } from '../children-render/children-render';
 
 @Component({
   selector: 'page-home',
@@ -12,14 +13,40 @@ import { ChildrenPage } from '../children/children';
 export class HomePage {
   public objectList: Array<any>;
   public loadedObjectList: Array<any>;
-  public objectRef: firebase.database.Reference;
+  public listAll: Array<any> = [];
+  public itemExpanded = false;
 
-  constructor(public navCtrl: NavController, public render: RenderProvider, public database: AccessFirebaseProvider) {
-    // let objetos = mocks.profissionais;
+  constructor(public navCtrl: NavController, public render: RenderProvider,
+    public renderer: Renderer, public database: AccessFirebaseProvider) {
     let objetos = atlas;
+    this.listAll = this.recuperarItens(atlas);
     this.objectList = objetos;
     this.loadedObjectList = objetos;
   }
+
+  recuperarItens(lista) {
+    lista.filter(el => {
+      if (el.nome) {
+        this.listAll.push(el);
+      }
+      if (el.filhos) {
+        this.recuperarItens(el.filhos);
+      } else {
+        return;
+      }
+    });
+    return this.listAll;
+  }
+
+  expandItem(object) {
+    if (object.expandWrapper.nativeElement.style.display === 'none') {
+      this.renderer.setElementStyle(object.expandWrapper.nativeElement, 'display', 'block');
+    }else{
+      this.renderer.setElementStyle(object.expandWrapper.nativeElement, 'display', 'none');
+    }
+    this.itemExpanded = !this.itemExpanded;
+  }
+
 
   initializeItems(): void {
     this.objectList = this.loadedObjectList;
@@ -33,7 +60,7 @@ export class HomePage {
     if (!valorSearch) {
       return;
     }
-    this.objectList = this.objectList.filter((v) => {
+    this.objectList = this.listAll.filter((v) => {
       if (v.nome && valorSearch) {
         if (v.nome.toLowerCase().indexOf(valorSearch.toLowerCase()) > -1) {
           return true;
@@ -43,7 +70,7 @@ export class HomePage {
     });
   }
 
-  openPage(object: any){
-    this.navCtrl.push(ChildrenPage, {objeto: object});
+  openPage(object: any) {
+    this.navCtrl.push(ChildrenRenderPage, { objeto: object });
   }
 }

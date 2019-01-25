@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar color="violet">
+    <ion-title>
+      Museu de Anatomia - UnB
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding >
+  <ion-grid class="bg-white">
+    <ion-row justify-content-center>
+      <ion-col col-5>
+          <img src="../../assets/imgs/unb.png">
+      </ion-col>
+      <ion-col col-11>
+        <img src="../../assets/imgs/about2.jpg" #myImage (click)="presentImage(myImage)">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

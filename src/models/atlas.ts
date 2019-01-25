@@ -35,6 +35,6 @@ export const atlas = [
                     { nome: "Ossos do pé", descricao: "Sem Descrição", imagem: "" },
                 ]
             }
-        ],
-    }
+        ]
+    },
 ]
