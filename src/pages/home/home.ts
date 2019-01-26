@@ -4,6 +4,7 @@ import { RenderProvider } from '../../providers/render/render';
 import { atlas } from '../../models/atlas';
 import { ChildrenPage } from '../children/children';
 import { ChildrenRenderPage } from '../children-render/children-render';
+import { CacheProvider } from '../../providers/cache/cache';
 
 @Component({
   selector: 'page-home',
@@ -13,10 +14,9 @@ export class HomePage {
   public objectList: Array<any>;
   public loadedObjectList: Array<any>;
   public listAll: Array<any> = [];
-  public itemExpanded = false;
 
   constructor(public navCtrl: NavController, public render: RenderProvider,
-    public renderer: Renderer) {
+    public renderer: Renderer, public cache: CacheProvider) {
     let objetos = atlas;
     this.listAll = this.recuperarItens(atlas);
     this.objectList = objetos;
@@ -37,15 +37,17 @@ export class HomePage {
     return this.listAll;
   }
 
-  expandItem(object) {
+  expandItem(object, iconEnable, iconDesable) {
     if (object.expandWrapper.nativeElement.style.display === 'none') {
       this.renderer.setElementStyle(object.expandWrapper.nativeElement, 'display', 'block');
+      iconDesable.style.display = 'block';
+      iconEnable.style.display = 'none';
     }else{
       this.renderer.setElementStyle(object.expandWrapper.nativeElement, 'display', 'none');
+      iconDesable.style.display = 'none';
+      iconEnable.style.display = 'block';
     }
-    this.itemExpanded = !this.itemExpanded;
   }
-
 
   initializeItems(): void {
     this.objectList = this.loadedObjectList;
@@ -70,6 +72,7 @@ export class HomePage {
   }
 
   openPage(object: any) {
+    this.cache.saveList("dados", object.nome);
     this.navCtrl.push(ChildrenRenderPage, { objeto: object });
   }
 }

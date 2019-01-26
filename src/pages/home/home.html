@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar color="violet">
+  <ion-navbar color="violet1">
     <ion-title>Atlas</ion-title>
   </ion-navbar>
 </ion-header>
@@ -9,22 +9,23 @@
   </ion-searchbar>
   <ion-scroll scrollY="true" style="width:100%; height:100%">
     <ion-list class="mb-5">
-      <ion-item no-lines *ngFor="let object of objectList" class="mb-2" color="white-violet">
-        <ion-grid>
-          <ion-row class="container-fluid">
-            <ion-col col-11 (click)="openPage(object)">
-              <strong>{{ object.nome }}</strong>
-            </ion-col>
-            <ion-col col-1 (click)="expandItem(expand)">
-              <ion-icon *ngIf="!itemExpanded && object.filhos" name="add-circle" color="light"></ion-icon>
-              <ion-icon *ngIf="itemExpanded && object.filhos" name="remove-circle" color="light"></ion-icon>
-            </ion-col>
-            <ion-col col-12 class="mt-2">
-              <expandable #expand [listExpanded]="object.filhos"></expandable>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+      <ion-grid *ngFor="let object of objectList" class="alert bg-violet mb-3">
+        <ion-row class="container-fluid">
+          <ion-col *ngIf="!object.filhos" col-12 (click)="openPage(object)">
+            <strong>{{ object.nome }}</strong>
+          </ion-col>
+          <ion-col *ngIf="object.filhos" col-11 (click)="openPage(object)" class="border-right border-secundary">
+            <strong>{{ object.nome }}</strong>
+          </ion-col>
+          <ion-col *ngIf="object.filhos" col-1 (click)="expandItem(expand, iconEnable, iconDesable)">
+            <ion-icon #iconEnable class="ml-2" name="add-circle" color="light" style=""></ion-icon>
+            <ion-icon #iconDesable class="ml-2" name="remove-circle" color="light" style="display: none;"></ion-icon>
+          </ion-col>
+          <ion-col col-12>
+            <expandable #expand [listExpanded]="object.filhos"></expandable>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-list>
   </ion-scroll>
 

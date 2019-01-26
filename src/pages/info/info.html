@@ -1,20 +1,20 @@
 <ion-header>
   <ion-navbar color="violet">
     <ion-title>
-      Museu de Anatomia - UnB
+      <!-- Museu de Anatomia - UnB -->
+      Estatisticas
     </ion-title>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding >
-  <ion-grid class="bg-white">
-    <ion-row justify-content-center>
-      <ion-col col-5>
-          <img src="../../assets/imgs/unb.png">
-      </ion-col>
-      <ion-col col-11>
-        <img src="../../assets/imgs/about2.jpg" #myImage (click)="presentImage(myImage)">
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+<ion-content>
+  <ion-card [ngStyle]="render.getMedidas(0.8, 0.95)">
+    <ion-card-content>
+      <canvas #doughnutCanvas [ngStyle]="render.getMedidas(0.4, 0.7)" class=" mb-3"></canvas>
+      <!-- <canvas #barCanvas [ngStyle]="render.getMedidas(0.4, 0.7)"></canvas> -->
+      <ul *ngFor="let obj of labels">
+        <li [ngStyle]="{color: obj.color}"><strong>{{obj.label}}</strong></li>
+      </ul>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

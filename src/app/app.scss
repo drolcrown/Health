@@ -18,6 +18,15 @@ ion-content {
     background: $app-background;
 }
 
+.bg-violet{
+    background: rgb(203, 81, 224);
+    color: white;
+    font-size: 15px;
+    align-items: center;
+    line-break: auto;
+    word-wrap: break-word;
+}
+
 .bg-blue{
     background: linear-gradient( to  bottom right, rgb(195, 219, 223),  rgb(47, 146, 163));
     // background-image: linear-gradient( to  bottom right, rgb(102, 206, 107),  rgb(41, 242, 192));

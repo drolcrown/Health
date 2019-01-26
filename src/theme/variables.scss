@@ -12,8 +12,8 @@ $font-path: "../assets/fonts";
 $app-direction: ltr;
 
 
-$app-background: linear-gradient( to  bottom right, rgb(95, 17, 58),  rgb(29, 1, 26));
-// $app-background: linear-gradient(rgb(17, 1, 9),  rgb(3, 0, 3));
+// $app-background: linear-gradient( to  bottom right, rgb(95, 17, 58),  rgb(29, 1, 26));
+$app-background: linear-gradient(rgb(166, 47, 187), rgb(143, 21, 161), rgb(32, 2, 32));
 
 @import "ionic.globals";
 @import "node_modules/bootstrap/scss/bootstrap.scss";
@@ -47,6 +47,7 @@ $colors: (
   white-violet:rgb(124, 36, 81),
   navy-blue:  rgb(49, 5, 119),
   gray:       gray,
+  violet1: rgb(132, 19, 150)
 );
 
 // App iOS Variables

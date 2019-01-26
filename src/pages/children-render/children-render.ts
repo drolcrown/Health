@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RenderProvider } from '../../providers/render/render';
 import { ImageViewerController } from 'ionic-img-viewer';
+import { CacheProvider } from '../../providers/cache/cache';
 
 /**
  * Generated class for the ChildrenRenderPage page.
@@ -19,7 +20,7 @@ export class ChildrenRenderPage {
   private _imageViewerCtrl: ImageViewerController;
   private objeto;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams, public cache: CacheProvider,
      public render: RenderProvider, imageViewerCtrl: ImageViewerController) {
     this.objeto = this.navParams.get("objeto");
     this._imageViewerCtrl = imageViewerCtrl;
@@ -34,6 +35,7 @@ export class ChildrenRenderPage {
   }
 
   openPage(object: any){
+    this.cache.saveList("dados", object.nome);
     this.navCtrl.push(ChildrenRenderPage, {objeto: object});
   }
 

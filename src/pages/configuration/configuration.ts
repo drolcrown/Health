@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ImageViewerController } from 'ionic-img-viewer';
 
 /**
  * Generated class for the ConfigurationPage page.
@@ -14,13 +15,18 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'configuration.html',
 })
 export class ConfigurationPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  private _imageViewerCtrl: ImageViewerController;
+
+  constructor(public navCtrl: NavController, imageViewerCtrl: ImageViewerController, public navParams: NavParams) {
+    this._imageViewerCtrl = imageViewerCtrl;
   }
   
-  ionViewDidLoad() {
+  ionViewWillLoad() {
   }
 
-  public onPage(page: any){
-    // this.navCtrl.push(page)
+  presentImage(myImage) {
+    const imageViewer = this._imageViewerCtrl.create(myImage);
+    imageViewer.present();
   }
+  
 }

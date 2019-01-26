@@ -1,3 +1,14 @@
 page-info {
+    .scroll-content {
+        background-color: map-get($colors, light);
+    }
 
+    ion-card-header {
+        font-weight: bold;
+    }
+
+    ul{
+      list-style-type: square;
+    }
+    
 }

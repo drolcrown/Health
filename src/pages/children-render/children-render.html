@@ -5,8 +5,8 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-  <ion-navbar color="violet">
-    <ion-title>{{objeto.nome}}</ion-title>
+  <ion-navbar color="violet1">
+    <h3>{{objeto.nome}}</h3>
   </ion-navbar>
 </ion-header>
 
@@ -25,9 +25,9 @@
         </ion-col>
         <ion-col col-12>
           <ion-list *ngIf="objeto.filhos" class="mb-5">
-            <ion-item no-lines *ngFor="let object of objeto.filhos" color="violet" class="mb-2" (click)="openPage(object)">
-              <ion-icon name="contrast" color="light"> {{object.nome}}</ion-icon>
-            </ion-item>
+            <div *ngFor="let object of objeto.filhos" class="alert bg-violet mb-2" role="alert" (click)="openPage(object)">
+              <strong>{{ object.nome }}</strong>
+            </div>
           </ion-list>
         </ion-col>
       </ion-row>

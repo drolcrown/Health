@@ -13,23 +13,34 @@ export class CacheProvider {
   constructor(public storage: Storage) {
   }
 
-  public clear(){
+  public clear() {
     this.storage.clear();
   }
 
-  public remove(key: string){
+  public remove(key: string) {
     this.storage.remove(key);
   }
 
-  public save(key: string, objeto: any){
+  public save(key: string, objeto: any) {
     this.storage.set(key, objeto);
   }
 
-  public get(key: string){
+  public saveList(key: string, objeto: any) {
+    let list: Array<any> = [];
+    this.get(key).then(resp => {
+      if (resp) {
+        list = resp;
+      }
+      list.push(objeto);
+      this.storage.set(key, list);
+    });
+  }
+
+  public get(key: string) {
     return this.storage.get(key);
   }
 
-  public getAll(){
+  public getAll() {
     return this.storage.keys();
   }
 }
