@@ -1,15 +1,6 @@
-<!--
-  Generated template for the ChildrenPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
-  <ion-navbar color="violet1">
-    <h3>{{objeto.nome}}</h3>
-  </ion-navbar>
+  <header [title]="objeto.nome"></header>
 </ion-header>
-
 
 <ion-content padding>
   <ion-scroll scrollY="true" style="width:100%; height:100%">
@@ -21,7 +12,7 @@
           </ion-col>
         </ion-row>
         <ion-col *ngIf="objeto.descricao" col-12>
-          <p class="text-center text-white mb-3 mt-3">{{objeto.descricao}}</p>
+          <p class="text-center mb-3 mt-3">{{objeto.descricao}}</p>
         </ion-col>
         <ion-col col-12>
           <ion-list *ngIf="objeto.filhos" class="mb-5">

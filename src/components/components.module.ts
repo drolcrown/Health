@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { ExpandableComponent } from './expandable/expandable';
+import { HeaderComponent } from './header/header';
 @NgModule({
-	declarations: [ExpandableComponent],
+	declarations: [ExpandableComponent,
+    HeaderComponent],
 	imports: [],
-	exports: [ExpandableComponent]
+	exports: [ExpandableComponent,
+    HeaderComponent]
 })
 export class ComponentsModule {}

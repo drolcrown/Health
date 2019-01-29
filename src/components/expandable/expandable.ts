@@ -27,11 +27,12 @@ export class ExpandableComponent {
   }
 
   recuperarItens(lista) {
-    lista.filter(el => {
+    lista.filter((el, index) => {
       if (el.nome) {
         if (el.filhos) {
-          this.html += "<br><strong>" + el.nome + "</strong><br>";
+          this.html += "<br><strong>" + el.nome + ":</strong><br><div class='ml-3'>";
           this.recuperarItens(el.filhos);
+          this.html += "</div>";
         } else {
           this.html += "<small class='ml-3'>* " + el.nome + "</small><br>";
         }

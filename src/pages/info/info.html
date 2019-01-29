@@ -1,20 +1,19 @@
 <ion-header>
-  <ion-navbar color="violet">
-    <ion-title>
-      <!-- Museu de Anatomia - UnB -->
-      Estatisticas
-    </ion-title>
-  </ion-navbar>
+  <header [title]="'Estatísticas'"></header>
 </ion-header>
 
 <ion-content>
-  <ion-card [ngStyle]="render.getMedidas(0.8, 0.95)">
-    <ion-card-content>
-      <canvas #doughnutCanvas [ngStyle]="render.getMedidas(0.4, 0.7)" class=" mb-3"></canvas>
-      <!-- <canvas #barCanvas [ngStyle]="render.getMedidas(0.4, 0.7)"></canvas> -->
-      <ul *ngFor="let obj of labels">
-        <li [ngStyle]="{color: obj.color}"><strong>{{obj.label}}</strong></li>
-      </ul>
-    </ion-card-content>
-  </ion-card>
+  <ion-scroll scrollY="true" style="width:100%; height:100%">
+    <h2 *ngIf="estat" class="text-center">Nenhum Dado Disponível</h2>
+    <ion-card *ngIf="!estat">
+      <ion-card-content class="borda text-center">
+        <strong>Ultima atualização feita em {{dateUpdate}}</strong>
+        <canvas #doughnutCanvas [ngStyle]="render.getMedidas(0.4, 0.7)" class=" mb-5"></canvas>
+        <!-- <canvas #barCanvas [ngStyle]="render.getMedidas(0.4, 0.7)"></canvas> -->
+        <ul *ngFor="let obj of labels">
+          <li [ngStyle]="{color: obj.color}"><strong>{{obj.label}}({{obj.size}})</strong></li>
+        </ul>
+      </ion-card-content>
+    </ion-card>
+  </ion-scroll>
 </ion-content>
