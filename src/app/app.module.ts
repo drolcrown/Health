@@ -33,11 +33,13 @@ import { ChildrenPage } from '../pages/children/children';
 import { ChildrenRenderPage } from '../pages/children-render/children-render';
 import { ExpandableComponent } from '../components/expandable/expandable';
 import { InfoPage } from '../pages/info/info';
+import { HeaderComponent } from '../components/header/header';
 
 @NgModule({
   declarations: [
     MyApp,
     InfoPage,
+    HeaderComponent,
     AboutPage,
     ChildrenPage,
     ChildrenRenderPage,
@@ -60,6 +62,7 @@ import { InfoPage } from '../pages/info/info';
   entryComponents: [
     MyApp,
     AboutPage,
+    HeaderComponent,
     InfoPage,
     ChildrenPage,
     ChildrenRenderPage,
