@@ -2,7 +2,7 @@
   <header [title]="" [subtitle]=""></header>
 </ion-header>
 <ion-content padding>
-  <ion-list>
+  <!-- <ion-list>
     <ion-card-header>
       Tipo de Atendimento
     </ion-card-header>
@@ -12,6 +12,12 @@
         <ion-icon color="danger" name="{{page.icon}}" item-start></ion-icon>
         {{page.name}}
       </button>
+    </ion-item> class="shadow-lg p-3 mb-2 bg-white rounded"
+  </ion-list> -->
+  <ion-list>
+    <ion-item *ngFor="let page of pages" [ngStyle]="item">
+      <ion-label>{{page.name}}</ion-label>
+      <img src="../../assets/imgs/usuario.png" />
     </ion-item>
   </ion-list>
   <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->

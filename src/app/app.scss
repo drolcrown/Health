@@ -27,3 +27,11 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import "node_modules/bootstrap/scss/bootstrap.scss";
+
+.bg-principal{
+    background: linear-gradient(to bottom right, rgb(144, 219, 221), rgb(97, 170, 219), rgb(67, 150, 206));
+}
+
+.hide-overflow{
+    overflow-y: hidden;
+}

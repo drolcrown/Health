@@ -1,15 +1,20 @@
-<ion-menu color="primary" [content]="content">
-  <ion-header>
-    <ion-toolbar color="primary" menuToggle>
-      <ion-title color="primary" >Menu</ion-title>
+<ion-menu [content]="content" style="background: transparent">
+  <!-- <ion-header>
+    <ion-toolbar menuToggle color="blue" >
+      <ion-title >Menu</ion-title>
     </ion-toolbar>
-  </ion-header>
+  </ion-header> -->
 
-  <ion-content>
-    <ion-list>
-      <button class="btn btn-outline-primary mb-2" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
+  <ion-content padding class="bg-principal" menuClose >
+    <ion-list >
+      <div class="container-fluid row col-12" >
+        <div class="col-6">
+          <img src="../../assets/imgs/usuario.png" />
+        </div>
+      </div>
+      <ion-item no-lines *ngFor="let p of pages" (click)="openPage(p)" style="background: transparent; color: white">
         {{p.title}}
-      </button>
+      </ion-item>
     </ion-list>
   </ion-content>
 

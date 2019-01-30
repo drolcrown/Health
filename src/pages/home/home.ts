@@ -13,8 +13,9 @@ export class HomePage {
     { name: 'Beleza e Estética', icon: 'people' },
     { name: 'Pets', icon: 'paw' },
   ];
-  private buttons = {
-    height: (window.screen.height * 0.1) + 'px'
+  private item = {
+    height: (window.screen.height * 0.15) + 'px',
+    width: (window.screen.width * 1) + 'px'
   }
 
   constructor(public navCtrl: NavController, private menuCtrl: MenuController) {
