@@ -1,8 +1,7 @@
-import { Component, Renderer, ViewChild, ContentChild } from '@angular/core';
+import { Component, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { RenderProvider } from '../../providers/render/render';
 import { atlas } from '../../models/atlas';
-import { ChildrenPage } from '../children/children';
 import { ChildrenRenderPage } from '../children-render/children-render';
 import { CacheProvider } from '../../providers/cache/cache';
 import { TabsPage } from '../tabs/tabs';
@@ -15,10 +14,7 @@ export class HomePage {
   public objectList: Array<any>;
   public loadedObjectList: Array<any>;
   public listAll: Array<any> = [];
-
-  // @ViewChild("expand") expand;
-  // @ViewChild("iconEnable") iconEnable;
-  // @ViewChild("iconDesable") iconDesable;
+  public activeSearch = false;
 
   constructor(public navCtrl: NavController, public render: RenderProvider,
     public renderer: Renderer, public cache: CacheProvider) {
@@ -28,10 +24,14 @@ export class HomePage {
     this.loadedObjectList = objetos;
   }
 
-  ionViewDidEnter() {
-    // this.renderer.setElementStyle(this.expand.expandWrapper.nativeElement, 'display', 'none');
-    // this.renderer.setElementStyle(this.iconDesable.nativeElement, 'display', 'none');
-    // this.renderer.setElementStyle(this.iconEnable.nativeElement, 'display', 'Block');
+  toogleSearch(search) {
+    if (this.activeSearch) {
+      this.initializeItems();
+    }
+    else {
+      search.value = "";
+    }
+    this.activeSearch = !this.activeSearch;
   }
 
   recuperarItens(lista) {
@@ -51,7 +51,7 @@ export class HomePage {
       this.renderer.setElementStyle(object.expandWrapper.nativeElement, 'display', 'block');
       iconEnable.style.display = 'none';
       iconDesable.style.display = 'block';
-      iconDesable.style.color= 'rgb(216, 36, 130)';
+      iconDesable.style.color = 'rgb(216, 36, 130)';
       row.style.background = "white";
       row.style.color = "rgb(216, 36, 130)";
       row.style.border = "1px solid rgb(216, 36, 130)";
@@ -61,7 +61,7 @@ export class HomePage {
       this.renderer.setElementStyle(object.expandWrapper.nativeElement, 'display', 'none');
       iconDesable.style.display = 'none';
       iconEnable.style.display = 'Block';
-      iconEnable.style.color= 'white';
+      iconEnable.style.color = 'white';
       row.style.background = "rgb(216, 36, 130)";
       row.style.color = "white";
       row.style.fontSize = "15px";
@@ -91,6 +91,8 @@ export class HomePage {
   }
 
   openPage(object: any) {
+    this.activeSearch = false;
+    this.initializeItems();
     this.cache.saveList("dados", object.nome);
     this.navCtrl.push(ChildrenRenderPage, { objeto: object });
   }

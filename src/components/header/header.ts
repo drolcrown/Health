@@ -12,6 +12,7 @@ import { Component, Input } from '@angular/core';
 })
 export class HeaderComponent {
   private _title = "Atlas Digital de Mamografia";
+  private _classe = "ml-3 h2 text-white";
 
   @Input()
   public set title(value: string) {
@@ -19,6 +20,14 @@ export class HeaderComponent {
     this._title = value;
     }
   }
+
+  @Input()
+  public set classe(value: string) {
+    if (value) {
+    this._classe =  "ml-3 " + value + " text-white";
+    }
+  }
+  
   
   constructor() {
   }
