@@ -8,29 +8,36 @@ import { MenuController } from 'ionic-angular';
 export class HeaderComponent {
   private _title = 'Health';
   private _subtitle = 'Saude ao seu alcance!';
-  private _activeIcon = true;
+  private _hideButton = true;
 
   @Input()
   private set title(value) {
     if (value) {
       this._title = value;
-      this._activeIcon = false;
+    }
+  }
+
+  @Input()
+  private set hideButton(value) {
+    if (value != "" && value) {
+      this._hideButton = value;
+    } else {
+      this._hideButton = false;
     }
   }
 
   @Input()
   private set subtitle(value) {
-    if(!value){
-      this._subtitle = '';      
+    if (!value) {
+      this._subtitle = '';
     }
   }
 
   constructor(private menuCtrl: MenuController) {
-    this.menuCtrl.enable(false);
   }
 
   enableMenu() {
     this.menuCtrl.enable(true);
   }
- 
+
 }

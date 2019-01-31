@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { SituacaoClinica } from '../../Models/situacaoClinica';
 
@@ -16,7 +16,8 @@ export class AtendimentoPage {
   private profissionais;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public provider: AccessFirebaseProvider) {
+    public provider: AccessFirebaseProvider, public menu: MenuController) {
+    this.menu.enable(false);
     this.name = navParams.get('name');
     this.popularSituacoes();
     // this.provider.getAll('profissional').subscribe(resp => {

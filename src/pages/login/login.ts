@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, MenuController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, MenuController, Platform, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -26,6 +26,7 @@ export class LoginPage {
 
   constructor(private navCtrl: NavController, private provider: AccessFirebaseProvider,
     private authorization: AngularFireAuth, private menuCtrl: MenuController,
+    private navParams: NavParams,
     private providerCache: CacheProvider, private platform: Platform) {
     this.menuCtrl.enable(false);
     let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
@@ -41,7 +42,7 @@ export class LoginPage {
       if (login) {
         login.then((success) => {
           this.providerCache.save('page', "HomePage");
-          this.navCtrl.push(HomePage);
+          this.navCtrl.setRoot(HomePage, this.navParams.data);
           this.provider.findObject('perfil', 'email', this.account.email).subscribe(resp => {
             this.providerCache.save('perfil', resp);
           });

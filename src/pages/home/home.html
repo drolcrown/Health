@@ -1,24 +1,13 @@
 <ion-header menuToggle>
-  <header [title]="" [subtitle]=""></header>
+  <header [title]="" [subtitle]="" [hideButton]="true"></header>
 </ion-header>
-<ion-content padding>
-  <!-- <ion-list>
-    <ion-card-header>
-      Tipo de Atendimento
-    </ion-card-header>
-    <ion-item *ngFor="let page of pages">
-      <button ion-button class="btn btn-lg btn-outline-primary mt-3" block 
-        (click)="goPage(page.name)" [ngStyle]="buttons">
-        <ion-icon color="danger" name="{{page.icon}}" item-start></ion-icon>
-        {{page.name}}
-      </button>
-    </ion-item> class="shadow-lg p-3 mb-2 bg-white rounded"
-  </ion-list> -->
-  <ion-list>
-    <ion-item *ngFor="let page of pages" [ngStyle]="item">
-      <ion-label>{{page.name}}</ion-label>
-      <img src="../../assets/imgs/usuario.png" />
-    </ion-item>
-  </ion-list>
-  <!-- <button ion-button secondary menuToggle>Toggle Menu</button> -->
+<ion-content class="container-fluid mt-2">
+  <ion-grid>
+    <ion-row justify-content-center class="text-center">
+      <ion-col col-5 *ngFor="let page of pages" [ngStyle]="buttons" [class]="page.classe" (click)="goPage(page.name)">
+        <h3 class="blue">{{page.name}}</h3>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+<app-menu [cont]="nav" ></app-menu>

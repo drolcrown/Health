@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { LoginPage } from '../login/login';
 import { CacheProvider } from '../../providers/cache/cache';
@@ -32,6 +32,7 @@ export class AcountPage {
   };
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
+    private menu: MenuController,
     private provider: AccessFirebaseProvider, private providerCache: CacheProvider) {
     let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
     this.img.width = (window.screen.width * 0.6) + 'px';
@@ -42,7 +43,8 @@ export class AcountPage {
     });
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
+    this.menu.enable(false);
   }
 
   private salvarArquivo(perfil, e) {

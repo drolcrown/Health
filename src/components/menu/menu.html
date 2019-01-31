@@ -1,0 +1,27 @@
+<ion-menu [content]="nav" style="background: transparent">
+  <ion-content padding class="bg-principal" menuClose (click)="toogleMenu()">
+    <ion-scroll scrollY="true" style="width:100%; height:100%">
+      <ion-grid>
+        <ion-row justify-content-center *ngIf="perfil">
+          <ion-col col-6 *ngIf="!perfil.imagem" (click)="openPage(pages[1])">
+            <img *ngIf="!perfil.profissao" src="../../assets/imgs/usuario.png" alt="Alterar Imagem" />
+            <img *ngIf="perfil.profissao" src="../../assets/imgs/profissional.png" alt="Alterar Imagem" />
+          </ion-col>
+          <ion-col col-6 *ngIf="perfil.imagem" (click)="openPage(pages[1])">
+            <img src="{{perfil.imagem}}" alt="Alterar Imagem" />
+          </ion-col>
+          <ion-col col-12 class="text-center text-white">
+            <h2>{{perfil.nome}} {{perfil.sobrenome}}</h2>
+            <h4 class="text-center">{{perfil.email}}</h4>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col col-12 ion-item no-lines *ngFor="let p of pages" (click)="openPage(p)" style="background: transparent; color: white">
+            <ion-icon name="{{p.icon}}" class="mr-3"></ion-icon>
+            {{p.title}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-scroll>
+  </ion-content>
+</ion-menu>

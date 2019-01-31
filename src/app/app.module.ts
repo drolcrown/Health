@@ -38,11 +38,14 @@ import { DatePipe } from '@angular/common';
 import { LoadsProvider } from '../providers/loads/loads';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { ListComponent } from '../components/list/list';
+import { ImagesComponent } from '../components/images/images';
+import { MenuComponent } from '../components/menu/menu';
 
 @NgModule({
   declarations: [
     MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
+    ImagesComponent, MenuComponent,
     FormsComponent, ProfissionalComponent, ListComponent
   ],
   imports: [
@@ -58,6 +61,7 @@ import { ListComponent } from '../components/list/list';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp, LoginPage, HeaderComponent,TestPage,
+    ImagesComponent, MenuComponent,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent, ListComponent
   ],
