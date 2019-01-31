@@ -12,21 +12,23 @@ export class AlertsProvider {
   constructor(
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    private toastCtrl: ToastController) { 
-    }
+    private toastCtrl: ToastController) {
+  }
 
-  loginAlert(code){
-    if(code.indexOf('auth/invalid-email') >= 0){
-      return 'Email Invalido';
-    }
-    else if(code.indexOf('auth/user-not-found') >= 0){
-      return 'Usuario Não encontrado';
-    }
-    else if(code.indexOf('auth/wrong-password') >= 0){
-      return 'Email ou Senha Incorretos';
-    }
-    else if(code.indexOf('auth/network-request-failed') >=  0){
-      return 'Falha no Login!! Tente Novamente';
+  loginAlert(code) {
+    if (code) {
+      if (code.indexOf('auth/invalid-email') >= 0) {
+        return 'Email Invalido';
+      }
+      else if (code.indexOf('auth/user-not-found') >= 0) {
+        return 'Usuario Não encontrado';
+      }
+      else if (code.indexOf('auth/wrong-password') >= 0) {
+        return 'Email ou Senha Incorretos';
+      }
+      else if (code.indexOf('auth/network-request-failed') >= 0) {
+        return 'Falha no Login!! Tente Novamente';
+      }
     }
   }
 

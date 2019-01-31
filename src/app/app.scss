@@ -30,3 +30,11 @@
     background-image: linear-gradient( to  bottom right, rgb(195, 219, 223),  rgb(47, 146, 163));
     // background-image: linear-gradient( to  bottom right, rgb(102, 206, 107),  rgb(41, 242, 192));
 }
+
+.bg-principal{
+    background: linear-gradient(to bottom right, rgb(144, 219, 221), rgb(97, 170, 219), rgb(67, 150, 206));
+}
+
+.hide-overflow{
+    overflow-y: hidden;
+}

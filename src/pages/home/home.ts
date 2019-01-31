@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 import { NavController, MenuController } from 'ionic-angular';
 import { AtendimentoPage } from '../atendimento/atendimento';
 import { CacheProvider } from '../../providers/cache/cache';
+import { LoginPage } from '../login/login';
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+  private perfil: Array<any>;
   private pages = [
     { name: 'Assistencia em Saúde', image: "../../assets/imgs/pets3.jpg", icon: 'heart' },
     { name: 'Prevenção e Treinamento', image: "../../assets/imgs/treino.jpg", icon: 'medical' },
@@ -26,6 +28,13 @@ export class HomePage {
     private providerCache: CacheProvider) {
       this.menuCtrl.enable(false);
       this.buttons.height = window.screen.height * 0.38 + 'px';
+  }
+
+
+  ngAfterViewInit() {
+    this.providerCache.get("perfil").then(response => {
+      this.perfil = response;
+    });
   }
 
   goPage(nome) {

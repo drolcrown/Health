@@ -1,4 +1,4 @@
-<ion-navbar hideBackButton>
+<!-- <ion-navbar hideBackButton>
   <ion-grid>
     <ion-row>
       <ion-col col-3>
@@ -13,6 +13,14 @@
         </ion-row>
       </ion-col>
     </ion-row>
-    <!-- <h5>{{_subtitle}}</h5> -->
+    <h5>{{_subtitle}}</h5>
   </ion-grid>
+</ion-navbar> -->
+
+<ion-navbar>
+
+  <button ion-button color="light" (click)="enableMenu()">
+    <ion-icon name="menu" color="primary"></ion-icon>
+  </button>
+  <p class="ml-2 font">{{_title}}</p>
 </ion-navbar>

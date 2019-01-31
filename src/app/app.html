@@ -1,17 +1,23 @@
-<ion-menu [content]="content">
-  <ion-header>
-    <ion-toolbar color="dark" >
-      <ion-title color="dark">Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-content class="bg-dark">
-    <button class="bg-dark text-white" type="button" menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-      {{p.title}}
-    </button>
+<ion-menu [content]="content" style="background: transparent">
+  <ion-content padding class="bg-principal" menuClose (click)="toogleMenu()">
+    <ion-scroll scrollY="true" style="width:100%; height:100%">
+      <ion-grid>
+        <ion-row justify-content-center>
+          <ion-col col-6 class="mb-5" (click)="openPage(pages[1])">
+            <img src="../../assets/imgs/usuario.png" />
+            <div *ngIf="perfil" class="text-center text-white">
+              {{perfil.nome}}{{perfil.sobrenome}}
+              {{perfil.email}}
+            </div>
+          </ion-col>
+          <ion-col col-12 ion-item no-lines *ngFor="let p of pages" (click)="openPage(p)" style="background: transparent; color: white">
+            <ion-icon name="{{p.icon}}" class="mr-3"></ion-icon>
+            {{p.title}}
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-scroll>
   </ion-content>
-
 </ion-menu>
 
-<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-<ion-nav [root]="rootPage" #content swipeEnabled="false" ></ion-nav>
+<ion-nav [root]="rootPage" #content swipeEnabled="false"></ion-nav> 

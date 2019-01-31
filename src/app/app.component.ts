@@ -19,28 +19,28 @@ import { ListComponent } from '../components/list/list';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  // rootPage: any = HomePage;
+
   rootPage: any = LoginPage;
+  // rootPage: any = HomePage;
   // rootPage: any = TestPage;
   // rootPage: any = ListComponent;
 
-  pages: Array<{ title: string, component: any, name: string }>;
+  pages: Array<{ title: string, component: any, name: string, icon: string }>;
 
   constructor(public platform: Platform, private authorization: AngularFireAuth,
     public statusBar: StatusBar, public splashScreen: SplashScreen,
     public cache: CacheProvider, private menuCtrl: MenuController) {
+    // this.cache.clear();
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage, name: "HomePage" },
-      // { title: 'Configurações', component: ListPage },
-      { title: 'Conta', component: AcountPage, name: "AcountPage" },
-      { title: 'ModoLista', component: ListComponent, name: "ListComponent" },
-      { title: 'List', component: ListPage, name: "ListPage" },
-      { title: 'Sair', component: LoginPage, name: "LoginPage" }
+      { title: 'Home', component: HomePage, name: "HomePage", icon: "home" },
+      { title: 'Conta', component: AcountPage, name: "AcountPage", icon: "person" },
+      { title: 'ModoLista', component: ListComponent, name: "ListComponent", icon: "list" },
+      { title: 'List', component: ListPage, name: "ListPage", icon: "search" },
+      { title: 'Sair', component: LoginPage, name: "LoginPage", icon: "log-out" }
     ];
-
   }
 
   initializeApp() {
@@ -62,8 +62,15 @@ export class MyApp {
     });
   }
 
+  toogleMenu() {
+    if (this.menuCtrl.isEnabled()) {
+      this.menuCtrl.enable(true);
+    } else {
+      this.menuCtrl.enable(false);
+    }
+  }
+
   openPage(page: any) {
-    this.menuCtrl.enable(false);
     if (page.title == 'Sair') {
       this.authorization.auth.signOut();
       this.cache.clear();
@@ -71,7 +78,7 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.cache.get("page").then(pageActual => {
-      if (page.name != pageActual) {
+      if (page.name != pageActual || !pageActual) {
         this.nav.push(page.component);
         this.cache.save("page", page.name);
       }

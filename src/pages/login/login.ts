@@ -5,7 +5,6 @@ import { AccessFirebaseProvider } from '../../providers/access-firebase/access-f
 import { AngularFireAuth } from 'angularfire2/auth';
 import { FormsComponent } from '../../components/forms/forms';
 import { CacheProvider } from '../../providers/cache/cache';
-import { AlertsProvider } from '../../providers/alerts/alerts';
 
 @IonicPage()
 @Component({
