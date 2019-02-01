@@ -30,7 +30,14 @@ export class HeaderComponent {
   }
 
   enableMenu() {
+    console.log("teste")
     this.menuCtrl.enable(true);
+    this.menuCtrl.toggle();
+  }
+
+  teste(){
+    console.log("teste")
+    return true;
   }
  
 }

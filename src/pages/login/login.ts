@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, MenuController, Platform } from 'ionic-angular';
+import { IonicPage, NavController, MenuController, Platform, Events } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -67,7 +67,7 @@ export class LoginPage {
   }
 
   registrar() {
-    this.providerCache.save('page',"FormsComponent");
+    this.providerCache.save('page', "FormsComponent");
     this.navCtrl.push(FormsComponent);
   }
 }

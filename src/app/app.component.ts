@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, NavParams, NavController, MenuController } from 'ionic-angular';
+import { Nav, Platform, NavParams, NavController, MenuController, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -12,6 +12,7 @@ import { TestPage } from '../pages/test/test';
 import { CacheProvider } from '../providers/cache/cache';
 import { FormsComponent } from '../components/forms/forms';
 import { ListComponent } from '../components/list/list';
+import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,13 +22,14 @@ export class MyApp {
 
   // rootPage: any = HomePage;
   rootPage: any = LoginPage;
+  loginPage: any = LoginPage;
   // rootPage: any = TestPage;
   // rootPage: any = ListComponent;
 
   pages: Array<{ title: string, component: any, name: string }>;
 
-  constructor(public platform: Platform, private authorization: AngularFireAuth,
-    public statusBar: StatusBar, public splashScreen: SplashScreen,
+  constructor(public platform: Platform, private provider: AccessFirebaseProvider,
+    public statusBar: StatusBar, public splashScreen: SplashScreen, public events: Events,
     public cache: CacheProvider, private menuCtrl: MenuController) {
     this.initializeApp();
 
@@ -52,10 +54,6 @@ export class MyApp {
       }
     });
     this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      // this.statusBar.styleDefault();
-      // this.statusBar.overlaysWebView(false);
       // this.statusBar.backgroundColorByHexString('#ffffff');
       // this.splashScreen.hide();
       this.statusBar.show();
@@ -65,7 +63,7 @@ export class MyApp {
   openPage(page: any) {
     this.menuCtrl.enable(false);
     if (page.title == 'Sair') {
-      this.authorization.auth.signOut();
+      this.provider.authorization.auth.signOut();
       this.cache.clear();
     }
     // Reset the content nav to have just this page
