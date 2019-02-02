@@ -44,7 +44,6 @@ export class LoginPage {
             this.providerCache.save('perfil', resp);
           });
           this.navCtrl.setRoot(HomePage);
-          this.menuCtrl.enable(true);
           loading.dismiss();
         }).catch(error => {
           this.loginErrorString = this.provider.alert.loginAlert(error.code);

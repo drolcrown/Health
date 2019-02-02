@@ -9,21 +9,24 @@ import { CacheProvider } from '../../providers/cache/cache';
 })
 export class HomePage {
   private pages = [
-    { name: 'Assistencia em Saúde', image: "../../assets/imgs/pets3.jpg", icon: 'heart' },
-    { name: 'Prevenção e Treinamento', image: "../../assets/imgs/treino.jpg", icon: 'medical' },
-    { name: 'Beleza e Estética', image: "../../assets/imgs/treino.jpg", icon: 'people' },
-    { name: 'Pets', image: "../../assets/imgs/pets3.jpg", icon: 'paw' },
+    { name: 'Assistencia em Saúde', image: "../../assets/imgs/pets3.jpg", classe: "border border-primary", icon: 'heart' },
+    { name: 'Prevenção e Treinamento', image: "../../assets/imgs/treino.jpg", classe: "border border-success ml-1", icon: 'medical' },
+    { name: 'Beleza e Estética', image: "../../assets/imgs/treino.jpg", classe: "border border-success mt-1", icon: 'people' },
+    { name: 'Pets', image: "../../assets/imgs/pets3.jpg", classe: "border border-primary ml-1 mt-1", icon: 'paw' },
   ];
+
   private buttons = {
     display: 'flex',
-    height: window.screen.height * 0.40 + 'px',
+    height: window.screen.height * 0.38 + 'px',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
   }
 
-  constructor(public navCtrl: NavController, private providerCache: CacheProvider) {
-      this.buttons.height = window.screen.height * 0.38 + 'px';
+  constructor(public navCtrl: NavController, private providerCache: CacheProvider, 
+    public menuCtrl: MenuController) {
+    this.buttons.height = window.screen.height * 0.38 + 'px';
+    this.menuCtrl.enable(true);
   }
 
   goPage(nome) {

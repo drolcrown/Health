@@ -10,6 +10,7 @@ import { AcountPage } from '../pages/acount/acount';
 import { CacheProvider } from '../providers/cache/cache';
 import { ListComponent } from '../components/list/list';
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
+import { a } from '@angular/core/src/render3';
 
 @Component({
   templateUrl: 'app.html'
@@ -18,7 +19,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // rootPage: any = HomePage;
-  rootPage: any = LoginPage;
+  rootPage: any;
 
   content;
   perfil;
@@ -39,7 +40,14 @@ export class MyApp {
   }
 
   initializeApp() {
-    this.loadPerfil();
+    this.cache.get("perfil").then(perfil => {
+      this.perfil = perfil;
+      if (this.perfil) {
+        this.rootPage = HomePage;
+      }else{
+        this.rootPage = LoginPage;
+      }
+    });
     this.platform.registerBackButtonAction(() => {
       if (this.nav.length() <= 1) {
         this.platform.exitApp();
@@ -48,14 +56,15 @@ export class MyApp {
       }
     });
     this.platform.ready().then(() => {
-      // this.statusBar.backgroundColorByHexString('#ffffff');
-      // this.splashScreen.hide();
+      this.statusBar.backgroundColorByHexString('#4FD5EC');
+      this.statusBar.overlaysWebView(true);
+      this.statusBar.styleLightContent();
+      this.splashScreen.show();
       this.statusBar.show();
     });
   }
 
   loadPerfil() {
-    console.log('eiei')
     this.cache.get("perfil").then(perfil => {
       this.perfil = perfil;
     })
@@ -68,7 +77,7 @@ export class MyApp {
     }
     this.cache.get("page").then(pageActual => {
       if (page.name != pageActual) {
-        this.nav.push(page.component);
+        this.nav.setRoot(page.component);
         this.cache.save("page", page.name);
       }
     });

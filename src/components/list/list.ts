@@ -27,7 +27,7 @@ export class ListComponent {
     console.log('Hello ListComponent Component');
     // this.name = navParams.get('name');
     this.text = 'Hello World';
-    // this.profissionais = this.provider.getAll('profissional')
+    this.profissionais = this.provider.getAll('profissional')
   }
 
 }

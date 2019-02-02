@@ -1,7 +1,12 @@
 <!-- Generated template for the ListComponent component -->
-<ion-scroll scrollY="true" style="width: 100%; height: 100%">
-  <div *ngFor="let opt of profissionais" class="container border-bottom border-primary">
-    <h3 class="mt-2">{{opt.nome}}</h3>
-    <h5 *ngIf="opt.descricao">{{opt.descricao}}</h5>
-  </div>
-</ion-scroll>
+<ion-header>
+  <header [title]="" [hideButton]="true"></header>
+</ion-header>
+<ion-content>
+  <ion-scroll scrollY="true" style="width: 100%; height: 100%">
+    <div *ngFor="let opt of profissionais | async" class="container border-bottom border-primary">
+      <h3 class="mt-2">{{opt.nome}}</h3>
+      <h5 *ngIf="opt.descricao">{{opt.descricao}}</h5>
+    </div>
+  </ion-scroll>
+</ion-content>
