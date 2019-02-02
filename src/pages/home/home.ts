@@ -22,8 +22,7 @@ export class HomePage {
     alignSelf: 'center',
   }
 
-  constructor(public navCtrl: NavController, private menuCtrl: MenuController,
-    private providerCache: CacheProvider,) {
+  constructor(public navCtrl: NavController, private providerCache: CacheProvider) {
       this.buttons.height = window.screen.height * 0.38 + 'px';
   }
 

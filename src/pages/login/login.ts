@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, MenuController, Platform, Events } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { FormsComponent } from '../../components/forms/forms';
 import { CacheProvider } from '../../providers/cache/cache';
-import { AlertsProvider } from '../../providers/alerts/alerts';
 
 @IonicPage()
 @Component({
@@ -26,8 +24,7 @@ export class LoginPage {
   };
 
   constructor(private navCtrl: NavController, private provider: AccessFirebaseProvider,
-    private authorization: AngularFireAuth, private menuCtrl: MenuController,
-    private providerCache: CacheProvider, private platform: Platform) {
+    private menuCtrl: MenuController, private providerCache: CacheProvider) {
     this.menuCtrl.enable(false);
     let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
     this.img.width = (tamanhoImg * 0.2) + 'px';
@@ -40,14 +37,18 @@ export class LoginPage {
     if (this.account.email != '' && this.account.password != '') {
       let login = this.provider.doLogin(this.account);
       if (login) {
+        let loading = this.provider.loadingCtrl.presentLoadingDefault();
         login.then((success) => {
           this.providerCache.save('page', "HomePage");
-          this.navCtrl.setRoot(HomePage);
           this.provider.findObject('perfil', 'email', this.account.email).subscribe(resp => {
             this.providerCache.save('perfil', resp);
           });
+          this.navCtrl.setRoot(HomePage);
+          this.menuCtrl.enable(true);
+          loading.dismiss();
         }).catch(error => {
           this.loginErrorString = this.provider.alert.loginAlert(error.code);
+          loading.dismiss();
         });
       }
     } else {

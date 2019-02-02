@@ -40,7 +40,8 @@ $colors: (
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
+  dark:       #222,
+  blue:       rgb(47, 146, 163),
 );
 
 
@@ -112,12 +113,3 @@ $grid-max-widths: (
   md: 720px,
   lg: 960px
 );
-
-$colors: (
-  primary:    #488aff,
-  secondary:  #32db64,
-  danger:     #f53d3d,
-  light:      #f4f4f4,
-  dark:       #222,
-  yellow:    yellow
-  );

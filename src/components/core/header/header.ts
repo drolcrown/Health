@@ -1,12 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { MenuController, Nav, NavController } from 'ionic-angular';
-import { CacheProvider } from '../../../providers/cache/cache';
-import { AccessFirebaseProvider } from '../../../providers/access-firebase/access-firebase';
-import { HomePage } from '../../../pages/home/home';
-import { AcountPage } from '../../../pages/acount/acount';
-import { ListComponent } from '../../list/list';
-import { ListPage } from '../../../pages/list/list';
-import { LoginPage } from '../../../pages/login/login';
+import { MenuController } from 'ionic-angular';
 
 @Component({
   selector: 'header',
@@ -14,17 +7,7 @@ import { LoginPage } from '../../../pages/login/login';
 })
 export class HeaderComponent {
   private _title = 'Health';
-  private _subtitle = 'Saude ao seu alcance!';
-  private content;
-  private perfil;
-  private pages = [
-    { title: 'Home', component: HomePage, name: "HomePage" },
-    // { title: 'Configurações', component: ListPage },
-    { title: 'Conta', component: AcountPage, name: "AcountPage" },
-    { title: 'ModoLista', component: ListComponent, name: "ListComponent" },
-    { title: 'List', component: ListPage, name: "ListPage" },
-    { title: 'Sair', component: LoginPage, name: "LoginPage" }
-  ];
+  private _hideButton = true;
 
   @Input()
   private set title(value) {
@@ -34,42 +17,17 @@ export class HeaderComponent {
   }
 
   @Input()
-  private set subtitle(value) {
-    if (!value) {
-      this._subtitle = '';
-    }
+  private set hideButton(value) {
+    this._hideButton = value;
   }
 
-  constructor(public menuCtrl: MenuController, public cache: CacheProvider,
-    public provider: AccessFirebaseProvider, public nav: NavController) {
-    this.content = menuCtrl.get('unauthenticated').getContentElement();
-    this.cache.get("perfil").then(perfil => {
-      this.perfil = perfil;
-    })
-  }
-
-
-  
-  public openPage(page: any) {
-    console.log(this.content)
-    alert('sds')
-    this.menuCtrl.enable(false);
-    if (page.title == 'Sair') {
-      this.provider.authorization.auth.signOut();
-      this.cache.clear();
-    }
-    this.cache.get("page").then(pageActual => {
-      if (page.name != pageActual) {
-        this.nav.push(page.component);
-        this.cache.save("page", page.name);
-      }
-    });
+  constructor(public menuCtrl: MenuController) {
+    menuCtrl.enable(true);
   }
 
   public enableMenu() {
-    this.menuCtrl.enable(true, 'authenticated');
-    this.menuCtrl.enable(false, 'unauthenticated');
-    this.menuCtrl.toggle('authenticated');
+    this.menuCtrl.enable(true);
+    this.menuCtrl.toggle();
   }
 
 }

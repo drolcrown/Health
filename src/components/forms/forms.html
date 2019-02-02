@@ -1,12 +1,12 @@
 <ion-header>
-  <!-- <ion-navbar  color="primary" class="text-center" >
-    <ion-title>Cadastro</ion-title>
-  </ion-navbar> -->
-  <ion-segment class="border border-primary" [(ngModel)]="_usuarioSelecionado">
-    <ion-segment-button value="paciente" class="text-white bg-primary">
+  <ion-navbar color="blue" class="text-center">
+    <ion-title>Cadastre-se</ion-title>
+  </ion-navbar>
+  <ion-segment [(ngModel)]="_usuarioSelecionado">
+    <ion-segment-button value="paciente" class="border border-primary text-primary" >
       Paciente
     </ion-segment-button>
-    <ion-segment-button value="profissional" class="text-white bg-primary">
+    <ion-segment-button value="profissional" class="border border-primary text-primary" >
       Profissional
     </ion-segment-button>
   </ion-segment>
