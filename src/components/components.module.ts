@@ -3,6 +3,7 @@ import { HeaderComponent } from './core/header/header';
 import { FormsComponent } from './forms/forms';
 import { ProfissionalComponent } from './forms/profissional/profissional';
 import { ListComponent } from './list/list';
+import { MenuComponent } from './menu/menu';
 
 @NgModule({
 	declarations: [HeaderComponent,
@@ -10,6 +11,7 @@ import { ListComponent } from './list/list';
     FormsComponent,
     ProfissionalComponent,
     ListComponent,
+    MenuComponent,
     ],
 	imports: [],
 	exports: [HeaderComponent,
@@ -17,6 +19,7 @@ import { ListComponent } from './list/list';
     FormsComponent,
     ProfissionalComponent,
     ListComponent,
+    MenuComponent,
     ]
 })
 export class ComponentsModule {}

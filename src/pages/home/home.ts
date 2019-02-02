@@ -23,8 +23,7 @@ export class HomePage {
   }
 
   constructor(public navCtrl: NavController, private menuCtrl: MenuController,
-    private providerCache: CacheProvider) {
-      this.menuCtrl.enable(false);
+    private providerCache: CacheProvider,) {
       this.buttons.height = window.screen.height * 0.38 + 'px';
   }
 

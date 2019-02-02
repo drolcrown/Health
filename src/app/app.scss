@@ -26,7 +26,38 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+@import url('https://fonts.googleapis.com/css?family=Hammersmith+One|Merriweather|Oswald');
+
+.font-merri{
+    font-family: 'Merriweather', serif;
+}
+
+.font-oswald{
+    font-family: 'Oswald', sans-serif;
+}
+
+.font-hammer{
+    font-family: 'Hammersmith One', sans-serif;
+}
+
+.blue{
+    color: rgb(46, 142, 206);
+  }
+  
 .bg-login{
     background-image: linear-gradient( to  bottom right, rgb(195, 219, 223),  rgb(47, 146, 163));
     // background-image: linear-gradient( to  bottom right, rgb(102, 206, 107),  rgb(41, 242, 192));
+}
+
+.bg-principal{
+    background: linear-gradient(to bottom right, rgb(144, 219, 221), rgb(97, 170, 219), rgb(67, 150, 206));
+}
+
+.hide-overflow{
+    overflow-y: hidden;
+}
+
+.img-circular{
+    border-radius: 50%;
+    border: 1px solid white;
 }

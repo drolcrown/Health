@@ -1,18 +1,57 @@
-<ion-navbar hideBackButton>
-  <ion-grid >
-    <ion-row>
-      <ion-col col-3>
-        <button ion-button color="light" (click)="enableMenu()">
-          <ion-icon name="menu" color="primary"></ion-icon>
-        </button>
-      </ion-col>
-      <ion-col col-6 align-self-center>
-        <ion-row >
-          <ion-icon *ngIf="_activeIcon" color="danger" name="heart"></ion-icon>
-          <p class="ml-2 font">{{_title}}</p>
-        </ion-row>
+<ion-header>
+  <ion-navbar #test>
+    <ion-grid>
+      <ion-row>
+        <ion-col col-3>
+          <button ion-button color="light" (click)="enableMenu()">
+            <ion-icon name="menu" color="primary"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col col-6 align-self-center>
+          <ion-row>
+            <p class="ml-2 font">{{_title}}</p>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-navbar>
+</ion-header>
+<!-- <ion-navbar padding hideBackButton="_hideButton">
+    <ion-row >
+      <ion-col *ngIf="_hideButton" col-2 (click)="enableMenu()" color="blue-light">
+        <ion-icon name="menu" color="light"></ion-icon>
+        <img src="../../../assets/icon/menu.svg" class="ml-3"/>
+      </ion-col> 
+      <ion-col col-10 align-self-center>
+        <p class="h1 ml-5 blue">{{_title}}</p>
       </ion-col>
     </ion-row>
-    <!-- <h5>{{_subtitle}}</h5> -->
-  </ion-grid>
-</ion-navbar>
+  </ion-navbar> -->
+
+<ion-menu id="authenticated" side="left" [content]="test">
+  <ion-content padding class="bg-principal">
+    <ion-row>
+      <ion-row justify-content-center>
+        <ion-col col-6 (click)="openPage(pages[1])">
+          <img class="img-circular" *ngIf="!perfil" src="../../assets/imgs/usuario.png" alt="Alterar Imagem" />
+          <img class="img-circular" *ngIf="perfil && !perfil.imagem && perfil.profissao" src="../../assets/imgs/profissional.png"
+            alt="Alterar Imagem" />
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center>
+        <ion-col col-6 *ngIf="perfil && perfil.imagem" (click)="openPage(pages[1])">
+          <img class="img-circular" src="{{perfil.imagem}}" alt="Alterar Imagem" />
+        </ion-col>
+      </ion-row>
+      <ion-col *ngIf="perfil" col-12 class="text-center text-white mt-2">
+        <h2>{{perfil.nome}} {{perfil.sobrenome}}</h2>
+      </ion-col>
+    </ion-row>
+    <ion-row class="mt-5">
+      <ion-col col-12 ion-item no-lines *ngFor="let p of pages" menuClose (click)="openPage(p)" style="background: transparent; color: white">
+        <ion-icon name="{{p.icon}}" class="mr-3"></ion-icon>
+        {{p.title}}
+      </ion-col>
+    </ion-row>
+  </ion-content>
+</ion-menu>
