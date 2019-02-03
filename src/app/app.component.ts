@@ -57,9 +57,7 @@ export class MyApp {
     });
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString('#4FD5EC');
-      this.statusBar.overlaysWebView(true);
-      this.statusBar.styleLightContent();
-      this.splashScreen.show();
+      // this.splashScreen.hide();
       this.statusBar.show();
     });
   }
