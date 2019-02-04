@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { LoginPage } from '../login/login';
 import { CacheProvider } from '../../providers/cache/cache';
 import { HomePage } from '../home/home';
+import { ConfigPage } from '../config/config';
 
 @IonicPage()
 @Component({
@@ -11,6 +13,7 @@ import { HomePage } from '../home/home';
   templateUrl: 'acount.html',
 })
 export class AcountPage {
+  private form: FormGroup;
   private perfil: any;
   private email: string;
   private PATH = 'perfil';
@@ -32,17 +35,20 @@ export class AcountPage {
   };
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
+    private menuCtrl: MenuController, private builder: FormBuilder,
     private provider: AccessFirebaseProvider, private providerCache: CacheProvider) {
     let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
     this.img.width = (window.screen.width * 0.6) + 'px';
     this.img.height = (tamanhoImg * 0.3) + 'px';
-    this.provider.alert.presentLoading(2);
-    this.providerCache.get(this.PATH).then(response => {
-      this.perfil = response;
-    });
   }
 
-  ionViewWillEnter() {
+  ionViewDidEnter() {
+    let alerta = this.provider.loadingCtrl.presentLoadingDefault();
+    this.providerCache.get(this.PATH).then(response => {
+      this.form = this.builder.group(response)
+      this.perfil = response;
+      alerta.dismiss();
+    });
   }
 
   private salvarArquivo(perfil, e) {
@@ -61,7 +67,7 @@ export class AcountPage {
                 this.provider.updateParams(this.PATH, 'email', perfil.email, perfil);
                 this.providerCache.save(this.PATH, perfil);
                 loading.dismiss();
-                this.navCtrl.push(HomePage);
+                this.navCtrl.setRoot(AcountPage);
               })
               .catch((erro) => {
                 this.provider.alert.showToast('Falha na Alteração da Imagem!!');
@@ -77,15 +83,24 @@ export class AcountPage {
   }
 
   public trocarSenha(perfil) {
+    this.perfil = this.provider.updatePassword(perfil);
     this.providerCache.remove(this.PATH);
-    perfil = this.provider.updatePassword(perfil);
     this.providerCache.save('perfil', perfil);
   }
 
 
   public excluirConta(perfil) {
-    this.provider.excluirConta(perfil);
-    this.providerCache.clear();
-    this.navCtrl.push(LoginPage);
+    if (this.provider.excluirConta(perfil)) {
+      this.providerCache.clear();
+      this.navCtrl.push(LoginPage);
+    }
+  }
+
+  public goConfig() {
+    this.navCtrl.push(ConfigPage);
+  }
+
+  public toggle() {
+    this.menuCtrl.toggle();
   }
 }

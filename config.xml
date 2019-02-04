@@ -3,7 +3,7 @@
     <name>Health</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://192.168.137.183:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -27,18 +27,18 @@
         <icon density="xhdpi" src="resources/android/icon/icon.jpg" />
         <icon density="xxhdpi" src="resources/android/icon/icon.jpg" />
         <icon density="xxxhdpi" src="resources/android/icon/icon.jpg" />
-        <splash density="land-ldpi" src="resources/android/splash/splash.jpg" />
-        <splash density="land-mdpi" src="resources/android/splash/splash.jpg" />
-        <splash density="land-hdpi" src="resources/android/splash/splash.jpg" />
-        <splash density="land-xhdpi" src="resources/android/splash/splash.jpg" />
-        <splash density="land-xxhdpi" src="resources/android/splash/splash.jpg" />
-        <splash density="land-xxxhdpi" src="resources/android/splash/splash.jpg" />
-        <splash density="port-ldpi" src="resources/android/splash/splash.jpg" />
-        <splash density="port-mdpi" src="resources/android/splash/splash.jpg" />
-        <splash density="port-hdpi" src="resources/android/splash/splash.jpg" />
-        <splash density="port-xhdpi" src="resources/android/splash/splash.jpg" />
-        <splash density="port-xxhdpi" src="resources/android/splash/splash.jpg" />
-        <splash density="port-xxxhdpi" src="resources/android/splash/splash.jpg" />
+        <splash density="land-ldpi" src="resources/android/splash/splash.png" />
+        <splash density="land-mdpi" src="resources/android/splash/splash.png" />
+        <splash density="land-hdpi" src="resources/android/splash/splash.png" />
+        <splash density="land-xhdpi" src="resources/android/splash/splash.png" />
+        <splash density="land-xxhdpi" src="resources/android/splash/splash.png" />
+        <splash density="land-xxxhdpi" src="resources/android/splash/splash.png" />
+        <splash density="port-ldpi" src="resources/android/splash/splash.png" />
+        <splash density="port-mdpi" src="resources/android/splash/splash.png" />
+        <splash density="port-hdpi" src="resources/android/splash/splash.png" />
+        <splash density="port-xhdpi" src="resources/android/splash/splash.png" />
+        <splash density="port-xxhdpi" src="resources/android/splash/splash.png" />
+        <splash density="port-xxxhdpi" src="resources/android/splash/splash.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
@@ -83,6 +83,7 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^2.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-plugin-camera" spec="4.0.3" />
+    <allow-navigation href="http://192.168.137.183:8100" sessionid="43748f6e" />
     <engine name="android" spec="7.1.1" />
     <engine name="ios" spec="4.5.5" />
     <engine name="browser" spec="5.0.4" />

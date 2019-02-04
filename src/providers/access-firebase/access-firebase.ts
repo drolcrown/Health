@@ -26,24 +26,48 @@ export class AccessFirebaseProvider {
     return hash.hex();
   }
 
-  async doLogin(account) {
+  doLogin(account) {
+    let contador = 0;
     let loading = this.loadingCtrl.presentLoadingDefault();
     let password = this.encripty(account.password);
-    setTimeout(() => { loading.dismiss(); }, 10000);
-    await this.authorization.auth.signInWithEmailAndPassword(account.email, password)
-      .then((resp) => {
+    let intervalo = setInterval(() => {
+      contador++;
+      if (contador < 15) {
+        this.authorization.auth.signInWithEmailAndPassword(account.email, password)
+          .then((resp) => {
+            loading.dismiss();
+            clearInterval(intervalo);
+          }).catch(error => {
+            loading.dismiss();
+            clearInterval(intervalo);
+          });
+      }else {
         loading.dismiss();
-      }).catch(error => {
-        loading.dismiss();
-      });
+        clearInterval(intervalo);
+        return;
+      }
+    }, 1000);
     return this.authorization.auth.signInWithEmailAndPassword(account.email, password);
   }
 
   getAll(PATH): any {
+    let contador = 0;
     let loading = this.loadingCtrl.presentLoadingDefault();
-    this.db.list(PATH).valueChanges().subscribe(valor => {
-      loading.dismiss();
-    });
+    let intervalo = setInterval(() => {
+      contador++;
+      if (contador < 15) {
+        this.db.list(PATH).valueChanges().subscribe(valor => {
+          loading.dismiss();
+          clearInterval(intervalo);
+        });
+      } else {
+        loading.dismiss();
+        this.alert.showToast("Erro de Conexão!");
+        clearInterval(intervalo);
+        return;
+      }
+    }, 1000);
+
     return this.db.list(PATH).valueChanges();
   }
 
@@ -252,6 +276,7 @@ export class AccessFirebaseProvider {
   }
 
   excluirConta(perfil): any {
+    let response = false;
     this.alert.newAlert().create({
       title: 'Excluir Conta',
       inputs: [
@@ -272,6 +297,7 @@ export class AccessFirebaseProvider {
               this.authorization.auth.currentUser.delete()
                 .then(() => {
                   this.removeParams('perfil', 'email', perfil.email);
+                  response = true;
                   loading.dismiss();
                 }).catch(() => {
                   loading.dismiss();
@@ -289,5 +315,6 @@ export class AccessFirebaseProvider {
         },
       ],
     }).present();
+    return response;
   }
 }

@@ -23,18 +23,18 @@ export class MyApp {
 
   content;
   perfil;
-  pages: Array<{ title: string, component: any, name: string }>;
+  pages: Array<{ title: string, component: any, icon: string, name: string }>;
 
   constructor(public platform: Platform, private provider: AccessFirebaseProvider,
     public statusBar: StatusBar, public splashScreen: SplashScreen,
     public cache: CacheProvider, private menuCtrl: MenuController) {
     this.pages = [
-      { title: 'Home', component: HomePage, name: "HomePage" },
+      { title: 'Home', component: HomePage, icon: "home",name: "HomePage" },
       // { title: 'Configurações', component: ListPage },
-      { title: 'Conta', component: AcountPage, name: "AcountPage" },
-      { title: 'ModoLista', component: ListComponent, name: "ListComponent" },
-      { title: 'List', component: ListPage, name: "ListPage" },
-      { title: 'Sair', component: LoginPage, name: "LoginPage" }
+      { title: 'Conta', component: AcountPage, icon: "person",name: "AcountPage" },
+      { title: 'Mensagens', component: ListComponent, icon: "list",name: "ListComponent" },
+      { title: 'List', component: ListPage, icon: "list",name: "ListPage" },
+      { title: 'Sair', component: LoginPage, icon: "log-out",name: "LoginPage" }
     ];
     this.initializeApp();
   }
@@ -48,12 +48,13 @@ export class MyApp {
         this.rootPage = LoginPage;
       }
     });
+    // this.rootPage = AcountPage
     this.platform.registerBackButtonAction(() => {
-      if (this.nav.length() <= 1) {
-        this.platform.exitApp();
-      } else {
+      // if (this.nav.length() <= 1) {
+      //   this.platform.exitApp();
+      // } else {
         this.nav.pop();
-      }
+      // }
     });
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString('#4FD5EC');
@@ -62,8 +63,8 @@ export class MyApp {
     });
   }
 
-  loadPerfil() {
-    this.cache.get("perfil").then(perfil => {
+  async loadPerfil() {
+    return await this.cache.get("perfil").then(perfil => {
       this.perfil = perfil;
     })
   }

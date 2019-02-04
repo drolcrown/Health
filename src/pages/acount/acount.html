@@ -1,73 +1,51 @@
-<ion-header menuToggle>
-  <header [title]="'Minha Conta'" [hideButton]="true"></header>
+<ion-header>
+  <ion-navbar hideBackButton color="blue-light">
+    <ion-row align-self-items>
+      <ion-col col-2 (click)="toggle()" class="text-center">
+        <ion-icon name="menu"></ion-icon>
+      </ion-col>
+      <ion-col col-10>
+        <ion-title class=" font-hammer">Minha Conta</ion-title>
+      </ion-col>
+      <!-- <ion-col (click)="goConfig()" class="text-center">
+          <ion-icon name="settings"></ion-icon>
+        </ion-col> -->
+    </ion-row>
+  </ion-navbar>
 </ion-header>
 
-<ion-content>
-  <ion-grid class="text-center">
-    <ion-card *ngIf="perfil">
-      <ion-card-content [ngStyle]="tamanho">
-        <ion-grid [ngStyle]="box">
-          <ion-row class="btn-wrap">
-            <ion-col *ngIf="!perfil.imagem">
-              <label for="selecao-arquivo">
-                <img *ngIf="!perfil.profissao" [ngStyle]="img" src="../../assets/imgs/usuario.png" alt="Alterar Imagem" />
-                <img *ngIf="perfil.profissao" [ngStyle]="img" src="../../assets/imgs/profissional.png" alt="Alterar Imagem" />
-              </label>
-            </ion-col>
-            <ion-col *ngIf="perfil.imagem" >
-              <label for="selecao-arquivo">
-                <img [ngStyle]="img" src="{{perfil.imagem}}" alt="Alterar Imagem" />
-              </label>
-            </ion-col>
-          </ion-row>
-          <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
-          <ion-row>
-            <ion-card-title>
-              {{perfil.nome}}
-            </ion-card-title>
-          </ion-row>
-          <ion-row>
-            <p *ngIf="perfil.profissao">{{perfil.profissao}}</p>
-          </ion-row>
-          <ion-row>
-            <p *ngIf="perfil.crm">CRM: {{perfil.crm}}</p>
-          </ion-row>
-          <ion-row>
-            <p class="mt-2">
-              Data de Nascimento: {{perfil.data}}
-            </p>
-          </ion-row>
-          <ion-row>
-            <p class="mt-2">
-              {{perfil.cidade}} - {{perfil.estado}}
-            </p>
-          </ion-row>
-          <ion-row>
-            <p class="mt-2">
-              {{perfil.email}}
-            </p>
-          </ion-row>
-          <ion-row>
-            <p class="mt-2">
-              Peso: {{perfil.peso}}
-            </p>
-          </ion-row>
-          <ion-row>
-            <ion-card-title>
-              Avaliação
-            </ion-card-title>
-          </ion-row>
-          <ion-row>
-            <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#488aff" defaultColor="#f03d3d"
-              readonly="true" [rating]="perfil.avaliacao">
-            </ionic3-star-rating>
-          </ion-row>
-          <ion-row class="margin">
-            <button ion-button class="btn btn-outline-primary ml-2" (click)="trocarSenha(perfil)">Trocar Senha</button>
-            <button ion-button class="btn btn-outline-primary" (click)="excluirConta(perfil)">Excluir Conta</button>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
-  </ion-grid>
+<ion-content padding>
+  <form *ngIf="form" [formGroup]="form">
+    <ion-grid>
+      <ion-row align-items-center>
+        <ion-col col-4 *ngIf="perfil">
+          <img #ev src="{{perfil.imagem}}" class="img-circular" (click)="salvarArquivo(perfil, event)"/>
+        </ion-col>
+        <ion-col col-8 align-self-items>
+          <strong>Nome</strong>
+          <ion-input formControlName="nome" type="text" placeholder="nome"></ion-input>
+          <strong>Sobrenome</strong>
+          <ion-input formControlName="sobrenome" type="text" placeholder="Sobrenome"></ion-input>
+        </ion-col>
+        <ion-col align-items-center col-12>
+          <strong col-5>Data de Nascimento:</strong>
+          <ion-input type="text" col-12 formControlName="data" placeholder="17/03/1993" [brmasker]="{mask:'17/03/1993', len:10}"></ion-input>
+          <strong col-5>Cidade:</strong>
+          <ion-input col-12 formControlName="cidade" type="text" placeholder="Brasilia"></ion-input>
+          <strong col-5>Estado:</strong>
+          <ion-input col-12 formControlName="estado" type="text" placeholder="Distrito Federal"></ion-input>
+        </ion-col>
+        <ion-col align-items-center col-12 class="text-center">
+          <ion-title>Avaliação</ion-title>
+          <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#4FD5EC" defaultColor="#f03d3d"
+            readonly="true" [rating]="5">
+          </ionic3-star-rating>
+        </ion-col>
+      </ion-row>
+      <ion-row justify-content-center class="mt-4">
+        <button ion-button color="blue-light" (click)="trocarSenha(perfil)">Trocar Senha</button>
+        <button ion-button color="blue-light" (click)="excluirConta(perfil)">Excluir Conta</button>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
