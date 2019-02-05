@@ -15,7 +15,7 @@ import { sha256, sha224 } from 'js-sha256';
 @Injectable()
 export class AccessFirebaseProvider {
   private perfis = [];
-  constructor(private db: AngularFireDatabase, private fp: FirebaseApp,
+  constructor(public db: AngularFireDatabase, private fp: FirebaseApp,
     public authorization: AngularFireAuth, private camera: Camera,
     public alert: AlertsProvider, public loadingCtrl: LoadsProvider) {
   }
@@ -41,7 +41,7 @@ export class AccessFirebaseProvider {
             loading.dismiss();
             clearInterval(intervalo);
           });
-      }else {
+      } else {
         loading.dismiss();
         clearInterval(intervalo);
         return;
@@ -88,6 +88,29 @@ export class AccessFirebaseProvider {
     return newObject;
   }
 
+  findListObject(path: string, param: string): Subject<any> {
+    let newObject = [];
+    let user;
+    let subject = new Subject();
+    this.getAll(path).subscribe((valor: any) => {
+      valor.filter((element: any) => {
+        if (element.user2.email && element.user1.email) {
+          if (element.user2.email.indexOf(param) > -1 || element.user1.email.indexOf(param) > -1) {
+            if (element.user2.email.indexOf(param) > -1) {
+              user = "user2";
+            } else {
+              user = "user1";
+            }
+            newObject.push(element);
+            subject.next({ user: user, list: newObject });
+          }
+        }
+      });
+    });
+
+    return subject;
+  }
+
   getKey(PATH: any, object: any): Subject<any> {
     let childData, idEncontrado = false;
     let newObject = new Subject();
@@ -112,6 +135,7 @@ export class AccessFirebaseProvider {
     let ref = this.db.database.ref(path);
     ref.orderByChild(key).equalTo(value)
       .on("child_added", (snapshot) => {
+        console.log(snapshot)
         newObject.next({ key: snapshot.key, value: object });
       });
 
@@ -142,9 +166,10 @@ export class AccessFirebaseProvider {
     let loading = this.loadingCtrl.presentLoadingDefault();
     this.db.list(PATH).push(object)
       .then((response) => {
+        object.id = response.key
+        this.db.list(PATH).update(object.id, object);
         loading.dismiss();
         subject.next(response);
-        this.alert.cadastroOkAlert();
       });
     return subject;
   }

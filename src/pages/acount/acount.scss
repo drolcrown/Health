@@ -4,12 +4,22 @@ page-acount {
         color: white;
     }
 
-
     ion-input{
         font-size: 17px;
+        color: black;
         :focus{
             border-bottom: 1px solid rgb(71, 165, 228);
         }
+    }
+    
+    ion-datetime{
+        font-size: 17px;
+        color: black;
+    }
+
+    ion-select{
+        font-size: 17px;
+        color: black;
     }
 
     strong{

@@ -1,0 +1,24 @@
+<ion-header>
+  <header [title]="'Conversa'" [hideButton]="false"></header>
+</ion-header>
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let item of conversa.mensagens">
+      <p>{{item.mensagem}}</p>
+      <ion-note item-right>
+        {{item.data | date:'HH:mm'}}
+      </ion-note>
+    </ion-item>
+  </ion-list>
+</ion-content>
+<ion-footer translucent>
+  <ion-toolbar>
+    <ion-item>
+      <ion-label floating>Mensagem</ion-label>
+      <ion-input type="text" [(ngModel)]="mensagem"></ion-input>
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)="enviar()">Enviar</button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

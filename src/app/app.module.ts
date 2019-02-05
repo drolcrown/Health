@@ -39,13 +39,14 @@ import { LoadsProvider } from '../providers/loads/loads';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { ListComponent } from '../components/list/list';
 import { ConfigPage } from '../pages/config/config';
+import { ChatComponent } from '../components/chat/chat';
 
 @NgModule({
   declarations: [
     MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent, ListComponent,
-    ConfigPage
+    ConfigPage, ChatComponent
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
@@ -62,7 +63,7 @@ import { ConfigPage } from '../pages/config/config';
     MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent, ListComponent,
-    ConfigPage
+    ConfigPage, ChatComponent
   ],
   providers: [
     StatusBar,

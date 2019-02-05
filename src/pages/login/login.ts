@@ -14,10 +14,6 @@ export class LoginPage {
   private loginErrorString: string = '';
   private imagem: any;
   private contador: number = 0;
-  private img = {
-    height: '',
-    width: '',
-  }
   private account: { email: string, password: string } = {
     email: '',
     password: ''
@@ -26,9 +22,6 @@ export class LoginPage {
   constructor(private navCtrl: NavController, private provider: AccessFirebaseProvider,
     private menuCtrl: MenuController, private providerCache: CacheProvider) {
     this.menuCtrl.enable(false);
-    let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
-    this.img.width = (tamanhoImg * 0.2) + 'px';
-    this.img.height = (tamanhoImg * 0.2) + 'px';
   }
 
   // Attempt to login in through our User service

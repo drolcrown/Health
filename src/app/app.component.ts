@@ -17,11 +17,8 @@ import { a } from '@angular/core/src/render3';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
   // rootPage: any = HomePage;
   rootPage: any;
-
-  content;
   perfil;
   pages: Array<{ title: string, component: any, icon: string, name: string }>;
 
@@ -30,10 +27,9 @@ export class MyApp {
     public cache: CacheProvider, private menuCtrl: MenuController) {
     this.pages = [
       { title: 'Home', component: HomePage, icon: "home",name: "HomePage" },
-      // { title: 'Configurações', component: ListPage },
       { title: 'Conta', component: AcountPage, icon: "person",name: "AcountPage" },
-      { title: 'Mensagens', component: ListComponent, icon: "list",name: "ListComponent" },
-      { title: 'List', component: ListPage, icon: "list",name: "ListPage" },
+      // { title: 'Mensagens', component: ListComponent, icon: "list",name: "ListComponent" },
+      { title: 'Mensagens', component: ListPage, icon: "list",name: "ListPage" },
       { title: 'Sair', component: LoginPage, icon: "log-out",name: "LoginPage" }
     ];
     this.initializeApp();
@@ -50,11 +46,11 @@ export class MyApp {
     });
     // this.rootPage = AcountPage
     this.platform.registerBackButtonAction(() => {
-      // if (this.nav.length() <= 1) {
-      //   this.platform.exitApp();
-      // } else {
+      if (this.nav.length() <= 1) {
+        this.platform.exitApp();
+      } else {
         this.nav.pop();
-      // }
+      }
     });
     this.platform.ready().then(() => {
       this.statusBar.backgroundColorByHexString('#4FD5EC');
@@ -76,9 +72,9 @@ export class MyApp {
     }
     this.cache.get("page").then(pageActual => {
       if (page.name != pageActual) {
-        this.nav.setRoot(page.component);
         this.cache.save("page", page.name);
       }
     });
+    this.nav.setRoot(page.component);
   }
 }

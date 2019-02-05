@@ -6,6 +6,7 @@ import { LoginPage } from '../login/login';
 import { CacheProvider } from '../../providers/cache/cache';
 import { HomePage } from '../home/home';
 import { ConfigPage } from '../config/config';
+import { UFs } from '../../models/uf';
 
 @IonicPage()
 @Component({
@@ -17,29 +18,12 @@ export class AcountPage {
   private perfil: any;
   private email: string;
   private PATH = 'perfil';
-  private tamanho = {
-    width: (window.screen.width * 0.95) + 'px',
-    height: (window.screen.height * 0.85) + 'px',
-  };
-
-  private box = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'center',
-  }
-
-  private img = {
-    height: '',
-    width: '',
-  };
+  private _estados = UFs;
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
     private menuCtrl: MenuController, private builder: FormBuilder,
     private provider: AccessFirebaseProvider, private providerCache: CacheProvider) {
-    let tamanhoImg = ((window.screen.height + window.screen.width) / 2);
-    this.img.width = (window.screen.width * 0.6) + 'px';
-    this.img.height = (tamanhoImg * 0.3) + 'px';
+      console.log(this._estados)
   }
 
   ionViewDidEnter() {
@@ -92,7 +76,7 @@ export class AcountPage {
   public excluirConta(perfil) {
     if (this.provider.excluirConta(perfil)) {
       this.providerCache.clear();
-      this.navCtrl.push(LoginPage);
+      this.navCtrl.setRoot(LoginPage);
     }
   }
 
@@ -102,5 +86,15 @@ export class AcountPage {
 
   public toggle() {
     this.menuCtrl.toggle();
+  }
+
+  public validar(entrada: string, valor) {
+    switch(entrada){
+      case 'data':
+      let dia = valor.value.substring(0, 2);
+      let mes = valor.value.substring(3, 5);
+      let ano = valor.value.substring(6, 10);
+      console.log(dia + ' = ' + mes + ano)
+    }
   }
 }

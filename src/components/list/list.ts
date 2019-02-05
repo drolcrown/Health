@@ -24,7 +24,6 @@ export class ListComponent {
   }
 
   constructor(private provider: AccessFirebaseProvider, navParams: NavParams) {
-    console.log('Hello ListComponent Component');
     // this.name = navParams.get('name');
     this.text = 'Hello World';
     // this.profissionais = this.provider.getAll('profissional')

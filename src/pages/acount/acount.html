@@ -8,8 +8,8 @@
         <ion-title class=" font-hammer">Minha Conta</ion-title>
       </ion-col>
       <!-- <ion-col (click)="goConfig()" class="text-center">
-          <ion-icon name="settings"></ion-icon>
-        </ion-col> -->
+            <ion-icon name="settings"></ion-icon>
+          </ion-col> -->
     </ion-row>
   </ion-navbar>
 </ion-header>
@@ -19,7 +19,10 @@
     <ion-grid>
       <ion-row align-items-center>
         <ion-col col-4 *ngIf="perfil">
-          <img #ev src="{{perfil.imagem}}" class="img-circular" (click)="salvarArquivo(perfil, event)"/>
+          <label for="selecao-arquivo">
+            <img #ev src="{{perfil.imagem}}" class="img-circular" />
+          </label>
+          <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
         </ion-col>
         <ion-col col-8 align-self-items>
           <strong>Nome</strong>
@@ -28,17 +31,26 @@
           <ion-input formControlName="sobrenome" type="text" placeholder="Sobrenome"></ion-input>
         </ion-col>
         <ion-col align-items-center col-12>
-          <strong col-5>Data de Nascimento:</strong>
-          <ion-input type="text" col-12 formControlName="data" placeholder="17/03/1993" [brmasker]="{mask:'17/03/1993', len:10}"></ion-input>
+          <ion-col col-12>
+            <strong col-5>Data de Nascimento:</strong>
+            <ion-datetime min="1940" max="2080-10-31" displayFormat="DD/MM/YYYY" doneText="Confirmar" cancelText="Cancelar"
+              formControlName="data" placeholder="{{perfil.data}}"></ion-datetime>
+          </ion-col>
+          <!-- <ion-input type="text" col-12 formControlName="data" (ionChange)="validar('data', $event)" placeholder="17/03/1993"
+            [brmasker]="{mask:'17/03/1993', len:10}"></ion-input> -->
           <strong col-5>Cidade:</strong>
           <ion-input col-12 formControlName="cidade" type="text" placeholder="Brasilia"></ion-input>
-          <strong col-5>Estado:</strong>
-          <ion-input col-12 formControlName="estado" type="text" placeholder="Distrito Federal"></ion-input>
+          <ion-col col-12>
+            <strong col-5>Estado:</strong>
+            <ion-select formControlName="estado">
+              <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
+            </ion-select>
+          </ion-col>
         </ion-col>
         <ion-col align-items-center col-12 class="text-center">
           <ion-title>Avaliação</ion-title>
           <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#4FD5EC" defaultColor="#f03d3d"
-            readonly="true" [rating]="5">
+            readonly="true" [rating]="perfil.avaliacao">
           </ionic3-star-rating>
         </ion-col>
       </ion-row>

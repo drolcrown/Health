@@ -24,9 +24,6 @@ export class AtendimentoPage {
     // });
   }
 
-  ionViewDidLoad() {
-  }
-
   public popularSituacoes() {
     switch (this.name) {
       case 'Assistencia em Saúde':
