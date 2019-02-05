@@ -17,7 +17,8 @@ import { a } from '@angular/core/src/render3';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  // rootPage: any = HomePage;
+
+
   rootPage: any;
   perfil;
   pages: Array<{ title: string, component: any, icon: string, name: string }>;
@@ -26,11 +27,11 @@ export class MyApp {
     public statusBar: StatusBar, public splashScreen: SplashScreen,
     public cache: CacheProvider, private menuCtrl: MenuController) {
     this.pages = [
-      { title: 'Home', component: HomePage, icon: "home",name: "HomePage" },
-      { title: 'Conta', component: AcountPage, icon: "person",name: "AcountPage" },
+      { title: 'Home', component: HomePage, icon: "home", name: "HomePage" },
+      { title: 'Conta', component: AcountPage, icon: "person", name: "AcountPage" },
       // { title: 'Mensagens', component: ListComponent, icon: "list",name: "ListComponent" },
-      { title: 'Mensagens', component: ListPage, icon: "chatboxes",name: "ListPage" },
-      { title: 'Sair', component: LoginPage, icon: "log-out",name: "LoginPage" }
+      { title: 'Mensagens', component: ListPage, icon: "chatboxes", name: "ListPage" },
+      { title: 'Sair', component: LoginPage, icon: "log-out", name: "LoginPage" }
     ];
     this.initializeApp();
   }
@@ -40,7 +41,7 @@ export class MyApp {
       this.perfil = perfil;
       if (this.perfil) {
         this.rootPage = HomePage;
-      }else{
+      } else {
         this.rootPage = LoginPage;
       }
     });
@@ -59,10 +60,17 @@ export class MyApp {
     });
   }
 
-  async loadPerfil() {
-    return await this.cache.get("perfil").then(perfil => {
-      this.perfil = perfil;
-    })
+  loadPerfil() {
+    this.cache.get('load-perfil').then(load => {
+      if (!load) {
+        let loading = this.provider.loadingCtrl.presentLoadingDefault();
+        this.cache.get("perfil").then(perfil => {
+          this.perfil = perfil;
+          this.cache.save('load-perfil', true);
+          loading.dismiss();
+        });
+      }
+    });
   }
 
   public openPage(page: any) {

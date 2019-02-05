@@ -20,10 +20,6 @@ export class LoadsProvider {
     });
   
     loading.present();
-  
-    // setTimeout(() => {
-    //   loading.dismiss();
-    // }, 5000);
     return loading;
   }
   
@@ -51,11 +47,6 @@ export class LoadsProvider {
     });
   
     loading.present();
-  
-    // setTimeout(() => {
-    //   this.nav.push(Page2);
-    // }, 1000);
-  
     setTimeout(() => {
       loading.dismiss();
     }, 5000);

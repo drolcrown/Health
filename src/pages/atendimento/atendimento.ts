@@ -10,6 +10,7 @@ import { SituacaoClinica } from '../../Models/situacaoClinica';
 })
 export class AtendimentoPage {
   private name: string;
+  private search = false;
   private select = '';
   private sit = SituacaoClinica;
   private options: any;

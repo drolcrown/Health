@@ -25,7 +25,6 @@ export class ChatComponent {
   }
 
   ionViewDidEnter(){
-    this.lista = this.provider.db.list(this.PATH);
   }
 
   public enviar() {
@@ -34,11 +33,11 @@ export class ChatComponent {
       data: new Date(),
       user: this.user
     }
-
     this.conversa.mensagens.push(msg);
-    this.provider.db.list(this.PATH).update(this.conversa.id, this.conversa).then((r) => {
+    console.log(this.conversa)
+    this.provider.update(this.PATH, this.conversa).then((r) => {
+      console.log(r)
       this.mensagem = "";
-      this.ionViewDidEnter();
     });
   }
 

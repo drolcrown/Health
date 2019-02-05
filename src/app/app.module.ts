@@ -40,13 +40,14 @@ import { BrMaskerModule } from 'brmasker-ionic-3';
 import { ListComponent } from '../components/list/list';
 import { ConfigPage } from '../pages/config/config';
 import { ChatComponent } from '../components/chat/chat';
+import { PerfilPage } from '../pages/perfil/perfil';
 
 @NgModule({
   declarations: [
     MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent, ListComponent,
-    ConfigPage, ChatComponent
+    ConfigPage, ChatComponent, PerfilPage
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
@@ -63,7 +64,7 @@ import { ChatComponent } from '../components/chat/chat';
     MyApp, LoginPage, HeaderComponent,TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent, ListComponent,
-    ConfigPage, ChatComponent
+    ConfigPage, ChatComponent, PerfilPage
   ],
   providers: [
     StatusBar,

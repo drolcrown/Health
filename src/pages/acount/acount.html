@@ -18,12 +18,10 @@
   <form *ngIf="form" [formGroup]="form">
     <ion-grid>
       <ion-row align-items-center>
-        <ion-col col-4 *ngIf="perfil">
-          <label for="selecao-arquivo">
-            <img #ev src="{{perfil.imagem}}" class="img-circular" />
-          </label>
+        <label col-4 *ngIf="perfil" for="selecao-arquivo">
+          <img src="{{perfil.imagem}}" class="img-circular" />
           <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
-        </ion-col>
+        </label>
         <ion-col col-8 align-self-items>
           <strong>Nome</strong>
           <ion-input formControlName="nome" type="text" placeholder="nome"></ion-input>

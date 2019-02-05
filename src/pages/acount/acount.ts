@@ -23,13 +23,12 @@ export class AcountPage {
   constructor(private navCtrl: NavController, private navParams: NavParams,
     private menuCtrl: MenuController, private builder: FormBuilder,
     private provider: AccessFirebaseProvider, private providerCache: CacheProvider) {
-      console.log(this._estados)
   }
 
   ionViewDidEnter() {
     let alerta = this.provider.loadingCtrl.presentLoadingDefault();
     this.providerCache.get(this.PATH).then(response => {
-      this.form = this.builder.group(response)
+      this.form = this.builder.group(response);
       this.perfil = response;
       alerta.dismiss();
     });
@@ -48,12 +47,14 @@ export class AcountPage {
             this.provider.upload(perfil, e)
               .then(response => {
                 perfil.imagem = response;
-                this.provider.updateParams(this.PATH, 'email', perfil.email, perfil);
+                this.form = this.builder.group(perfil);
+                this.provider.update(this.PATH, perfil);
                 this.providerCache.save(this.PATH, perfil);
+                this.providerCache.save("load-perfil", false);
                 loading.dismiss();
-                this.navCtrl.setRoot(AcountPage);
               })
               .catch((erro) => {
+                loading.dismiss();
                 this.provider.alert.showToast('Falha na Alteração da Imagem!!');
               });
           },
@@ -86,15 +87,5 @@ export class AcountPage {
 
   public toggle() {
     this.menuCtrl.toggle();
-  }
-
-  public validar(entrada: string, valor) {
-    switch(entrada){
-      case 'data':
-      let dia = valor.value.substring(0, 2);
-      let mes = valor.value.substring(3, 5);
-      let ano = valor.value.substring(6, 10);
-      console.log(dia + ' = ' + mes + ano)
-    }
   }
 }

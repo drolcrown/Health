@@ -1,8 +1,13 @@
 <ion-header>
-  <header [title]="'Atendimento'" [hideButton]="true"></header>
+  <ion-row align-self-items>
+    <ion-navbar *ngIf="!search" color="blue-light">
+      <h2 col-9 class=" font-hammer" align-self-items>{{name}}</h2>
+      <ion-icon col-3 (click)="goConfig()" class="text-center" name="settings" align-self-items></ion-icon>
+    </ion-navbar>
+  </ion-row>
 </ion-header>
 
 <ion-content padding>
-  <h2 class="text-primary">{{name}}</h2>
+  <!-- <h2 class="text-primary">{{name}}</h2> -->
   <list [lista]="options"></list>
 </ion-content>

@@ -68,6 +68,7 @@ export class AccessFirebaseProvider {
       }
     }, 1000);
 
+    loading.dismiss();
     return this.db.list(PATH).valueChanges();
   }
 
@@ -94,7 +95,7 @@ export class AccessFirebaseProvider {
     let subject = new Subject();
     this.getAll(path).subscribe((valor: any) => {
       valor.filter((element: any) => {
-        if (element.user2.email && element.user1.email) {
+        if (element.user2 && element.user1) {
           if (element.user2.email.indexOf(param) > -1 || element.user1.email.indexOf(param) > -1) {
             if (element.user2.email.indexOf(param) > -1) {
               user = "user2";
@@ -102,10 +103,10 @@ export class AccessFirebaseProvider {
               user = "user1";
             }
             newObject.push(element);
-            subject.next({ user: user, list: newObject });
           }
         }
       });
+      subject.next({ user: user, list: newObject });
     });
 
     return subject;
@@ -151,7 +152,7 @@ export class AccessFirebaseProvider {
   }
 
   update(PATH: any, object: any) {
-    this.db.list(PATH).update(object.key, object);
+    return this.db.list(PATH).update(object.id, object);
   }
 
   save(PATH: any, object: any): Subject<any> {
@@ -176,13 +177,11 @@ export class AccessFirebaseProvider {
   }
 
   remove(PATH: any, usuario) {
-    this.getKey(PATH, usuario).subscribe(obj => {
-      this.db.list(PATH).remove(obj.key);
-    }, ((error) => {
-      return this.alert.showToast('Falha na Operação!');
-    }), (() => {
+    this.db.list(PATH).remove(usuario.id).then(() => {
       return this.alert.showToast('Ação Concluída com Sucesso!');
-    }));
+    }).catch((error) => {
+      return this.alert.showToast('Falha na Operação!');
+    });
   }
 
   upload(usuario, arq): any {
@@ -314,7 +313,7 @@ export class AccessFirebaseProvider {
               let loading = this.loadingCtrl.presentLoadingDefault();
               this.authorization.auth.currentUser.delete()
                 .then(() => {
-                  this.removeParams('perfil', 'email', perfil.email);
+                  this.remove('perfil', perfil);
                   response = true;
                   loading.dismiss();
                 }).catch(() => {
