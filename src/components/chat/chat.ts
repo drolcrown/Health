@@ -17,20 +17,28 @@ export class ChatComponent {
   mensagem: string;
   conversa: any;
   PATH: string = 'chat';
+  user: string;
 
   constructor(public provider: AccessFirebaseProvider, public navParam: NavParams) {
-    this.lista = provider.db.list(this.PATH);
     this.conversa = navParam.get('conversa');
+    this.user = navParam.get('user');
+  }
+
+  ionViewDidEnter(){
+    this.lista = this.provider.db.list(this.PATH);
   }
 
   public enviar() {
     let msg = {
       mensagem: this.mensagem,
-      data: new Date()
+      data: new Date(),
+      user: this.user
     }
 
-    this.provider.save(this.PATH, msg).toPromise().then((r) => {
+    this.conversa.mensagens.push(msg);
+    this.provider.db.list(this.PATH).update(this.conversa.id, this.conversa).then((r) => {
       this.mensagem = "";
+      this.ionViewDidEnter();
     });
   }
 

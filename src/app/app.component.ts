@@ -29,7 +29,7 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: "home",name: "HomePage" },
       { title: 'Conta', component: AcountPage, icon: "person",name: "AcountPage" },
       // { title: 'Mensagens', component: ListComponent, icon: "list",name: "ListComponent" },
-      { title: 'Mensagens', component: ListPage, icon: "list",name: "ListPage" },
+      { title: 'Mensagens', component: ListPage, icon: "chatboxes",name: "ListPage" },
       { title: 'Sair', component: LoginPage, icon: "log-out",name: "LoginPage" }
     ];
     this.initializeApp();

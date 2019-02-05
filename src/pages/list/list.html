@@ -7,11 +7,11 @@
     <!-- <ion-scroll scrollY="true" style="width:100%; height:100%"> -->
       <button ion-item *ngFor="let conversa of lista" (click)="goChat(conversa)" class="border-bottom border-secundary">
         <ion-row align-items-center>
-          <ion-col col-3> 
+          <ion-col col-2 align-self-items> 
             <img *ngIf="user !== 'user2'" src="{{conversa.user2.imagem}}" class="img-circular"/>
             <img *ngIf="user !== 'user1'" src="{{conversa.user1.imagem}}" class="img-circular"/>
           </ion-col>
-          <ion-col col-9 align-self-items>
+          <ion-col col-10 align-self-items>
             <h3 *ngIf="user !== 'user2'">{{conversa.user2.nome}}</h3>
             <h3 *ngIf="user !== 'user1'">{{conversa.user1.nome}}</h3>
             <small>{{recuperarUltimaConversa(conversa)}}</small>

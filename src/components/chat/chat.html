@@ -2,23 +2,44 @@
   <header [title]="'Conversa'" [hideButton]="false"></header>
 </ion-header>
 <ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let item of conversa.mensagens">
-      <p>{{item.mensagem}}</p>
-      <ion-note item-right>
-        {{item.data | date:'HH:mm'}}
-      </ion-note>
-    </ion-item>
+  <ion-list class="mt-3">
+    <div *ngFor="let item of conversa.mensagens">
+      <ion-row col-10 *ngIf="item.user === 'user1'" class="alinhar-esquerda shadow p-3 mb-5 bg-white rounded" align-items-center>
+        <ion-col col-2 align-self-items>
+          <img src="{{conversa.user1.imagem}}" class="img-circular" />
+        </ion-col>
+        <ion-col col-10 align-self-items>
+          <p>{{item.mensagem}}</p>
+          <ion-note item-right>
+            {{item.data | date:'HH:mm'}}
+          </ion-note>
+        </ion-col>
+      </ion-row>
+      <ion-row col-10 *ngIf="item.user === 'user2'" class="alinhar-direita shadow p-3 mb-5 bg-white rounded" align-items-center>
+        <ion-col col-2 align-self-items>
+          <img src="{{conversa.user2.imagem}}" class="img-circular" />
+        </ion-col>
+        <ion-col col-10 align-self-items>
+          <p>{{item.mensagem}}</p>
+          <ion-note item-right>
+            {{item.data | date:'HH:mm'}}
+          </ion-note>
+        </ion-col>
+      </ion-row>
+    </div>
   </ion-list>
 </ion-content>
 <ion-footer translucent>
   <ion-toolbar>
-    <ion-item>
-      <ion-label floating>Mensagem</ion-label>
-      <ion-input type="text" [(ngModel)]="mensagem"></ion-input>
-    </ion-item>
-    <ion-item>
-      <button ion-button (click)="enviar()">Enviar</button>
-    </ion-item>
+    <ion-row  align-items-center>
+      <ion-item col-10 align-self-items>
+        <ion-label floating class="text-center">Mensagem</ion-label>
+        <ion-input type="text" [(ngModel)]="mensagem" class="border-bottom border-primary"></ion-input>
+      </ion-item>
+      <ion-item col-2>
+        <!-- <button ion-button (click)="enviar()">Enviar</button> -->
+        <ion-icon name="send" (click)="enviar()" color="blue-light"></ion-icon>
+      </ion-item>
+    </ion-row>
   </ion-toolbar>
 </ion-footer>

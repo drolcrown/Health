@@ -151,14 +151,7 @@ export class AccessFirebaseProvider {
   }
 
   update(PATH: any, object: any) {
-    this.getKey(PATH, object).subscribe(obj => {
-      console.log(obj)
-      this.db.list(PATH).update(obj.key, object);
-    }), ((error) => {
-      return this.alert.showToast('Falha na Operação!');
-    }), (() => {
-      return this.alert.showToast('Ação Concluída com Sucesso!');
-    });
+    this.db.list(PATH).update(object.key, object);
   }
 
   save(PATH: any, object: any): Subject<any> {
@@ -284,7 +277,7 @@ export class AccessFirebaseProvider {
         this.authorization.auth.currentUser.updatePassword(alerta1)
           .then((resp) => {
             perfil.senha = alerta1;
-            this.updateParams('perfil', 'email', perfil.email, perfil);
+            this.update('perfil', perfil);
             loading.dismiss();
             this.alert.showToast('Senha Alterada Com Sucesso!!');
           }).catch((er) => {

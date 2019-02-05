@@ -42,7 +42,7 @@
           <ion-input col-12 formControlName="cidade" type="text" placeholder="Brasilia"></ion-input>
           <ion-col col-12>
             <strong col-5>Estado:</strong>
-            <ion-select formControlName="estado">
+            <ion-select formControlName="estado" cancelText="Cancelar" placeholder="{{perfil.estado}}" interface="alert">
               <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
             </ion-select>
           </ion-col>

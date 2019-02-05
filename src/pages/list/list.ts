@@ -39,19 +39,20 @@ export class ListPage {
   }
 
   public goChat(conv) {
-    this.navCtrl.push(ChatComponent, { conversa: conv })
+    this.navCtrl.push(ChatComponent, {user: this.user, conversa: conv })
   }
 
   teste() {
     let data = new Date().toLocaleString();
     this.provider.save('chat', {
-      user1: {email: "rafaelsoec@gmail.com", imagem:"", nome:""},
-      user2: {email: "rafa17@gmail.com", imagem:"", nome:""},
+      user1: {email: "rafaelsoec@gmail.com", imagem:"../../assets/imgs/respect.svg", nome:"Rafael Souza"},
+      user2: {email: "rafa17@gmail.com", imagem:"../../assets/imgs/respect.svg", nome:"Rafael Silva"},
       dataInicio: data,
       mensagens: [
         {
           mensagem: "Olá, onde voce atende?",
-          data: data
+          data: data,
+          user: "user1"
         }
       ]
     });
