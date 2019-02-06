@@ -19,7 +19,7 @@
     <ion-grid>
       <ion-row align-items-center>
         <label col-4 *ngIf="perfil" for="selecao-arquivo">
-          <img src="{{perfil.imagem}}" class="img-circular" />
+          <img src="{{perfil.imagem}}" class="img-circular" #myImage (click)="presentImage(myImage)"/>
           <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
         </label>
         <ion-col col-8 align-self-items>

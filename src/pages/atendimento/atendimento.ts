@@ -20,9 +20,6 @@ export class AtendimentoPage {
     public provider: AccessFirebaseProvider) {
     this.name = navParams.get('name');
     this.popularSituacoes();
-    // this.provider.getAll('profissional').subscribe(resp => {
-    //   this.profissionais = resp;
-    // });
   }
 
   public popularSituacoes() {
@@ -35,6 +32,7 @@ export class AtendimentoPage {
         break;
       case 'Beleza e Estética':
         this.options = this.sit.estetica;
+        console.log(this.options)
         break;
       case 'Pets':
         // this.options = this.sit.pets;
@@ -43,6 +41,10 @@ export class AtendimentoPage {
         });
         break;
     }
+  }
+
+  public goSearch(){
+    this.search = !this.search;
   }
 
 }

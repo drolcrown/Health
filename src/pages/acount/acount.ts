@@ -7,6 +7,7 @@ import { CacheProvider } from '../../providers/cache/cache';
 import { HomePage } from '../home/home';
 import { ConfigPage } from '../config/config';
 import { UFs } from '../../models/uf';
+import { ImageViewerController } from 'ionic-img-viewer';
 
 @IonicPage()
 @Component({
@@ -19,10 +20,13 @@ export class AcountPage {
   private email: string;
   private PATH = 'perfil';
   private _estados = UFs;
+  private _imageViewerCtrl;
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
     private menuCtrl: MenuController, private builder: FormBuilder,
-    private provider: AccessFirebaseProvider, private providerCache: CacheProvider) {
+    private provider: AccessFirebaseProvider, private providerCache: CacheProvider,
+    imageViewerCtrl: ImageViewerController) {
+    this._imageViewerCtrl = imageViewerCtrl;
   }
 
   ionViewDidEnter() {
@@ -32,6 +36,11 @@ export class AcountPage {
       this.perfil = response;
       alerta.dismiss();
     });
+  }
+
+  presentImage(myImage) {
+    const imageViewer = this._imageViewerCtrl.create(myImage);
+    imageViewer.present();
   }
 
   private salvarArquivo(perfil, e) {

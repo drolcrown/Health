@@ -41,27 +41,29 @@ import { ListComponent } from '../components/list/list';
 import { ConfigPage } from '../pages/config/config';
 import { ChatComponent } from '../components/chat/chat';
 import { PerfilPage } from '../pages/perfil/perfil';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 @NgModule({
   declarations: [
-    MyApp, LoginPage, HeaderComponent,TestPage,
+    MyApp, LoginPage, HeaderComponent, TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent, ListComponent,
-    ConfigPage, ChatComponent, PerfilPage
+    ConfigPage, ChatComponent, PerfilPage,
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
     StarRatingModule,
     BrMaskerModule,
     AngularFirestoreModule,
-    IonicModule.forRoot(MyApp), 
+    IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
     AngularFireModule.initializeApp(environment.FirebaseConfig),
+    IonicImageViewerModule,
     AngularFireDatabaseModule, AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, LoginPage, HeaderComponent,TestPage,
+    MyApp, LoginPage, HeaderComponent, TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent, ListComponent,
     ConfigPage, ChatComponent, PerfilPage

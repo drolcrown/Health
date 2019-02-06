@@ -1,10 +1,15 @@
 <ion-header>
-  <ion-row align-self-items>
-    <ion-navbar *ngIf="!search" color="blue-light">
-      <h2 col-9 class=" font-hammer" align-self-items>{{name}}</h2>
-      <ion-icon col-3 (click)="goConfig()" class="text-center" name="settings" align-self-items></ion-icon>
-    </ion-navbar>
-  </ion-row>
+  <ion-navbar *ngIf="!search" color="blue-light" hideBackButton>
+    <ion-row align-items-center class="text-center">
+      <ion-icon col-2 navPop name="arrow-round-back"></ion-icon>
+      <h2 col-8 class=" font-hammer" align-self-items>{{name}}</h2>
+      <ion-icon col-2 (click)="goSearch()" name="search" align-self-items></ion-icon>
+    </ion-row>
+  </ion-navbar>
+  <ion-navbar *ngIf="search" color="blue-light" hideBackButton>
+    <h2 col-9 class=" font-hammer" align-self-items>{{name}}</h2>
+    <ion-icon col-3 (click)="goSearch()" class="text-center" name="settings" align-self-items></ion-icon>
+  </ion-navbar>
 </ion-header>
 
 <ion-content padding>
