@@ -6,9 +6,10 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import * as firebase from 'firebase';
 import { AlertsProvider } from '../alerts/alerts';
-import { Subject } from 'rxjs';
-import { timeout } from 'rxjs/operators';
+import { Subject, from } from 'rxjs';
 import { LoadsProvider } from '../loads/loads';
+import { timeout, catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { sha256, sha224 } from 'js-sha256';
 // import { AlertController } from 'ionic-angular';
 
@@ -27,48 +28,41 @@ export class AccessFirebaseProvider {
   }
 
   doLogin(account) {
-    let contador = 0;
     let loading = this.loadingCtrl.presentLoadingDefault();
     let password = this.encripty(account.password);
-    let intervalo = setInterval(() => {
-      contador++;
-      if (contador < 15) {
-        this.authorization.auth.signInWithEmailAndPassword(account.email, password)
-          .then((resp) => {
-            loading.dismiss();
-            clearInterval(intervalo);
-          }).catch(error => {
-            loading.dismiss();
-            clearInterval(intervalo);
-          });
-      } else {
-        loading.dismiss();
-        clearInterval(intervalo);
-        return;
-      }
-    }, 1000);
+    let observable = from(this.authorization.auth.signInWithEmailAndPassword(account.email, password))
+      .pipe(timeout(10000))
+      .subscribe(
+        (value) => {
+          loading.dismiss();
+          observable.unsubscribe();
+        },
+        (err) => {
+          loading.dismiss();
+          observable.unsubscribe();
+          this.alert.showToast('Falha na Conexão!');
+        },
+        () => { }
+      );
+
     return this.authorization.auth.signInWithEmailAndPassword(account.email, password);
   }
 
   getAll(PATH): any {
-    let contador = 0;
     let loading = this.loadingCtrl.presentLoadingDefault();
-    let intervalo = setInterval(() => {
-      contador++;
-      if (contador < 15) {
-        this.db.list(PATH).valueChanges().subscribe(valor => {
+    let observable = this.db.list(PATH).valueChanges().pipe(timeout(10000))
+      .subscribe(
+        (value) => {
           loading.dismiss();
-          clearInterval(intervalo);
-        });
-      } else {
-        loading.dismiss();
-        this.alert.showToast("Erro de Conexão!");
-        clearInterval(intervalo);
-        return;
-      }
-    }, 1000);
+          observable.unsubscribe();
+        },
+        (err) => {
+          loading.dismiss();
+          this.alert.showToast('Falha na Conexão!');
+        },
+        () => { }
+      );
 
-    loading.dismiss();
     return this.db.list(PATH).valueChanges();
   }
 

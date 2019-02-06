@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { SituacaoClinica } from '../../Models/situacaoClinica';
 import { NavParams } from 'ionic-angular';
+import { PerfilPage } from '../../pages/perfil/perfil';
 
 /**
  * Generated class for the ListComponent component.
@@ -15,6 +16,7 @@ import { NavParams } from 'ionic-angular';
 })
 export class ListComponent {
   options = [];
+  perfis = PerfilPage;
 
   @Input()
   private set lista(value) {
