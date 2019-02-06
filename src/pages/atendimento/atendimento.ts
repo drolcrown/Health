@@ -10,40 +10,63 @@ import { SituacaoClinica } from '../../Models/situacaoClinica';
 })
 export class AtendimentoPage {
   private name: string;
+  private title: string;
   private search = false;
-  private select = '';
   private sit = SituacaoClinica;
-  private options: any;
-  private profissionais;
+  private objectList: Array<any>;
+  private loadedObjectList: Array<any>;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public provider: AccessFirebaseProvider) {
     this.name = navParams.get('name');
+    this.title = navParams.get('title');
     this.popularSituacoes();
   }
 
   public popularSituacoes() {
     switch (this.name) {
       case 'Assistencia em Saúde':
-        this.options = this.sit.assistencia;
+        this.objectList = this.sit.assistencia;
+        this.loadedObjectList = this.sit.assistencia;
         break;
       case 'Prevenção e Treinamento':
-        this.options = this.sit.prevencao;
+        this.objectList = this.sit.prevencao;
+        this.loadedObjectList = this.sit.prevencao;
         break;
       case 'Beleza e Estética':
-        this.options = this.sit.estetica;
-        console.log(this.options)
+        this.objectList = this.sit.estetica;
+        this.loadedObjectList = this.sit.estetica;
         break;
       case 'Pets':
-        // this.options = this.sit.pets;
         this.provider.getAll('profissional').subscribe(resp => {
-          this.options = resp;
+          this.objectList = resp;
+          this.loadedObjectList = resp;
         });
         break;
     }
   }
 
-  public goSearch(){
+  initializeItems(): void {
+    this.objectList = this.loadedObjectList;
+  }
+
+  public getItems(searchbar) {
+    this.initializeItems();
+    var valorSearch = searchbar.srcElement.value;
+    if (!valorSearch) {
+      return;
+    }
+    this.objectList = this.objectList.filter((v) => {
+      if (v.nome && valorSearch) {
+        if (v.nome.toLowerCase().indexOf(valorSearch.toLowerCase()) > -1) {
+          return true;
+        }
+        return false;
+      }
+    });
+  }
+
+  public goSearch() {
     this.search = !this.search;
   }
 

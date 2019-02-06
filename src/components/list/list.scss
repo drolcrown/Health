@@ -1,7 +1,14 @@
 list {
-    p {
-        word-break: break-all;
-      }
+    p, h3, h4, h5, small {
+        word-break: inherit;
+        line-break: auto;
+        text-align: center;
+    }
+
+    .box{
+        height: 60px;
+    }
+    
     .bg-pets{
         position: fixed;
         bottom: 0%;

@@ -1,9 +1,9 @@
 <ion-header>
   <header [title]="" [hideButton]="true"></header>
 </ion-header>
-<ion-content class="container-fluid mt-2">
-  <ion-grid>
-    <ion-row justify-content-center class="text-center">
+<ion-content>
+  <ion-grid *ngIf="_title != 'profissional'" style="margin-top: 10%">
+    <ion-row justify-content-center  class="text-center">
       <ion-col col-5 *ngFor="let page of pages" [ngStyle]="buttons" [class]="page.classe" (click)="goPage(page.name)">
         <img src={{page.image}}/>
         <!-- <h3 class="blue">{{page.name}}</h3> -->

@@ -8,6 +8,7 @@ import { CacheProvider } from '../../providers/cache/cache';
   templateUrl: 'home.html'
 })
 export class HomePage {
+  private _title = "Atendimento";
   private pages = [
     { name: 'Assistencia em Saúde', image: "../../assets/imgs/pets3.jpg", classe: "border border-primary", icon: 'heart' },
     { name: 'Prevenção e Treinamento', image: "../../assets/imgs/treino.jpg", classe: "border border-success ml-1", icon: 'medical' },
@@ -25,14 +26,13 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private providerCache: CacheProvider, 
     public menuCtrl: MenuController) {
-    this.buttons.height = window.screen.height * 0.38 + 'px';
+    this.buttons.height = window.screen.height * 0.4 + 'px';
     this.menuCtrl.enable(true);
   }
 
   goPage(nome) {
-    // this.navCtrl.push(ListComponent, { name: nome });
     this.providerCache.save("page", "AtendimentoPage");
-    this.navCtrl.push(AtendimentoPage, { name: nome });
+    this.navCtrl.push(AtendimentoPage, { name: nome, title: this._title });
   }
 
 }

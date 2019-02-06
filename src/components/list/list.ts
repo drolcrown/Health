@@ -14,19 +14,14 @@ import { NavParams } from 'ionic-angular';
   templateUrl: 'list.html'
 })
 export class ListComponent {
-  name: string;
-  text: string;
-  profissionais = [];
+  options = [];
 
   @Input()
   private set lista(value) {
-    this.profissionais = value;
+    this.options = value;
   }
 
   constructor(private provider: AccessFirebaseProvider, navParams: NavParams) {
-    // this.name = navParams.get('name');
-    this.text = 'Hello World';
-    // this.profissionais = this.provider.getAll('profissional')
   }
 
 }
