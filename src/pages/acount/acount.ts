@@ -29,6 +29,10 @@ export class AcountPage {
     this._imageViewerCtrl = imageViewerCtrl;
   }
 
+  customActionSheetOptions: any = {
+    header: 'Estados',
+  };
+
   ionViewDidEnter() {
     let alerta = this.provider.loadingCtrl.presentLoadingDefault();
     this.providerCache.get(this.PATH).then(response => {

@@ -12,7 +12,6 @@ export class AtendimentoPage {
   private name: string;
   private title: string;
   private search = false;
-  private sit = SituacaoClinica;
   private objectList: Array<any>;
   private loadedObjectList: Array<any>;
 
@@ -24,26 +23,25 @@ export class AtendimentoPage {
   }
 
   public popularSituacoes() {
+    let nome = "";
     switch (this.name) {
       case 'Assistencia em Saúde':
-        this.objectList = this.sit.assistencia;
-        this.loadedObjectList = this.sit.assistencia;
+        nome = 'assistencia';
         break;
       case 'Prevenção e Treinamento':
-        this.objectList = this.sit.prevencao;
-        this.loadedObjectList = this.sit.prevencao;
+        nome = 'prevencao';
         break;
       case 'Beleza e Estética':
-        this.objectList = this.sit.estetica;
-        this.loadedObjectList = this.sit.estetica;
+        nome = 'estetica';
         break;
       case 'Pets':
-        this.provider.getAll('profissional').subscribe(resp => {
-          this.objectList = resp;
-          this.loadedObjectList = resp;
-        });
+        nome = 'pets';
         break;
     }
+    this.provider.getAll('especialidades/' + nome).subscribe(resp => {
+      this.objectList = resp[0];
+      this.loadedObjectList = resp[0];
+    });
   }
 
   initializeItems(): void {

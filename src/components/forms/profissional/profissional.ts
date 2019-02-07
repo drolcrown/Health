@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { AccessFirebaseProvider } from '../../../providers/access-firebase/access-firebase';
 import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -7,6 +7,8 @@ import { LoginPage } from '../../../pages/login/login';
 import { NavController } from 'ionic-angular';
 import { AlertsProvider } from '../../../providers/alerts/alerts';
 import { DatePipe } from '@angular/common';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
+import { FormsComponent } from '../forms';
 
 @Component({
   selector: 'profissional-form',
@@ -15,38 +17,42 @@ import { DatePipe } from '@angular/common';
 export class ProfissionalComponent {
   private form: FormGroup;
   private _usuario;
-  private arquivo;
+  private especialidades = [];
+  private profissao = [];
   private _estados = UFs;
-  private _msg = '';
-  private senhaInvalida = false;
-  private emailInvalido = false;
   private formInvalido = "";
 
-  @Input()
-  private set usuario(value) {
-    this._usuario = value;
-  }
-
   constructor(private builder: FormBuilder, private navCtrl: NavController,
-    private alerta: AlertsProvider, private datePipe: DatePipe,
+    private alerta: AlertsProvider, private datePipe: DatePipe, private params: NavParams,
     private provider: AccessFirebaseProvider, private authorization: AngularFireAuth) {
+    let espec: Array<any> = params.get('especialidades');
+    espec.forEach(el => {
+      this.especialidades = this.especialidades.concat(Object.values(el)[0]);
+    });
+
+
+    this.profissao = params.get('profissao');
+    this._usuario = params.get('usuario');
+
     this.form = this.builder.group({
       avaliacao: [5],
       nome: ['', Validators.required],
+      sobrenome: ['', Validators.required],
       data: ['', Validators.required],
       peso: ['', (this._usuario == 'paciente' ? Validators.required : null)],
+      altura: ['', (this._usuario == 'paciente' ? Validators.required : null)],
       cpf: ['', Validators.required],
       telefone: ['', Validators.required],
       imagem: [''],
       cidade: ['', Validators.required],
       estado: ['', Validators.required],
+      especialidades: [''],
       profissao: ['', (this._usuario == 'profissional' ? Validators.required : null)],
       cr: ['', (this._usuario == 'profissional' ? Validators.required : null)],
       email: ['', Validators.required],
       senha: ['', Validators.required],
       confirmarSenha: ['', Validators.required],
     });
-
   }
 
   private registrar() {
@@ -59,7 +65,7 @@ export class ProfissionalComponent {
           .then(resposta => {
             objeto.data = this.datePipe.transform(this.form.controls.data.value, 'dd/MM/yyyy');
             this.provider.save('perfil/', objeto).subscribe(resp => {
-              this.goPage();
+              this.navCtrl.push(LoginPage);
             }), (error => {
               this.alerta.showToast('Falha no Cadastro!! Tente Novamente')
             });
@@ -75,6 +81,6 @@ export class ProfissionalComponent {
   }
 
   private goPage() {
-    this.navCtrl.push(LoginPage);
+    this.navCtrl.push(FormsComponent);
   }
 }

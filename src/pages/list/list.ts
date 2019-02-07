@@ -22,7 +22,7 @@ export class ListPage {
   ionViewDidEnter() {
     this.cache.get('perfil').then(perfil => {
       if (perfil) {
-        this.provider.findListObject(this.PATH, perfil.email).subscribe(object => {
+        this.provider.findListChat(this.PATH, perfil.email).subscribe(object => {
           this.user = object.user;
           this.lista = object.list;
           this.noChats = (this.lista.length < 1 ? true : false);

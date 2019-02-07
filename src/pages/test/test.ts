@@ -33,6 +33,10 @@ export class TestPage {
 
   constructor(public navCtrl: NavController,
     public service: AccessFirebaseProvider, public alert: AlertsProvider) {
+      this.service.save('especialidades/assistencia', this.especialidades.assistencia);
+      this.service.save('especialidades/prevencao', this.especialidades.prevencao);
+      this.service.save('especialidades/estetica', this.especialidades.estetica);
+      this.service.save('especialidades/pets', this.especialidades.pets);
   }
 
   private pages = [
@@ -52,22 +56,72 @@ export class TestPage {
   }
 
 
-  ionViewWillEnter() {
-    // this.buttons.height = window.screen.height * 0.42 + 'px';
+  especialidades = {
+    assistencia: [
+      { nome: "Cuidados Paliativos", descricao: "", profissionas: [] },
+      { nome: "Constipação", descricao: "", profissionas: [] },
+      { nome: "Disfunção Cognitiva", descricao: "", profissionas: [] },
+      { nome: "Doença Cardiovascular", descricao: "", profissionas: [] },
+      { nome: "Doenças Infectocontagiosas", descricao: "", profissionas: [] },
+      { nome: "Doença Osteomuscular", descricao: "", profissionas: [] },
+      { nome: "Doença Respiratoria", descricao: "", profissionas: [] },
+      { nome: "Feridas", descricao: "", profissionas: [] },
+      { nome: "Imobiliddade", descricao: "", profissionas: [] },
+      { nome: "Infecção Trato Urinario", descricao: "", profissionas: [] },
+      { nome: "Neoplasia", descricao: "", profissionas: [] },
+      { nome: "Pós Cirurgico", descricao: "", profissionas: [] },
+      { nome: "Pré Cirurgico", descricao: "", profissionas: [] },
+      { nome: "Reabilitação Neurofunional e Motora", descricao: "", profissionas: [] },
+      { nome: "Reabilitação Nutricional", descricao: "", profissionas: [] },
+      { nome: "Sindrome da Fragilidade", descricao: "", profissionas: [] },
+      { nome: "Sindrome Neurologica da Infancia ao Envelhecimento", descricao: "", profissionas: [] },
+      { nome: "Transtorno Saude Mental", descricao: "", profissionas: ["psicologo"] },
+      // "(opção descrever e escrever o profissional)"
+    ],
+    prevencao: [
+      { nome: "Cuidados Paliativos Preventivos(acamados, pós / pré - cirúrgicos)", descricao: "", profissionas: [] },
+      { nome: "Habilitação e Desempenho(atletas)", descricao: "", profissionas: [] },
+      { nome: "Personal Trainer (Acompanhamento ginásio)", descricao: "", profissionas: [] },
+      { nome: "Prevencao Doença e Dores Osteomusculares e Articulares", descricao: "", profissionas: [] },
+      { nome: "Prevenção Contra Queda", descricao: "", profissionas: [] },
+      { nome: "Precenção Contra Doenças Infectocontagiosas", descricao: "", profissionas: [] },
+      { nome: "Treinamento para Prova Física", descricao: "", profissionas: [] },
+    ],
+    estetica: [
+      { nome: "Cuidados Paliativos Preventivos(acamados, pós / pré - cirúrgicos)", descricao: "", profissionas: [] },
+      { nome: "Habilitação e Desempenho(atletas)", descricao: "", profissionas: [] },
+      { nome: "Personal Trainer (Acompanhamento ginásio)", descricao: "", profissionas: [] },
+      { nome: "Prevencao Doença e Dores Osteomusculares e Articulares", descricao: "", profissionas: [] },
+      { nome: "Prevenção Contra Queda", descricao: "", profissionas: [] },
+      { nome: "Precenção Contra Doenças Infectocontagiosas", descricao: "", profissionas: [] },
+      { nome: "Treinamento para Prova Física", descricao: "", profissionas: [] },
+    ],
+    pets: [
+      { nome: "Cuidados Paliativos Preventivos(acamados, pós / pré - cirúrgicos)", descricao: "", profissionas: [] },
+      { nome: "Habilitação e Desempenho(atletas)", descricao: "", profissionas: [] },
+      { nome: "Personal Trainer (Acompanhamento ginásio)", descricao: "", profissionas: [] },
+      { nome: "Prevencao Doença e Dores Osteomusculares e Articulares", descricao: "", profissionas: [] },
+      { nome: "Prevenção Contra Queda", descricao: "", profissionas: [] },
+      { nome: "Precenção Contra Doenças Infectocontagiosas", descricao: "", profissionas: [] },
+      { nome: "Treinamento para Prova Física", descricao: "", profissionas: [] },
+    ],
+    outras: [
+      { nome: "Cuidados Paliativos Preventivos(acamados, pós / pré - cirúrgicos)", descricao: "", profissionas: [] },
+      { nome: "Habilitação e Desempenho(atletas)", descricao: "", profissionas: [] },
+      { nome: "Personal Trainer (Acompanhamento ginásio)", descricao: "", profissionas: [] },
+      { nome: "Prevencao Doença e Dores Osteomusculares e Articulares", descricao: "", profissionas: [] },
+      { nome: "Prevenção Contra Queda", descricao: "", profissionas: [] },
+      { nome: "Precenção Contra Doenças Infectocontagiosas", descricao: "", profissionas: [] },
+      { nome: "Treinamento para Prova Física", descricao: "", profissionas: [] },
+    ]
 
-    var hash = sha256.create();
-    hash.update('rafaeelel');
-    hash.hex();
-    console.log(hash.hex())
-    hash.update('4459d379dd1cc9f260b2526594b9700f5826b0ed0ccb3ee6f9c19a3c8d819c60');
-    hash.hex();
-    console.log(hash.hex())
-    
+    // profissionais{
+    // especialidades: []
   }
 
+
   save(path, objeto: any) {
-    this.service.findObject(path, "email", "rafaelsoec@gmail.com").subscribe(r => console.log(r))
-    // this.service.save(path, objeto);
+    this.service.save('especialidades', this.especialidades);
     // this.service.remove(path, objeto);
   }
 

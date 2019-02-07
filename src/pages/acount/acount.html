@@ -1,17 +1,5 @@
 <ion-header>
-  <ion-navbar hideBackButton color="blue-light">
-    <ion-row align-self-items>
-      <ion-col col-2 (click)="toggle()" class="text-center">
-        <ion-icon name="menu"></ion-icon>
-      </ion-col>
-      <ion-col col-10>
-        <ion-title class=" font-hammer">Minha Conta</ion-title>
-      </ion-col>
-      <!-- <ion-col (click)="goConfig()" class="text-center">
-            <ion-icon name="settings"></ion-icon>
-          </ion-col> -->
-    </ion-row>
-  </ion-navbar>
+  <header [title]="'Minha Conta'" [hideButton]="true"></header>
 </ion-header>
 
 <ion-content padding>
@@ -19,7 +7,7 @@
     <ion-grid>
       <ion-row align-items-center>
         <label col-4 *ngIf="perfil" for="selecao-arquivo">
-          <img src="{{perfil.imagem}}" class="img-circular" #myImage (click)="presentImage(myImage)"/>
+          <img src="{{perfil.imagem}}" class="img-circular" #myImage (click)="presentImage(myImage)" />
           <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
         </label>
         <ion-col col-8 align-self-items>

@@ -45,7 +45,6 @@ export class MyApp {
         this.rootPage = LoginPage;
       }
     });
-    // this.rootPage = AcountPage
     this.platform.registerBackButtonAction(() => {
       if (this.nav.length() <= 1) {
         this.platform.exitApp();

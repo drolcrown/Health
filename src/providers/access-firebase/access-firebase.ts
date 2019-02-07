@@ -6,7 +6,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { storage } from 'firebase';
 import * as firebase from 'firebase';
 import { AlertsProvider } from '../alerts/alerts';
-import { Subject, from } from 'rxjs';
+import { Subject, from, Observable } from 'rxjs';
 import { LoadsProvider } from '../loads/loads';
 import { timeout, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -41,6 +41,7 @@ export class AccessFirebaseProvider {
           loading.dismiss();
           observable.unsubscribe();
           this.alert.showToast('Falha na Conexão!');
+          observable.unsubscribe();
         },
         () => { }
       );
@@ -48,7 +49,7 @@ export class AccessFirebaseProvider {
     return this.authorization.auth.signInWithEmailAndPassword(account.email, password);
   }
 
-  getAll(PATH): any {
+  getAll(PATH): Observable<any> {
     let loading = this.loadingCtrl.presentLoadingDefault();
     let observable = this.db.list(PATH).valueChanges().pipe(timeout(10000))
       .subscribe(
@@ -59,6 +60,7 @@ export class AccessFirebaseProvider {
         (err) => {
           loading.dismiss();
           this.alert.showToast('Falha na Conexão!');
+          observable.unsubscribe();
         },
         () => { }
       );
@@ -83,7 +85,7 @@ export class AccessFirebaseProvider {
     return newObject;
   }
 
-  findListObject(path: string, param: string): Subject<any> {
+  findListChat(path: string, param: string): Subject<any> {
     let newObject = [];
     let user;
     let subject = new Subject();
@@ -137,14 +139,6 @@ export class AccessFirebaseProvider {
     return newObject;
   }
 
-  updateParams(path: any, key: string, value: string, object: any) {
-    let ref = this.db.database.ref(path);
-    ref.orderByChild(key).equalTo(value)
-      .on("child_added", (snapshot) => {
-        this.db.list(path).update(snapshot.key, object);
-      });
-  }
-
   update(PATH: any, object: any) {
     return this.db.list(PATH).update(object.id, object);
   }
@@ -162,14 +156,6 @@ export class AccessFirebaseProvider {
     return subject;
   }
 
-  removeParams(path: any, key: string, value: string) {
-    let ref = this.db.database.ref(path);
-    ref.orderByChild(key).equalTo(value)
-      .on("child_added", (snapshot) => {
-        this.db.list(path).remove(snapshot.key);
-      });
-  }
-
   remove(PATH: any, usuario) {
     this.db.list(PATH).remove(usuario.id).then(() => {
       return this.alert.showToast('Ação Concluída com Sucesso!');
@@ -179,7 +165,6 @@ export class AccessFirebaseProvider {
   }
 
   upload(usuario, arq): any {
-    let subject = new Subject();
     let PATH = '/Usuarios/' + usuario.email + '.jpg';
     let arquivo = arq.target.files[0];
     let reader = new FileReader();

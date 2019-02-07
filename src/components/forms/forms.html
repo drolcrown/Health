@@ -1,16 +1,14 @@
-<ion-header>
-  <ion-navbar color="blue" class="text-center">
-    <ion-title>Cadastre-se</ion-title>
+<ion-content class="bg-principal">
+  <ion-navbar color="blue-light" class=" border-bottom border-dark">
+    <ion-title class="text-white text-center">Bem Vindo!!</ion-title>
   </ion-navbar>
-  <ion-segment [(ngModel)]="_usuarioSelecionado">
-    <ion-segment-button value="paciente" class="border border-primary text-primary" >
-      Paciente
-    </ion-segment-button>
-    <ion-segment-button value="profissional" class="border border-primary text-primary" >
-      Profissional
-    </ion-segment-button>
-  </ion-segment>
-</ion-header>
-<ion-content>
-  <profissional-form [usuario]="_usuarioSelecionado"></profissional-form>
+  <ion-grid padding class="box">
+    <ion-row justify-content-center col-12>
+      <ion-col col-12>
+        <h1 class="text-white">Como deseja se cadastrar??</h1>
+        <button ion-button color="dark" block (click)="registrar('profissional')" class="borda-circular">Profissional</button>
+        <button ion-button color="dark" block (click)="registrar('paciente')" class="borda-circular">Paciente</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

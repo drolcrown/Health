@@ -1,3 +1,17 @@
 forms {
+    .box{
+        position: fixed;
+        top:15%;
+        bottom: 25%;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
+        text-align: center;
+    }
 
+    .borda-circular{
+        margin-top: 15%;
+        border-radius: 5px;
+        height: 80px;
+    }
 }
