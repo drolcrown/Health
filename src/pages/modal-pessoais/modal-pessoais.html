@@ -1,0 +1,87 @@
+<ion-content class="bg-principal">
+  <ion-navbar color="transparent" class="form-group" hideBackButton="false">
+  </ion-navbar>
+  <form *ngIf="form" [formGroup]="form" padding>
+    <h1 class="text-white text-center">Faça o seu cadastro</h1>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white">Nome</ion-label>
+      <ion-input type="text" formControlName="nome"></ion-input>
+    </ion-item>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white">Sobrenome</ion-label>
+      <ion-input type="text" formControlName="sobrenome"></ion-input>
+    </ion-item>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white">Data de Nascimento</ion-label>
+      <ion-datetime min="1940" formControlName="data" max="2080-10-31" displayFormat="DD/MM/YYYY" doneText="Confirmar"
+        cancelText="Cancelar"></ion-datetime>
+    </ion-item>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white">CPF</ion-label>
+      <ion-input type="text" formControlName="cpf" [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+    </ion-item>
+    <ion-row justify-content-center>
+      <ion-item color="transparent" class="form-group" col-5 *ngIf="_usuario == 'paciente'">
+        <ion-label floating class="text-white">Peso(kg):</ion-label>
+        <ion-input formControlName="peso" type="text" [brmasker]="{money: true, decimal: 2, len:5}" autocomplete="on"></ion-input>
+      </ion-item>
+      <ion-item color="transparent" class="form-group" col-5 *ngIf="_usuario == 'paciente'">
+        <ion-label floating class="text-white">Altura(cm):</ion-label>
+        <ion-input formControlName="altura" type="text" [brmasker]="{money: true, decimal: 4, mask:'000', len:3}"
+          autocomplete="on"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white">Telefone:</ion-label>
+      <ion-input type="text" formControlName="telefone" [brmasker]="{phone: true}"></ion-input>
+    </ion-item>
+    <ion-row justify-content-center>
+      <ion-item color="transparent" class="form-group" col-5>
+        <ion-label floating class="text-white">Estado</ion-label>
+        <ion-select formControlName="estado">
+          <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item color="transparent" class="form-group" col-5>
+        <ion-label floating class="text-white">Município:</ion-label>
+        <ion-input formControlName="cidade" type="text" autocomplete="on"></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white"*ngIf="_usuario == 'profissional'">Profissional</ion-label>
+      <ion-select formControlName="profissao" multiple="true" cancelText="Cancelar">
+        <ion-option *ngFor="let prof of profissional">{{prof.nome}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item  color="transparent" class="form-group" *ngIf="_usuario == 'profissional'">
+      <ion-label floating class="text-white">Código do Conselho:</ion-label>
+      <ion-input formControlName="cr" type="text" autocomplete="on" ></ion-input>
+    </ion-item>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white">Email:</ion-label>
+      <ion-input formControlName="email" type="email" autocomplete="on"></ion-input>
+    </ion-item>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white">Senha:</ion-label>
+      <ion-input formControlName="senha" max-lenght="8" type="password" autocomplete="off"></ion-input>
+    </ion-item>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white">Confirmar Senha:</ion-label>
+      <ion-input formControlName="confirmarSenha" max-lenght="8" type="password" autocomplete="off"></ion-input>
+    </ion-item>
+    <div color="transparent" *ngIf="formInvalido != ''" class="form-group text-center mt-3 mb-3">
+      <small class="text-danger" style="font-size: 15px">
+        {{formInvalido}}
+      </small>
+    </div>
+    <div class="text-center mt-5">
+      <!-- <button ion-button color="white" (click)="goPage()">Sair</button> -->
+      <button ion-button color="white" class="mr-2" (click)="registrar()" *ngIf="_usuario == 'paciente'">
+        Concluir
+      </button>
+      <button ion-button color="white" class="mr-2" (click)="registrar()" *ngIf="_usuario == 'profissional'">
+        Próximo Passo
+      </button>
+    </div>
+  </form>
+</ion-content>

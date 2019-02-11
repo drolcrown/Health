@@ -1,4 +1,4 @@
-<ion-content class="bg-login">
+<ion-content class="bg-principal">
   <ion-grid padding class="box-login">
     <ion-row justify-content-center col-12>
       <ion-col col-4>
@@ -6,9 +6,9 @@
       </ion-col>
       <ion-col col-12>
         <h1 (click)="admin()" class="text-white mb-5">Health</h1>
-        <ion-input block autocomplete="on" type="text" [(ngModel)]="account.email" name="email" placeholder="Email">
+        <ion-input autofocus autocomplete="on" type="email" [(ngModel)]="account.email" name="email" placeholder="Email">
         </ion-input>
-        <ion-input type="password" [(ngModel)]="account.password" name="password" placeholder="Senha">
+        <ion-input autofocus type="password" [(ngModel)]="account.password" name="password" placeholder="Senha">
         </ion-input>
         <small class="text-danger">{{loginErrorString}}</small>
         <button ion-button color="dark" block (click)="doLogin()" class="borda-circular">Log-in</button>

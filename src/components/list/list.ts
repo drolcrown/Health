@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { SituacaoClinica } from '../../Models/situacaoClinica';
-import { NavParams } from 'ionic-angular';
+import { NavParams, NavController } from 'ionic-angular';
 import { PerfilPage } from '../../pages/perfil/perfil';
 
 /**
@@ -23,7 +23,59 @@ export class ListComponent {
     this.options = value;
   }
 
-  constructor(private provider: AccessFirebaseProvider, navParams: NavParams) {
+  contacts;
+  groupedContacts = [];
+
+  constructor(public navCtrl: NavController) {
+
+      this.contacts = [
+          'Kate Beckett',
+          'Richard Castle',
+          'Alexis Castle',
+          'Lanie Parish',
+          'Javier Esposito',
+          'Kevin Ryan',
+          'Martha Rodgers',
+          'Roy Montgomery',
+          'Jim Beckett',
+          'Stana Katic',
+          'Nathan Fillion',
+          'Molly Quinn',
+          'Tamala Jones',
+          'Jon Huertas',
+          'Seamus Dever',
+          'Susan Sullivan'
+      ];
+
+      this.groupContacts(this.contacts);
+
   }
 
+  groupContacts(contacts){
+
+      let sortedContacts = contacts.sort();
+      let currentLetter = false;
+      let currentContacts = [];
+
+      sortedContacts.forEach((value, index) => {
+        console.log(value)
+          // if(value.charAt(0) != currentLetter){
+
+          //     currentLetter = value.charAt(0);
+
+          //     let newGroup = {
+          //         letter: currentLetter,
+          //         contacts: []
+          //     };
+
+          //     currentContacts = newGroup.contacts;
+          //     this.groupedContacts.push(newGroup);
+
+          // } 
+
+          // currentContacts.push(value);
+
+      });
+
+  }
 }

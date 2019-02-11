@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { LoginPage } from '../login/login';
 import { CacheProvider } from '../../providers/cache/cache';
@@ -28,10 +28,6 @@ export class AcountPage {
     imageViewerCtrl: ImageViewerController) {
     this._imageViewerCtrl = imageViewerCtrl;
   }
-
-  customActionSheetOptions: any = {
-    header: 'Estados',
-  };
 
   ionViewDidEnter() {
     let alerta = this.provider.loadingCtrl.presentLoadingDefault();

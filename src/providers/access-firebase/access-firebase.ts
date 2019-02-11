@@ -27,6 +27,11 @@ export class AccessFirebaseProvider {
     return hash.hex();
   }
 
+  pagination(path) {
+    let ref = this.db.database.ref(path);
+    ref.orderByValue().limitToLast(50);
+  }
+
   doLogin(account) {
     let loading = this.loadingCtrl.presentLoadingDefault();
     let password = this.encripty(account.password);
@@ -40,10 +45,8 @@ export class AccessFirebaseProvider {
         (err) => {
           loading.dismiss();
           observable.unsubscribe();
-          this.alert.showToast('Falha na Conexão!');
-          observable.unsubscribe();
         },
-        () => { }
+        () => { loading.dismiss(); }
       );
 
     return this.authorization.auth.signInWithEmailAndPassword(account.email, password);
@@ -51,7 +54,8 @@ export class AccessFirebaseProvider {
 
   getAll(PATH): Observable<any> {
     let loading = this.loadingCtrl.presentLoadingDefault();
-    let observable = this.db.list(PATH).valueChanges().pipe(timeout(10000))
+    let observable = this.db.list(PATH).valueChanges()
+      .pipe(timeout(10000), catchError(error => of(this.alert.showToast('Falha na Conexão!'))))
       .subscribe(
         (value) => {
           loading.dismiss();
@@ -59,10 +63,9 @@ export class AccessFirebaseProvider {
         },
         (err) => {
           loading.dismiss();
-          this.alert.showToast('Falha na Conexão!');
           observable.unsubscribe();
         },
-        () => { }
+        () => { loading.dismiss(); }
       );
 
     return this.db.list(PATH).valueChanges();

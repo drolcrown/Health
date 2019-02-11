@@ -1,36 +1,31 @@
 import { Component } from '@angular/core';
-import { AccessFirebaseProvider } from '../../../providers/access-firebase/access-firebase';
-import { FormBuilder, Validators, FormGroup, AbstractControl } from '@angular/forms';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { UFs } from '../../../models/uf';
-import { LoginPage } from '../../../pages/login/login';
-import { NavController } from 'ionic-angular';
-import { AlertsProvider } from '../../../providers/alerts/alerts';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormsComponent } from '../../components/forms/forms';
 import { DatePipe } from '@angular/common';
-import { NavParams } from 'ionic-angular/navigation/nav-params';
-import { FormsComponent } from '../forms';
+import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
+import { LoginPage } from '../login/login';
+import { ModalProfissionaisPage } from '../modal-profissionais/modal-profissionais';
+import { UFs } from '../../models/uf';
+import { CacheProvider } from '../../providers/cache/cache';
 
+@IonicPage()
 @Component({
-  selector: 'profissional-form',
-  templateUrl: 'profissional.html'
+  selector: 'page-modal-pessoais',
+  templateUrl: 'modal-pessoais.html',
 })
-export class ProfissionalComponent {
+export class ModalPessoaisPage {
   private form: FormGroup;
   private _usuario;
-  private especialidades = [];
-  private profissao = [];
-  private _estados = UFs;
   private formInvalido = "";
+  private _estados = UFs;
+  private profissional = [];
 
-  constructor(private builder: FormBuilder, private navCtrl: NavController,
-    private alerta: AlertsProvider, private datePipe: DatePipe, private params: NavParams,
-    private provider: AccessFirebaseProvider) {
-    this.especialidades = params.get('especialidades');
-    console.log(this.especialidades)
-    this.profissao = params.get('profissao');
-    this._usuario = params.get('usuario');
-
-    this.form = this.builder.group({
+  constructor(private builder: FormBuilder, public navCtrl: NavController,
+    public navParams: NavParams, public cache: CacheProvider,
+    private datePipe: DatePipe, private provider: AccessFirebaseProvider) {
+    this._usuario = navParams.get('usuario');
+    this.form = builder.group({
       avaliacao: [5],
       nome: ['', Validators.required],
       sobrenome: ['', Validators.required],
@@ -39,7 +34,7 @@ export class ProfissionalComponent {
       altura: ['', (this._usuario == 'paciente' ? Validators.required : null)],
       cpf: ['', Validators.required],
       telefone: ['', Validators.required],
-      imagem: ['../../../assets/imgs/usuario.png'],
+      imagem: [(this._usuario == 'profissional' ? '../../../assets/imgs/profissional.png' : '../../../assets/imgs/usuario.png')],
       cidade: ['', Validators.required],
       estado: ['', Validators.required],
       especialidades: [''],
@@ -51,6 +46,14 @@ export class ProfissionalComponent {
     });
   }
 
+  ionViewDidEnter() {
+    if (this._usuario == 'profissional') {
+      this.provider.getAll('profissional').subscribe(resp => {
+        this.profissional = resp;
+      });
+    }
+  }
+
   private registrar() {
     if (this.form.valid) {
       let objeto = this.form.value;
@@ -60,12 +63,14 @@ export class ProfissionalComponent {
         this.provider.authorization.auth.createUserWithEmailAndPassword(objeto.email, objeto.senha)
           .then(resposta => {
             objeto.data = this.datePipe.transform(this.form.controls.data.value, 'dd/MM/yyyy');
+            // if (this._usuario != 'profissional') {
             this.provider.save('perfil/', objeto).subscribe(resp => {
-              this.alerta.showToast('Cadastro Realizado com Sucesso!!')
               this.navCtrl.push(LoginPage);
-            }), (error => {
-              this.alerta.showToast('Falha no Cadastro!! Tente Novamente')
-            });
+              this.provider.alert.showToast('Cadastro Realizado com Sucesso!!');
+            })
+            // } else {
+            // this.navCtrl.push(ModalProfissionaisPage, { perfil: objeto });
+            // }
           }).catch(error => {
             this.formInvalido = "Email em Uso!!";
           });

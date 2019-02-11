@@ -6,10 +6,14 @@
   <form *ngIf="form" [formGroup]="form">
     <ion-grid>
       <ion-row align-items-center>
-        <label col-4 *ngIf="perfil" for="selecao-arquivo">
-          <img src="{{perfil.imagem}}" class="img-circular" #myImage (click)="presentImage(myImage)" />
-          <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
-        </label>
+        <ion-col col-4 *ngIf="perfil">
+          <img src="{{perfil.imagem}}" class="" #myImage (click)="presentImage(myImage)" />
+          <label col-12 for="selecao-arquivo" class="btn btn-dark">
+            <!-- <img src="../../assets/icon/camera-with-external-flash.svg" alt="Alterar Imagem" /> -->
+            Alterar Imagem
+            <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
+          </label>
+        </ion-col>
         <ion-col col-8 align-self-items>
           <strong>Nome</strong>
           <ion-input formControlName="nome" type="text" placeholder="nome"></ion-input>
@@ -26,12 +30,12 @@
             [brmasker]="{mask:'17/03/1993', len:10}"></ion-input> -->
           <strong col-5>Cidade:</strong>
           <ion-input col-12 formControlName="cidade" type="text" placeholder="Brasilia"></ion-input>
-          <ion-col col-12>
-            <strong col-5>Estado:</strong>
+          <ion-item color="transparent" no-lines>
+            <ion-label col-5>Estado:</ion-label>
             <ion-select formControlName="estado" cancelText="Cancelar" placeholder="{{perfil.estado}}" interface="alert">
               <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
             </ion-select>
-          </ion-col>
+          </ion-item>
         </ion-col>
         <ion-col align-items-center col-12 class="text-center">
           <ion-title>Avaliação</ion-title>
@@ -41,8 +45,8 @@
         </ion-col>
       </ion-row>
       <ion-row justify-content-center class="mt-4">
-        <button ion-button color="blue-light" (click)="trocarSenha(perfil)">Trocar Senha</button>
-        <button ion-button color="blue-light" (click)="excluirConta(perfil)">Excluir Conta</button>
+        <button ion-button color="dark" (click)="trocarSenha(perfil)">Trocar Senha</button>
+        <button ion-button color="dark" (click)="excluirConta(perfil)">Excluir Conta</button>
       </ion-row>
     </ion-grid>
   </form>

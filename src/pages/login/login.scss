@@ -1,8 +1,8 @@
 page-login {
     .box-login{
         position: fixed;
-        top:35%;
-        bottom: 25%;
+        top:10%;
+        bottom: 15%;
         align-items: center;
         justify-content: center;
         align-self: center;
@@ -12,20 +12,22 @@ page-login {
         ion-input {
           ::placeholder{
           text-align: center;
+          color: white;
           }
           // color: white;
+          font-size: 15px;
           border-radius: 20px 20px;
           background: rgb(179, 204, 236);
           margin-top: 5%;
         }
-
+        
         .borda-circular{
           border-radius: 20px 20px;
           margin-top: 15%;
         }
 
       .footer{
-        margin-top: 25%;
+        margin-top: 15%;
       }
       
 }

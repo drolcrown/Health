@@ -1,0 +1,33 @@
+<ion-content class="bg-principal">
+  <ion-navbar color="transparent" class="form-group" hideBackButton="false" class="border-bottom border-dark">
+    <h1 class="text-white">Dados Profissionais</h1>
+  </ion-navbar>
+  <div padding>
+    <ion-item color="transparent" class="form-group">
+      <ion-label floating class="text-white">Codigo de Conselho</ion-label>
+      <ion-input type="text" autocomplete="off" placeholde="CRM-023932"></ion-input>
+    </ion-item>
+    <ion-item color="transparent" class="form-group" (click)="openModal()">
+      <ion-label floating class="text-white">Profissao</ion-label>
+      <ion-input type="text" autocomplete="off"></ion-input>
+    </ion-item>
+    <button ion-button color="dark" block (click)="openModal('profissional')" class="borda-circular">Adicionar Profissão</button>
+    <button ion-button color="dark" block (click)="openModal('especialidade')" class="borda-circular">Adicionar Especialidade</button>
+
+    <div (click)="openModal()" class="bg-danger">
+      <ion-item color="transparent" class="form-group">
+        <ion-label class="text-white">Especialidades</ion-label>
+        <ion-input type="text" autocomplete="off"></ion-input>
+      </ion-item>
+    </div>
+    <div color="transparent" *ngIf="formInvalido != ''" class="form-group text-center mt-3 mb-3">
+      <small class="text-danger">
+        {{formInvalido}}
+      </small>
+    </div>
+    <div class="text-center mt-5">
+      <!-- <button ion-button color="dark" (click)="goPage()">Sair</button> -->
+      <button ion-button color="dark" class="mr-2" (click)="registrar()">Concluir</button>
+    </div>
+  </div>
+</ion-content>

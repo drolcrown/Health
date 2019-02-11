@@ -35,7 +35,6 @@ export class LoginPage {
           this.providerCache.save('page', "HomePage");
           this.provider.findObject('perfil', 'email', this.account.email).subscribe(resp => {
             this.providerCache.save('perfil', resp);
-            this.providerCache.save('load-perfil', true);
           });
           this.navCtrl.setRoot(HomePage);
           loading.dismiss();

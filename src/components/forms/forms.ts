@@ -1,24 +1,18 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
-import { ProfissionalComponent } from './profissional/profissional';
-import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
+import { NavController, ModalController } from 'ionic-angular';
+import { ModalPessoaisPage } from '../../pages/modal-pessoais/modal-pessoais';
+import { CacheProvider } from '../../providers/cache/cache';
+import { ModalProfissionaisPage } from '../../pages/modal-profissionais/modal-profissionais';
 
 @Component({
   selector: 'forms',
   templateUrl: 'forms.html'
 })
 export class FormsComponent {
-  constructor(private navCtrl: NavController, private provider: AccessFirebaseProvider) { }
+  constructor(private navCtrl: NavController){
+   }
 
   public registrar(nome) {
-    if (nome == 'profissional') {
-      this.provider.getAll('especialidades').subscribe(espec => {
-        this.provider.getAll('profissional').subscribe(prof => {
-          this.navCtrl.push(ProfissionalComponent, { usuario: nome, especialidades: espec, profissao: prof});
-        });
-      });
-    } else {
-      this.navCtrl.push(ProfissionalComponent, { usuario: nome, especialidades: [], profissao: []});
-    }
+    this.navCtrl.push(ModalPessoaisPage , { usuario: nome });
   }
 }

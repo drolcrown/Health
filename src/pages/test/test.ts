@@ -33,10 +33,19 @@ export class TestPage {
 
   constructor(public navCtrl: NavController,
     public service: AccessFirebaseProvider, public alert: AlertsProvider) {
-      this.service.save('especialidades/assistencia', this.especialidades.assistencia);
-      this.service.save('especialidades/prevencao', this.especialidades.prevencao);
-      this.service.save('especialidades/estetica', this.especialidades.estetica);
-      this.service.save('especialidades/pets', this.especialidades.pets);
+
+    let tipos = [
+      { lista: this.especialidades.assistencia, nome: 'assistencia' },
+      { lista: this.especialidades.prevencao, nome: 'prevencao' },
+      { lista: this.especialidades.estetica, nome: 'estetica' },
+      { lista: this.especialidades.pets, nome: 'pets' }
+    ];
+
+    tipos.forEach(tipo => {
+      tipo.lista.forEach(el => {
+        this.service.save('especialidades/' + tipo.nome, el);
+      });
+    });
   }
 
   private pages = [

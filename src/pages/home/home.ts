@@ -20,7 +20,7 @@ export class HomePage {
 
   private buttons = {
     display: 'flex',
-    height: window.screen.height * 0.37 + 'px',
+    height: window.screen.height * 0.35 + 'px',
     alignItems: 'center',
     justifyContent: 'center',
     alignSelf: 'center',
@@ -28,19 +28,48 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private providerCache: CacheProvider,
     public menuCtrl: MenuController, public provider: AccessFirebaseProvider) {
+    this.buttons.height = window.screen.height * 0.35 + 'px';
     this.menuCtrl.enable(true);
   }
 
   ionViewDidEnter() {
-    this._title = "Atendimento";
-    this.provider.getAll('profissional').subscribe((value) => {
-      this.profissionais = value;
+    this.providerCache.get('profissional').then(resp => {
+      if (!resp) {
+        this.provider.getAll('profissional')
+          .subscribe(value => {
+            this.profissionais = value;
+          });
+      }
     });
   }
 
   goPage(nome) {
+    switch (nome) {
+      case 'Assistencia em Saúde':
+        nome = 'assistencia';
+        break;
+      case 'Prevenção e Treinamento':
+        nome = 'prevencao';
+        break;
+      case 'Beleza e Estética':
+        nome = 'estetica';
+        break;
+      case 'Pets':
+        nome = 'pets';
+        break;
+    }
     this.providerCache.save("page", "AtendimentoPage");
-    this.navCtrl.push(AtendimentoPage, { name: nome, title: this._title });
+    this.providerCache.updateCache('especialidades/' + nome).then(resp => {
+      if (!resp) {
+        this.provider.getAll('especialidades/' + nome).subscribe(espec => {
+          if (espec) {
+            this.navCtrl.push(AtendimentoPage, { name: nome, title: this._title, especialidades: espec });
+          }
+        });
+      } else {
+        this.navCtrl.push(AtendimentoPage, { name: nome, title: this._title, especialidades: resp });
+      }
+    });
   }
 
 }

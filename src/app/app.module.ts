@@ -42,13 +42,17 @@ import { ConfigPage } from '../pages/config/config';
 import { ChatComponent } from '../components/chat/chat';
 import { PerfilPage } from '../pages/perfil/perfil';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
+import { ModalPage } from '../pages/modal/modal';
+import { ModalPessoaisPage } from '../pages/modal-pessoais/modal-pessoais';
+import { ModalProfissionaisPage } from '../pages/modal-profissionais/modal-profissionais';
 
 @NgModule({
   declarations: [
     MyApp, LoginPage, HeaderComponent, TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent, ListComponent,
-    ConfigPage, ChatComponent, PerfilPage,
+    ConfigPage, ChatComponent, PerfilPage, ModalPage,
+    ModalPessoaisPage, ModalProfissionaisPage
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
@@ -66,7 +70,8 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
     MyApp, LoginPage, HeaderComponent, TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
     FormsComponent, ProfissionalComponent, ListComponent,
-    ConfigPage, ChatComponent, PerfilPage
+    ConfigPage, ChatComponent, PerfilPage, ModalPage,
+    ModalPessoaisPage, ModalProfissionaisPage
   ],
   providers: [
     StatusBar,

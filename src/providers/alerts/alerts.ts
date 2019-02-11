@@ -53,13 +53,6 @@ export class AlertsProvider {
     alert.present();
   }
 
-  cadastroFailAlert() {
-    let alert = this.alertCtrl.create({
-      title: 'Falha no Cadastro!',
-    });
-    alert.present();
-  }
-
   showToast(data: any) {
     let toast = this.toastCtrl.create({
       message: data,
