@@ -1,34 +1,25 @@
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-  <ion-row>
-    <ion-col *ngFor="let prof of profissional">
-        {{prof}}
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <ion-list inset>
-        <ion-item>
-          <ion-input placeholder="e-mail" type="text" #mail></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-input placeholder="senha" type="password" #password></ion-input>
-        </ion-item>
-      </ion-list>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <button ion-button class="submit-btn" (click)="logIn(mail.value,password.value)" type="submit">Login
-      </button>
-    </ion-col>
-  </ion-row>
-</ion-content>
+<!-- <ion-content padding class="bg-principal">
+-->  <ion-navbar color="transparent" hideBackButton="false"></ion-navbar>
+  <!--<form *ngIf="form" [formGroup]="form">
+    <ion-row align-items-center class="text-center">
+      <ion-col col-12>
+        <h1 class="text-white text-center mb-5" [innerHTML]="_conversa.mensagem"></h1>
+        <ion-list inset>
+          <div *ngFor="let msg of _conversa.inputs">
+            <ion-item class="mb-4" color="transparent">
+              <ion-label floating class="text-white">{{msg.label}}</ion-label>
+              <ion-datetime *ngIf="msg.tipo === 'date'" min="1940" formControlName="{{msg.nome}}" displayFormat="DD/MM/YYYY"
+                doneText="Confirmar" cancelText="Cancelar"></ion-datetime>
+              <ion-input *ngIf="msg.tipo === 'cpf'" type="text" formControlName="{{msg.nome}}" [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+              <ion-input *ngIf="msg.tipo === 'text'" formControlName="{{msg.nome}}" type="{{msg.tipo}}" autocomplete="off"></ion-input>
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row col-12>
+      <button col-5 ion-button color="dark" navPop type="button">{{buttonBack}}</button>
+      <button col-5 ion-button color="dark" (click)="logIn()" type="button">Enviar</button>
+    </ion-row>
+  </form>
+</ion-content> -->

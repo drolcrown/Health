@@ -1,25 +1,25 @@
 import { NgModule } from '@angular/core';
 import { HeaderComponent } from './core/header/header';
 import { FormsComponent } from './forms/forms';
-import { ProfissionalComponent } from './forms/profissional/profissional';
 import { ListComponent } from './list/list';
 import { ChatComponent } from './chat/chat';
+import { CadastroComponent } from './cadastro/cadastro';
 
 @NgModule({
 	declarations: [HeaderComponent,
     HeaderComponent,
     FormsComponent,
-    ProfissionalComponent,
     ListComponent,
     ChatComponent,
+    CadastroComponent,
     ],
 	imports: [],
 	exports: [HeaderComponent,
     HeaderComponent,
     FormsComponent,
-    ProfissionalComponent,
     ListComponent,
     ChatComponent,
+    CadastroComponent,
     ]
 })
 export class ComponentsModule {}

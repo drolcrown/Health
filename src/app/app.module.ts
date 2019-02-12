@@ -26,7 +26,6 @@ import { AtendimentoPage } from '../pages/atendimento/atendimento';
 //Components
 import { HeaderComponent } from '../components/core/header/header';
 import { FormsComponent } from '../components/forms/forms';
-import { ProfissionalComponent } from '../components/forms/profissional/profissional';
 
 //Providers
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
@@ -45,12 +44,13 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { ModalPage } from '../pages/modal/modal';
 import { ModalPessoaisPage } from '../pages/modal-pessoais/modal-pessoais';
 import { ModalProfissionaisPage } from '../pages/modal-profissionais/modal-profissionais';
+import { CadastroComponent } from '../components/cadastro/cadastro';
 
 @NgModule({
   declarations: [
     MyApp, LoginPage, HeaderComponent, TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, ProfissionalComponent, ListComponent,
+    FormsComponent, ListComponent, CadastroComponent,
     ConfigPage, ChatComponent, PerfilPage, ModalPage,
     ModalPessoaisPage, ModalProfissionaisPage
   ],
@@ -69,7 +69,7 @@ import { ModalProfissionaisPage } from '../pages/modal-profissionais/modal-profi
   entryComponents: [
     MyApp, LoginPage, HeaderComponent, TestPage,
     HomePage, AtendimentoPage, ListPage, AcountPage,
-    FormsComponent, ProfissionalComponent, ListComponent,
+    FormsComponent, ListComponent, CadastroComponent,
     ConfigPage, ChatComponent, PerfilPage, ModalPage,
     ModalPessoaisPage, ModalProfissionaisPage
   ],

@@ -1,0 +1,26 @@
+<ion-content padding class="bg-principal">
+  <form *ngIf="form" [formGroup]="form">
+    <ion-row align-items-center class="text-center">
+      <ion-col col-12>
+        <h1 class="text-white text-center mb-5" [innerHTML]="conversa.mensagem"></h1>
+        <ion-list inset>
+          <div *ngFor="let msg of conversa.inputs">
+            <ion-item class="mb-4" color="transparent">
+              <ion-label floating class="text-white">{{msg.label}}</ion-label>
+              <ion-datetime *ngIf="msg.tipo === 'date'" min="1940" formControlName="{{msg.nome}}" displayFormat="DD/MM/YYYY"
+                doneText="Confirmar" cancelText="Cancelar"></ion-datetime>
+              <ion-input *ngIf="msg.tipo === 'cpf'" type="text" formControlName="{{msg.nome}}" [brmasker]="{mask:'000.000.000-00', len:14}"></ion-input>
+              <ion-input *ngIf="msg.tipo === 'text' || msg.tipo === 'email' || msg.tipo === 'password'" formControlName="{{msg.nome}}"
+                type="{{msg.tipo}}" autocomplete="off"></ion-input>
+            </ion-item>
+          </div>
+        </ion-list>
+      </ion-col>
+      <strong class="text-danger">{{alerta}}</strong>
+      <ion-row col-12>
+        <button col-5 ion-button color="dark" (click)="goBack()" type="reset">{{buttonBack}}</button>
+        <button col-5 ion-button color="dark" (click)="goNext()" type="button">{{buttonNext}}</button>
+      </ion-row>
+    </ion-row>
+  </form>
+</ion-content>

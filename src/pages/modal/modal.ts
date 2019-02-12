@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ViewController } from 'ionic-angular/navigation/view-controller';
-import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { CacheProvider } from '../../providers/cache/cache';
+import { FormBuilder, FormGroup, AbstractControl, Validators, FormControl } from '@angular/forms';
 
 /**
  * Generated class for the ModalPage page.
@@ -17,38 +16,49 @@ import { CacheProvider } from '../../providers/cache/cache';
   templateUrl: 'modal.html',
 })
 export class ModalPage {
-  private nome = "";
-  private label = "";
-  private lista = [];
+  private form: FormGroup;
+  private buttonBack = "Sair";
+  private _conversa: {
+    mensagem: string,
+    inputs: Array<any>
+  };
 
-  constructor(public navParams: NavParams, public viewCtrl: ViewController,
-    public cache: CacheProvider) {
+  @Input()
+  private set conversa(value) {
+    console.log(value)
+    this._conversa = value;
   }
 
-  ionViewDidEnter() {
-    this.nome = this.navParams.get('nome');
-    if (this.nome) {
-      this.cache.updateCache(this.nome)
-        .then(resp => {
-          if (this.nome == 'profissional') {
-            this.lista = resp;
-          }
-        });
+  constructor(public navParams: NavParams, public navCtrl: NavController,
+    public builder: FormBuilder, public cache: CacheProvider) {
+    // this._conversa = this.navParams.get("conversa");
+    // this.buttonBack = this.navParams.get("button");
+    this.form = builder.group({
+      cpf: "",
+      email: "",
+      nome: "",
+      sobrenome: "",
+      data: "",
+      estado: "",
+      municipio: "",
+      senha: ""
+    });
+    this._conversa.inputs.forEach(el => {
+      this.gerarControl(el.nome);
+    })
+  }
+
+  public gerarControl(nome) {
+    let control = new FormControl('', Validators.required);
+    this.form.setControl(nome, control);
+  }
+
+
+  logIn() {
+    if (this.form.valid) {
+      this.navCtrl.push(ModalPage, { perfil: this.form.value })
+      // this.viewCtrl.dismiss(this.form.value);
     }
-
-    // this.cache.updateCache('especialidades').then(resp => {
-    //   resp.forEach(element => {
-    //     console.log(Object.keys(element))
-    //     // // .map(k => {
-    //     // //   console.log(element[k])
-    //     // });
-    //   });
-    // });
-
-  }
-
-  logIn(mail, password) {
-    this.viewCtrl.dismiss({ mail: mail, password: password });
   }
 
 }

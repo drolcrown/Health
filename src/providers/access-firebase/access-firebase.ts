@@ -27,9 +27,9 @@ export class AccessFirebaseProvider {
     return hash.hex();
   }
 
-  pagination(path) {
+  pagination(path){
     let ref = this.db.database.ref(path);
-    ref.orderByValue().limitToLast(50);
+    return ref.orderByValue().limitToLast(50);
   }
 
   doLogin(account) {
