@@ -5,7 +5,6 @@ import { AccessFirebaseProvider } from '../../providers/access-firebase/access-f
 import { LoginPage } from '../login/login';
 import { CacheProvider } from '../../providers/cache/cache';
 import { HomePage } from '../home/home';
-import { ConfigPage } from '../config/config';
 import { UFs } from '../../models/uf';
 import { ImageViewerController } from 'ionic-img-viewer';
 
@@ -88,10 +87,6 @@ export class AcountPage {
       this.providerCache.clear();
       this.navCtrl.setRoot(LoginPage);
     }
-  }
-
-  public goConfig() {
-    this.navCtrl.push(ConfigPage);
   }
 
   public toggle() {

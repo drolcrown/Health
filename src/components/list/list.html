@@ -1,14 +1,13 @@
-<ion-scroll scrollY="true" style="width: 100%; height: 100%">
-  <!-- <ion-list>
-    <ion-row *ngFor="let opt of options" class="border border-primary mt-2" [navPush]="perfis" align-items-center>
-      <h4 col-12>{{opt.nome}}</h4>
+<ion-content padding class="animated fadeIn common-bg" (ionScroll)="onScroll($event)" >
+  <ion-item no-margin margin-bottom *ngFor="let opt of options">
+    <ion-row align-items-center>
+      <ion-col col-4>
+        <img src="{{opt.imagem}}" />
+      </ion-col>
+      <ion-col col-8 class="text-center">
+        <strong>{{opt.nome}}</strong><br>
+        <small>R$ {{opt.preco}}</small>
+      </ion-col>
     </ion-row>
-  </ion-list> -->
-  <ion-item-group *ngFor="let group of groupedContacts">
-
-    <ion-item-divider light>{{group.letter}}</ion-item-divider>
-    <ion-item *ngFor="let contact of group.contacts">{{contact}}</ion-item>
-
-  </ion-item-group>
-
-</ion-scroll>
+  </ion-item>
+</ion-content>

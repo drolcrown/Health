@@ -9,7 +9,6 @@ import { LoginPage } from '../pages/login/login';
 import { AcountPage } from '../pages/acount/acount';
 import { CacheProvider } from '../providers/cache/cache';
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
-import { TestPage } from '../pages/test/test';
 
 @Component({
   templateUrl: 'app.html'
@@ -36,21 +35,21 @@ export class MyApp {
   }
 
   initializeApp() {
-    this.cache.get("perfil").then(perfil => {
-      if (this.perfil) {
-        this.perfil = perfil;
-        this.rootPage = HomePage;
-      } else {
-        this.perfil = {
-          nome: "Bem Vindo!",
-          imagem: "../assets/imgs/profissional.png",
-          sobrenome: ""
-        };
-        this.rootPage = LoginPage;
-      }
-      this.cache.save('load-perfil', false);
-    });
-    // this.rootPage = TestPage;
+    // this.cache.get("perfil").then(perfil => {
+    //   if (this.perfil) {
+    //     this.perfil = perfil;
+    //     this.rootPage = HomePage;
+    //   } else {
+    //     this.perfil = {
+    //       nome: "Bem Vindo!",
+    //       imagem: "../assets/imgs/profissional.png",
+    //       sobrenome: ""
+    //     };
+    //     this.rootPage = LoginPage;
+    //   }
+    //   this.cache.save('load-perfil', false);
+    // });
+    this.rootPage = HomePage;
     // this.rootPage = FormsComponent;
     this.platform.registerBackButtonAction(() => {
       if (this.nav.length() <= 1) {

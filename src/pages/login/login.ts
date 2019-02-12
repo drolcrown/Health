@@ -32,9 +32,8 @@ export class LoginPage {
       if (login) {
         let loading = this.provider.loadingCtrl.presentLoadingDefault();
         login.then((success) => {
-          this.providerCache.save('page', "HomePage");
-          this.provider.findObject('perfil', 'email', this.account.email).subscribe(resp => {
-            this.providerCache.save('perfil', resp);
+          this.provider.findObject('usuario', 'email', this.account.email).subscribe(resp => {
+            this.providerCache.save('usuario', resp);
           });
           this.navCtrl.setRoot(HomePage);
           loading.dismiss();

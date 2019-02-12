@@ -39,14 +39,15 @@ export class CadastroComponent {
       data: "",
       estado: "",
       municipio: "",
-      senha: ""
+      senha: "",
+      confirmarSenha: ""
     });
     this.mensagens = [
       { mensagem: "Olá!!<br> Informe seu nome e sobrenome", inputs: [{ nome: "nome", label: "Nome", tipo: "text" }, { nome: "sobrenome", label: "Sobrenome", tipo: "text" }] },
       { mensagem: "Quando você nasceu?", inputs: [{ nome: "data", label: "Data de Nascimento", tipo: "date" }] },
       { mensagem: "Por favor, informe seu cpf", inputs: [{ nome: "cpf", label: "CPF", tipo: "cpf" }] },
       { mensagem: "Qual o estado e o município que você mora?", inputs: [{ nome: "estado", label: "Estado", tipo: "text" }, { nome: "municipio", label: "Município", tipo: "text" }] },
-      { mensagem: this.form.controls.nome + ", Falta pouco pra concluirmos!<br>Informe seu email", inputs: [{ nome: "email", label: "Email", tipo: "email" }] },
+      { mensagem: this.form.controls.nome.value + ", Falta pouco pra concluirmos!<br>Informe seu email", inputs: [{ nome: "email", label: "Email", tipo: "email" }] },
       { mensagem: "Ufa!! Demorou, mas está acabando.<br>Dê uma senha para sua nova conta!!", inputs: [{ nome: "senha", label: "Senha", tipo: "password" }, { nome: "confirmarSenha", label: "Confirme sua Senha", tipo: "password" }] }
     ];
     this.initialize();
@@ -59,6 +60,10 @@ export class CadastroComponent {
     this.buttonBack = ((this.contador > 0) ? " Voltar" : "Sair");
     this.buttonNext = ((this.contador !== this.mensagens.length) ? " Próximo" : "Concluir");
     this.conversa = this.mensagens[this.contador];
+    this.alerta = "";
+  }
+
+  public clearAlert() {
     this.alerta = "";
   }
 
@@ -78,14 +83,18 @@ export class CadastroComponent {
 
   goNext() {
     if (this.form.valid) {
-      this.contador++;
-      if (this.contador < this.mensagens.length) {
-        this.initialize();
+      if (this.form.controls.senha.value === this.form.controls.confirmarSenha.value) {
+        this.contador++;
+        if (this.contador < this.mensagens.length) {
+          this.initialize();
+        } else {
+          this.provider.save('usuario', this.form.value);
+          this.navCtrl.setRoot(LoginPage);
+        }
       } else {
-        this.provider.save('usuario', this.form.value);
-        this.navCtrl.setRoot(LoginPage);
+        this.alerta = "Senha Diferentes!!";
       }
-    }else{
+    } else {
       this.alerta = "Preencha todos os campos!!";
     }
   }

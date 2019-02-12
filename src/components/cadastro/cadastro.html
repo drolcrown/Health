@@ -1,11 +1,11 @@
 <ion-content padding class="bg-principal">
-  <form *ngIf="form" [formGroup]="form">
-    <ion-row align-items-center class="text-center">
+  <ion-grid *ngIf="form" [formGroup]="form">
+    <ion-row class="text-center" justify-content-center>
       <ion-col col-12>
         <h1 class="text-white text-center mb-5" [innerHTML]="conversa.mensagem"></h1>
         <ion-list inset>
           <div *ngFor="let msg of conversa.inputs">
-            <ion-item class="mb-4" color="transparent">
+            <ion-item class="mb-4" color="transparent" (click)="clearAlert()">
               <ion-label floating class="text-white">{{msg.label}}</ion-label>
               <ion-datetime *ngIf="msg.tipo === 'date'" min="1940" formControlName="{{msg.nome}}" displayFormat="DD/MM/YYYY"
                 doneText="Confirmar" cancelText="Cancelar"></ion-datetime>
@@ -16,11 +16,11 @@
           </div>
         </ion-list>
       </ion-col>
-      <strong class="text-danger">{{alerta}}</strong>
-      <ion-row col-12>
-        <button col-5 ion-button color="dark" (click)="goBack()" type="reset">{{buttonBack}}</button>
-        <button col-5 ion-button color="dark" (click)="goNext()" type="button">{{buttonNext}}</button>
-      </ion-row>
     </ion-row>
-  </form>
+    <ion-row padding justify-content-center>
+      <strong col-12 class="text-danger text-center">{{alerta}}</strong>
+      <button col-5 ion-button color="dark" (click)="goBack()">{{buttonBack}}</button>
+      <button col-5 ion-button color="dark" (click)="goNext()" type="button">{{buttonNext}}</button>
+    </ion-row>
+  </ion-grid>
 </ion-content>

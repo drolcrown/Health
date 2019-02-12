@@ -1,21 +1,7 @@
 list {
-    p, h3, h4, h5, small {
-        word-break: inherit;
-        line-break: auto;
-        text-align: center;
-    }
-
-    .box{
-        height: 60px;
-    }
-    
-    .bg-pets{
-        position: fixed;
-        bottom: 0%;
-        top: 10%;
-        left: 0%;
-        right: 0%;
-        background-image: linear-gradient( to  bottom right, rgb(79, 241, 50),  rgb(17, 83, 95));
-        // background-image: linear-gradient( to  bottom right, rgb(102, 206, 107),  rgb(41, 242, 192));
+    strong, small, p{
+        word-break: normal;
+        word-wrap: break-word;
+        line-break: inherit;
     }
 }

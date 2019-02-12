@@ -1,23 +1,24 @@
 <ion-header>
-  <header [title]="" [hideButton]="true"></header>
-  <ion-segment [(ngModel)]="_title">
-    <ion-segment-button value="Atendimento">
-      Atendimento
-    </ion-segment-button>
-    <ion-segment-button value="Profissional">
-      Profissional
-    </ion-segment-button>
-  </ion-segment>
+  <ion-navbar color="main">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title >
+      <ion-searchbar autocomplete="on" type="text" placeholder="Buscar" animated ionfocus value="" (ionInput)="getItems($event)">
+      </ion-searchbar>
+    </ion-title>
+    <ion-buttons end>
+      <button ion-button tappable (click)="goToAccount()">
+        <ion-icon name="options"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
-<ion-content padding class="mt-1">
-  <ion-grid *ngIf="_title != 'Profissional'">
-    <ion-row justify-content-center class="text-center">
-      <ion-col col-5 *ngFor="let page of pages" [ngStyle]="buttons" [class]="page.classe" (click)="goPage(page.name)">
-        <img src={{page.image}} />
-        <!-- <h3 class="blue">{{page.name}}</h3> -->
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-  <!-- <h2 *ngIf="_title == 'Profissional'" class="text-primary border-bottom border-secundary">Profissionais</h2> -->
-  <list *ngIf="_title == 'Profissional'" [lista]="profissionais"></list>
+<ion-content padding class="text-center">
+  <list [lista]="objectList" (scrollOn)="receiverFeedback($event)"></list>
+  <ion-footer translucent no-border [hidden]="footerOn">
+    <button ion-button color="main" (click)="openModal()" class="borda-circular">
+      <ion-icon name="add-circle" class="mr-3"></ion-icon>Anunciar agora
+    </button>
+  </ion-footer>
 </ion-content>

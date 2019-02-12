@@ -21,7 +21,6 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
-import { AtendimentoPage } from '../pages/atendimento/atendimento';
 
 //Components
 import { HeaderComponent } from '../components/core/header/header';
@@ -31,28 +30,23 @@ import { FormsComponent } from '../components/forms/forms';
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
 import { AlertsProvider } from '../providers/alerts/alerts';
 import { AcountPage } from '../pages/acount/acount';
-import { TestPage } from '../pages/test/test';
 import { CacheProvider } from '../providers/cache/cache';
 import { DatePipe } from '@angular/common';
 import { LoadsProvider } from '../providers/loads/loads';
 import { BrMaskerModule } from 'brmasker-ionic-3';
 import { ListComponent } from '../components/list/list';
-import { ConfigPage } from '../pages/config/config';
 import { ChatComponent } from '../components/chat/chat';
 import { PerfilPage } from '../pages/perfil/perfil';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { ModalPage } from '../pages/modal/modal';
-import { ModalPessoaisPage } from '../pages/modal-pessoais/modal-pessoais';
-import { ModalProfissionaisPage } from '../pages/modal-profissionais/modal-profissionais';
 import { CadastroComponent } from '../components/cadastro/cadastro';
 
 @NgModule({
   declarations: [
-    MyApp, LoginPage, HeaderComponent, TestPage,
-    HomePage, AtendimentoPage, ListPage, AcountPage,
+    MyApp, LoginPage, HeaderComponent, 
+    HomePage, ListPage, AcountPage,
     FormsComponent, ListComponent, CadastroComponent,
-    ConfigPage, ChatComponent, PerfilPage, ModalPage,
-    ModalPessoaisPage, ModalProfissionaisPage
+    ChatComponent, PerfilPage, ModalPage,
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
@@ -67,11 +61,10 @@ import { CadastroComponent } from '../components/cadastro/cadastro';
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp, LoginPage, HeaderComponent, TestPage,
-    HomePage, AtendimentoPage, ListPage, AcountPage,
+    MyApp, LoginPage, HeaderComponent,
+    HomePage, ListPage, AcountPage,
     FormsComponent, ListComponent, CadastroComponent,
-    ConfigPage, ChatComponent, PerfilPage, ModalPage,
-    ModalPessoaisPage, ModalProfissionaisPage
+    ChatComponent, PerfilPage, ModalPage,
   ],
   providers: [
     StatusBar,

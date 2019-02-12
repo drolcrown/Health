@@ -1,5 +1,12 @@
 page-home {
-    img{
-        z-index: 0;
+    .borda-circular{
+      border-radius: 20px 20px;
+    //   margin-top: 15%;
+      }
+
+    .footer{
+        position: fixed;
+        bottom: 5%;
     }
+
 }
