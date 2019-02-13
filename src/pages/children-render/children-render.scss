@@ -1,11 +1,15 @@
 page-children-render {
-    p{
-        font-size: 16px;
-        line-break: auto;
-        word-wrap: break-word;
-        color: rgb(216, 36, 130);
-    }
-    h1, h2, h3{
+    // p{
+    //     font-size: 16px;
+    //     line-break: auto;
+    //     word-wrap: break-word;
+    //     color: rgb(216, 36, 130);
+    // }
+    h1, h2{
         color: white;
+    }
+
+    small{
+        font-size: 14px;
     }
 }

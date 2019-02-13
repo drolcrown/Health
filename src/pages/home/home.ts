@@ -1,5 +1,5 @@
 import { Component, Renderer, ViewChild, ElementRef } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Searchbar, NavParams, Tabs, Keyboard } from 'ionic-angular';
 import { RenderProvider } from '../../providers/render/render';
 import { atlas } from '../../models/atlas';
 import { ChildrenRenderPage } from '../children-render/children-render';
@@ -16,22 +16,57 @@ export class HomePage {
   public listAll: Array<any> = [];
   public activeSearch = false;
 
+  @ViewChild('search') searchbar: Searchbar;
+
   constructor(public navCtrl: NavController, public render: RenderProvider,
-    public renderer: Renderer, public cache: CacheProvider) {
+    public renderer: Renderer, public cache: CacheProvider, public tab: Tabs) {
     let objetos = atlas;
-    this.listAll = this.recuperarItens(atlas);
+    this.listAll = this.recuperarItens(atlas).sort(function (a: any, b: any) {
+      if (a.nome > b.nome) {
+        return 1;
+      }
+      if (a.nome === b.nome) {
+        return 0;
+      }
+      if (a.nome < b.nome) {
+        return -1;
+      }
+    });
     this.objectList = objetos;
     this.loadedObjectList = objetos;
   }
 
-  toogleSearch(search) {
+  ordenarPorNome(a: any, b: any) {
+    if (a.nome > b.nome) {
+      return 1;
+    }
+    if (a.nome === b.nome) {
+      return 0;
+    }
+    if (a.nome < b.nome) {
+      return -1;
+    }
+  }
+
+  toogleSearch() {
+    this.searchbar.inputFocused();
     if (this.activeSearch) {
       this.initializeItems();
+      this.tab.setTabbarHidden(false);
     }
     else {
-      search.value = "";
+      this.searchbar.value = "";
+      this.tab.setTabbarHidden(true);
     }
     this.activeSearch = !this.activeSearch;
+  }
+
+  closeFocus() {
+    this.searchbar.inputFocused();
+    this.tab.setTabbarHidden(false);
+    this.searchbar.value = "";
+    this.initializeItems();
+    this.activeSearch = false;
   }
 
   recuperarItens(lista) {
@@ -78,6 +113,7 @@ export class HomePage {
     // set q to the value of the searchbar
     var valorSearch = searchbar.srcElement.value;
     if (!valorSearch) {
+      this.tab.setTabbarHidden(false);
       return;
     }
     this.objectList = this.listAll.filter((v) => {

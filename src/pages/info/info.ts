@@ -55,9 +55,9 @@ export class InfoPage {
     let listaHoverBackgroundColor = [];
     let listaValor = [];
     this.cache.get("dados").then(resp => {
-      if (!resp){
+      if (!resp) {
         this.estat = true;
-      }else{
+      } else {
         resp.filter(el => {
           if (listaChave.indexOf(el.toLowerCase()) > -1) {
             listaValor[listaChave.indexOf(el.toLowerCase())]++;
@@ -94,6 +94,17 @@ export class InfoPage {
           color: this.render.getColor(index, 1),
           size: listaValor[index]
         });
+      });
+      this.labels.sort(function (a: any, b: any) {
+        if (a.label > b.label) {
+          return 1;
+        }
+        if (a.label === b.label) {
+          return 0;
+        }
+        if (a.label < b.label) {
+          return -1;
+        }
       });
     });
   }

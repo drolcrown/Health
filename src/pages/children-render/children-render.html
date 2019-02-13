@@ -7,12 +7,13 @@
     <ion-grid>
       <ion-row justify-content-center>
         <ion-row *ngIf="objeto.imagem" justify-content-center>
-          <ion-col col-6 *ngFor="let object of objeto.imagem" class="mb-3">
+          <ion-col col-6 *ngFor="let object of objeto.imagem" class="mb-3 text-center">
             <img *ngIf="object" src="{{object}}" [ngStyle]="render.getMedidas(0.3, 1)" #myImage (click)="presentImage(myImage)">
+            <small *ngIf="objeto.legenda">{{objeto.legenda}}</small>
           </ion-col>
         </ion-row>
         <ion-col *ngIf="objeto.descricao" col-12>
-          <p class="text-center mb-3 mt-3">{{objeto.descricao}}</p>
+          <h3 class="text-center mb-3 mt-5">{{objeto.descricao}}</h3>
         </ion-col>
         <ion-col col-12>
           <ion-list *ngIf="objeto.filhos" class="mb-5">

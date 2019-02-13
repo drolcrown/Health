@@ -1,24 +1,21 @@
 <ion-header class="container-fluid bg-violet-aux">
-  <ion-grid>
-    <ion-row>
-      <ion-col col-10>
-        <header [classe]="'h3'" [title]=""></header>
-      </ion-col>
-      <ion-col col-2 align-self-center class="text-center">
-        <p class="icon-size mt-3" (click)="toogleSearch(search)">
-          <ion-icon name="search"></ion-icon>
-        </p>
-      </ion-col>
-      <ion-searchbar #search [style.display]="(activeSearch ? 'block' : 'none')" autocomplete="on" type="text"
-        placeholder="Buscar" animated ionfocus (ionInput)="getItems($event)" value="">
-      </ion-searchbar>
-    </ion-row>
-  </ion-grid>
+  <ion-row>
+    <ion-col col-10 [hidden]="activeSearch">
+      <header [classe]="'h3'" [title]=""></header>
+    </ion-col>
+    <ion-col col-2 align-self-center class="text-center" [hidden]="activeSearch">
+      <p class="icon-size mt-3" (click)="toogleSearch()">
+        <ion-icon name="search"></ion-icon>
+      </p>
+    </ion-col>
+    <ion-searchbar #search type="text" [hidden]="!activeSearch" placeholder="Buscar" showCancelButton
+      autofocus (ionInput)="getItems($event)" value="" (ionCancel)="toogleSearch()">
+    </ion-searchbar>
+  </ion-row>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding (click)="closeFocus()">
   <ion-scroll scrollY="true" style="width:100%; height:100%">
-    <div [style.display]="(activeSearch ? 'block' : 'none')"><br><br></div>
     <ion-list>
       <ion-grid>
         <ion-row #row *ngFor="let object of objectList" class="alert bg-violet mb-3" style="">

@@ -214,13 +214,13 @@
 							{
 								nome: "Alta densidade",
 								descricao: "Nódulo irregular, com margem indistinta, com alta densidade. Bi-RADS 4.",
-								legenda: "",
+								legenda: "Testando legenda",
 								imagem: ["../assets/imgs/mama/densi1.jpg", "../assets/imgs/mama/densi2.jpg"]
 							},
 							{
 								nome: "Densidade igual",
 								descricao: "Nódulos ovais, circunscritos, com densidade semelhante ao parênquima. Bi-RADS 3",
-								legenda: "",
+								legenda: "Testando legenda",
 								imagem: ["../assets/imgs/mama/densi3.jpg"]
 							},
 							{
