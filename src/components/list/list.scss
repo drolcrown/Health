@@ -4,4 +4,16 @@ list {
         word-wrap: break-word;
         line-break: inherit;
     }
+
+    strong{
+        font-size: 17px;
+    }
+
+    small{
+        font-size: 14px;
+    }
+    
+    ion-note{
+        font-size: 12px;
+    }
 }

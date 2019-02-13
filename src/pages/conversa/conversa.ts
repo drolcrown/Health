@@ -5,10 +5,10 @@ import { CacheProvider } from '../../providers/cache/cache';
 import { ChatComponent } from '../../components/chat/chat';
 
 @Component({
-  selector: 'page-list',
-  templateUrl: 'list.html'
+  selector: 'page-conversa',
+  templateUrl: 'conversa.html'
 })
-export class ListPage {
+export class ConversaPage {
   noChats: any = false;
   lista: Array<any> = [];
   user: string;
@@ -20,7 +20,7 @@ export class ListPage {
   }
 
   ionViewDidEnter() {
-    this.cache.get('perfil').then(perfil => {
+    this.cache.get('usuario').then(perfil => {
       if (perfil) {
         this.provider.findListChat(this.PATH, perfil.email).subscribe(object => {
           this.user = object.user;
@@ -41,7 +41,7 @@ export class ListPage {
   }
 
   public goChat(conv) {
-    this.navCtrl.push(ChatComponent, { user: this.user, conversa: conv })
+    this.navCtrl.push(ChatComponent, { user: this.user, conversa: conv });
   }
 
   teste() {

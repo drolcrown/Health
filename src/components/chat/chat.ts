@@ -24,7 +24,7 @@ export class ChatComponent {
     this.user = navParam.get('user');
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
   }
 
   public enviar() {
@@ -34,11 +34,13 @@ export class ChatComponent {
       user: this.user
     }
     this.conversa.mensagens.push(msg);
-    console.log(this.conversa)
-    this.provider.update(this.PATH, this.conversa).then((r) => {
-      console.log(r)
-      this.mensagem = "";
-    });
+    if (this.conversa.id) {
+      this.provider.update(this.PATH, this.conversa).then((r) => {
+      });
+    } else {
+      this.provider.save(this.PATH, this.conversa);
+    }
+    this.mensagem = "";
   }
 
 }

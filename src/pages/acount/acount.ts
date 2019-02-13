@@ -17,7 +17,7 @@ export class AcountPage {
   private form: FormGroup;
   private perfil: any;
   private email: string;
-  private PATH = 'perfil';
+  private PATH = 'usuario';
   private _estados = UFs;
   private _imageViewerCtrl;
 
@@ -78,7 +78,7 @@ export class AcountPage {
   public trocarSenha(perfil) {
     this.perfil = this.provider.updatePassword(perfil);
     this.providerCache.remove(this.PATH);
-    this.providerCache.save('perfil', perfil);
+    this.providerCache.save(this.PATH, perfil);
   }
 
 

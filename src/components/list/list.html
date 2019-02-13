@@ -1,13 +1,16 @@
-<ion-content padding class="animated fadeIn common-bg" (ionScroll)="onScroll($event)" >
-  <ion-item no-margin margin-bottom *ngFor="let opt of options">
-    <ion-row align-items-center>
-      <ion-col col-4>
-        <img src="{{opt.imagem}}" />
-      </ion-col>
-      <ion-col col-8 class="text-center">
-        <strong>{{opt.nome}}</strong><br>
-        <small>R$ {{opt.preco}}</small>
-      </ion-col>
-    </ion-row>
-  </ion-item>
+<ion-content padding class="animated fadeIn common-bg" (ionScroll)="onScroll($event)">
+  <ion-row align-items-center no-margin margin-bottom *ngFor="let opt of options" class="border border-dark" (click)="goPerfil(opt)">
+    <ion-col col-4>
+      <img src="{{opt.imagem}}" />
+    </ion-col>
+    <ion-col col-8 class="text-center">
+      <strong>{{opt.nome}}</strong><br><br>
+      <small>R$ {{opt.preco}}</small>
+      <ion-item>
+        <ion-note item-right> {{opt.tipo}}</ion-note>
+        <!-- <ion-note item-right> {{setDate(opt.data) | date:"HH : mm"}}</ion-note> -->
+        <ion-note item-left> {{opt.municipio}}</ion-note>
+      </ion-item>
+    </ion-col>
+  </ion-row>
 </ion-content>

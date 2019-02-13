@@ -4,11 +4,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
 import { LoginPage } from '../pages/login/login';
 import { AcountPage } from '../pages/acount/acount';
 import { CacheProvider } from '../providers/cache/cache';
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
+import { ConversaPage } from '../pages/conversa/conversa';
 
 @Component({
   templateUrl: 'app.html'
@@ -28,7 +28,7 @@ export class MyApp {
       { title: 'Home', component: HomePage, icon: "home", name: "HomePage" },
       { title: 'Conta', component: AcountPage, icon: "person", name: "AcountPage" },
       // { title: 'Mensagens', component: ListComponent, icon: "list",name: "ListComponent" },
-      { title: 'Mensagens', component: ListPage, icon: "chatboxes", name: "ListPage" },
+      { title: 'Mensagens', component: ConversaPage, icon: "chatboxes", name: "ListPage" },
       { title: 'Sair', component: LoginPage, icon: "log-out", name: "LoginPage" }
     ];
     this.initializeApp();

@@ -47,7 +47,7 @@ export class CadastroComponent {
       { mensagem: "Quando você nasceu?", inputs: [{ nome: "data", label: "Data de Nascimento", tipo: "date" }] },
       { mensagem: "Por favor, informe seu cpf", inputs: [{ nome: "cpf", label: "CPF", tipo: "cpf" }] },
       { mensagem: "Qual o estado e o município que você mora?", inputs: [{ nome: "estado", label: "Estado", tipo: "text" }, { nome: "municipio", label: "Município", tipo: "text" }] },
-      { mensagem: this.form.controls.nome.value + ", Falta pouco pra concluirmos!<br>Informe seu email", inputs: [{ nome: "email", label: "Email", tipo: "email" }] },
+      { mensagem: "Falta pouco pra concluirmos!<br>Informe seu email", inputs: [{ nome: "email", label: "Email", tipo: "email" }] },
       { mensagem: "Ufa!! Demorou, mas está acabando.<br>Dê uma senha para sua nova conta!!", inputs: [{ nome: "senha", label: "Senha", tipo: "password" }, { nome: "confirmarSenha", label: "Confirme sua Senha", tipo: "password" }] }
     ];
     this.initialize();

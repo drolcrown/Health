@@ -19,7 +19,7 @@ import { StarRatingModule } from 'ionic3-star-rating';
 //Pages
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
+import { ConversaPage } from '../pages/conversa/conversa';
 import { LoginPage } from '../pages/login/login';
 
 //Components
@@ -44,7 +44,7 @@ import { CadastroComponent } from '../components/cadastro/cadastro';
 @NgModule({
   declarations: [
     MyApp, LoginPage, HeaderComponent, 
-    HomePage, ListPage, AcountPage,
+    HomePage, ConversaPage, AcountPage,
     FormsComponent, ListComponent, CadastroComponent,
     ChatComponent, PerfilPage, ModalPage,
   ],
@@ -62,7 +62,7 @@ import { CadastroComponent } from '../components/cadastro/cadastro';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp, LoginPage, HeaderComponent,
-    HomePage, ListPage, AcountPage,
+    HomePage, ConversaPage, AcountPage,
     FormsComponent, ListComponent, CadastroComponent,
     ChatComponent, PerfilPage, ModalPage,
   ],

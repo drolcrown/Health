@@ -1,18 +1,25 @@
-<!--
-  Generated template for the PerfilPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-
-  <ion-navbar>
-    <ion-title>perfil</ion-title>
-  </ion-navbar>
-
-</ion-header>
-
-
-<ion-content padding>
-
+<ion-content padding class="bg-principal">
+  <ion-navbar color="transparent"></ion-navbar>
+  <form *ngIf="form" [formGroup]="form">
+    <ion-row align-items-center justify-content-center>
+      <ion-col col-8 *ngIf="perfil">
+        <img src="{{perfil.imagem}}" class="" #myImage (click)="presentImage(myImage)" />
+        <!-- <label col-12 for="selecao-arquivo" class="btn btn-dark">
+          Alterar Imagem
+          <input readonly id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
+        </label> -->
+      </ion-col>
+      <ion-col col-12 align-items-center>
+        <ion-input formControlName="nome" type="text" readonly></ion-input>
+        <ion-input readonly formControlName="tipo" type="text"></ion-input>
+      </ion-col>
+      <ion-col col-12 align-items-center >
+        <ion-input readonly formControlName="estado" type="text"></ion-input>
+        <ion-input readonly formControlName="municipio" type="text"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row justify-content-center class="mt-4">
+      <button ion-button color="dark" (click)="goChat()">Enviar Mensagem</button>
+    </ion-row>
+  </form>
 </ion-content>

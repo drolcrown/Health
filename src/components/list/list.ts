@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NavParams, NavController } from 'ionic-angular';
+import { PerfilPage } from '../../pages/perfil/perfil';
 
 /**
  * Generated class for the ListComponent component.
@@ -21,10 +22,18 @@ export class ListComponent {
 
   @Output() scrollOn = new EventEmitter<any>();
 
-  constructor(public navCtrl: NavParams) {
+  constructor(public navCtrl: NavController) {
   }
 
-  onScroll(event) {
+  public onScroll(event) {
     this.scrollOn.emit(event);
+  }
+
+  public setDate(data){
+    return new Date();
+  }
+
+  public goPerfil(perf) {
+    this.navCtrl.push(PerfilPage, { perfil: perf })
   }
 }
