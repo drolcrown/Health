@@ -28,12 +28,13 @@ export class AcountPage {
     this._imageViewerCtrl = imageViewerCtrl;
   }
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     let alerta = this.provider.loadingCtrl.presentLoadingDefault();
-    this.providerCache.get(this.PATH).then(response => {
+    return await this.providerCache.get(this.PATH).then(response => {
       this.form = this.builder.group(response);
       this.perfil = response;
       alerta.dismiss();
+      return;
     });
   }
 

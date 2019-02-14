@@ -2,6 +2,7 @@
   <ion-row align-items-center no-margin margin-bottom *ngFor="let opt of options" class="border border-dark" (click)="goPerfil(opt)">
     <ion-col col-4>
       <img src="{{opt.imagem}}" />
+      <ion-note item-center> {{opt.data}}</ion-note>
     </ion-col>
     <ion-col col-8 class="text-center">
       <strong>{{opt.nome}}</strong><br><br>

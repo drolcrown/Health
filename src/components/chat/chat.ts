@@ -27,7 +27,7 @@ export class ChatComponent {
   ionViewDidEnter() {
   }
 
-  public enviar() {
+  async enviar() {
     let msg = {
       mensagem: this.mensagem,
       data: new Date(),
@@ -35,10 +35,10 @@ export class ChatComponent {
     }
     this.conversa.mensagens.push(msg);
     if (this.conversa.id) {
-      this.provider.update(this.PATH, this.conversa).then((r) => {
+      await this.provider.update(this.PATH, this.conversa).then((r) => {
       });
     } else {
-      this.provider.save(this.PATH, this.conversa);
+     await this.provider.save(this.PATH, this.conversa);
     }
     this.mensagem = "";
   }

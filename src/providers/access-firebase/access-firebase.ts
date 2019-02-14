@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 import { AlertsProvider } from '../alerts/alerts';
 import { Subject, from, Observable } from 'rxjs';
 import { LoadsProvider } from '../loads/loads';
-import { timeout, catchError } from 'rxjs/operators';
+import { timeout, catchError, retry } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { sha256, sha224 } from 'js-sha256';
 // import { AlertController } from 'ionic-angular';
@@ -27,7 +27,7 @@ export class AccessFirebaseProvider {
     return hash.hex();
   }
 
-  pagination(path){
+  pagination(path) {
     let ref = this.db.database.ref(path);
     return ref.orderByValue().limitToLast(50);
   }
@@ -75,13 +75,17 @@ export class AccessFirebaseProvider {
     return this.db.object(PATH + '/' + key).valueChanges();
   }
 
-  findObject(path: string, key: string, value: string): any {
+  findObject(path: string, key: string, value: string): Subject<any> {
     let newObject = new Subject();
     let ref = this.db.database.ref(path);
     ref.orderByChild(key).equalTo(value)
       .on("child_added", (snapshot) => {
         this.get(path, snapshot.key).subscribe(response => {
-          newObject.next(response);
+          if (response) {
+            newObject.next(response);
+          } else {
+            newObject.next(null);
+          }
         });
       });
 
@@ -110,6 +114,30 @@ export class AccessFirebaseProvider {
 
     return subject;
   }
+
+
+  // getChat(path: string, user1: string, user2: string): Subject<any> {
+  //   let newObject = [];
+  //   let user;
+  //   let subject = new Subject();
+  //   this.getAll(path).subscribe((valor: any) => {
+  //     valor.filter((element: any) => {
+  //       if ((element.user2 == user2 && element.user1 == user1) || (element.user2 == user1 && element.user1 == user2)){
+  //         if (element.user2.email.indexOf(param) > -1 || element.user1.email.indexOf(param) > -1) {
+  //           if (element.user2.email.indexOf(param) > -1) {
+  //             user = "user2";
+  //           } else {
+  //             user = "user1";
+  //           }
+  //           newObject.push(element);
+  //         }
+  //       }
+  //     });
+  //     subject.next({ user: user, list: newObject });
+  //   });
+
+  //   return subject;
+  // }
 
   getKey(PATH: any, object: any): Subject<any> {
     let childData, idEncontrado = false;

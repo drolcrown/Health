@@ -1,6 +1,11 @@
 page-modal {
     ion-label{
-        font-size: 18px;
-        color: white;
+        font-size: 14px;
+        // color: white;
     }
+    
+    input[type='file'] {
+        display: none
+    }
+
 }

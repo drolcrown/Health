@@ -35,21 +35,21 @@ export class MyApp {
   }
 
   initializeApp() {
-    // this.cache.get("perfil").then(perfil => {
-    //   if (this.perfil) {
-    //     this.perfil = perfil;
-    //     this.rootPage = HomePage;
-    //   } else {
-    //     this.perfil = {
-    //       nome: "Bem Vindo!",
-    //       imagem: "../assets/imgs/profissional.png",
-    //       sobrenome: ""
-    //     };
-    //     this.rootPage = LoginPage;
-    //   }
-    //   this.cache.save('load-perfil', false);
-    // });
-    this.rootPage = HomePage;
+    this.cache.get("usuario").then(perfil => {
+      if (perfil) {
+        this.perfil = perfil;
+        this.rootPage = HomePage;
+      } else {
+        this.perfil = {
+          nome: "Bem Vindo!",
+          imagem: "../assets/imgs/usuario.png",
+          sobrenome: ""
+        };
+        this.rootPage = LoginPage;
+      }
+      this.cache.save('load-perfil', false);
+    });
+    // this.rootPage = HomePage;
     // this.rootPage = FormsComponent;
     this.platform.registerBackButtonAction(() => {
       if (this.nav.length() <= 1) {
@@ -69,7 +69,7 @@ export class MyApp {
     this.cache.get('load-perfil').then(load => {
       if (!load) {
         let loading = this.provider.loadingCtrl.presentLoadingDefault();
-        this.cache.get("perfil").then(perfil => {
+        this.cache.get("usuario").then(perfil => {
           this.perfil = perfil;
           this.cache.save('load-perfil', true);
           loading.dismiss();

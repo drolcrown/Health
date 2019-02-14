@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { AccessFirebaseProvider } from '../access-firebase/access-firebase';
+import { Subject } from 'rxjs';
 
 /*
   Generated class for the CacheProvider provider.
@@ -30,20 +31,21 @@ export class CacheProvider {
     return this.storage.get(key);
   }
 
-  async updateCache(key: string) {
+  updateCache(key: string): Subject<any> {
     let minutes = new Date().getMinutes();
-    
-    return await this.get(key)
-      .then(resp => {
-        if (minutes == 30 || minutes == 59 || !resp) {
-          this.provider.getAll(key).subscribe((value) => {
-            this.save(key, value);
-            return value;
-          });
-        } else {
-          return resp;
-        }
-      }).catch((error) => {return null});
+    let subject = new Subject();
+    this.get(key).then(resp => {
+      if (minutes == 30 || minutes == 59 || !resp) {
+        this.provider.getAll(key).subscribe((value) => {
+          this.save(key, value);
+          subject.next(value);
+        });
+      } else {
+        subject.next(resp);
+      }
+    })
+
+    return subject;
   }
 
   public getAll() {

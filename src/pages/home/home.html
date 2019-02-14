@@ -8,7 +8,7 @@
       </ion-searchbar>
     </ion-title>
     <ion-buttons end>
-      <button ion-button tappable (click)="goToAccount()">
+      <button ion-button tappable (click)="goToAccount()" readonly>
         <ion-icon name="options"></ion-icon>
       </button>
     </ion-buttons>
@@ -16,7 +16,7 @@
 </ion-header>
 <ion-content padding class="text-center">
   <list [lista]="objectList" (scrollOn)="receiverFeedback($event)"></list>
-  <ion-footer translucent no-border [hidden]="footerOn">
+  <ion-footer translucent no-border *ngIf="!footerOn">
     <button ion-button color="main" (click)="openModal()" class="borda-circular">
       <ion-icon name="add-circle" class="mr-3"></ion-icon>Anunciar agora
     </button>

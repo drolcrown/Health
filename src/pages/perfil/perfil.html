@@ -2,11 +2,11 @@
   <ion-navbar color="transparent"></ion-navbar>
   <form *ngIf="form" [formGroup]="form">
     <ion-row align-items-center justify-content-center>
-      <ion-col col-8 *ngIf="perfil">
-        <img src="{{perfil.imagem}}" class="" #myImage (click)="presentImage(myImage)" />
+      <ion-col col-8 *ngIf="anuncio">
+        <img src="{{anuncio.imagem}}" class="" #myImage (click)="presentImage(myImage)" />
         <!-- <label col-12 for="selecao-arquivo" class="btn btn-dark">
           Alterar Imagem
-          <input readonly id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
+          <input readonly id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(anuncio, $event)" />
         </label> -->
       </ion-col>
       <ion-col col-12 align-items-center>

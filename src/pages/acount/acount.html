@@ -28,10 +28,11 @@
           </ion-col>
           <!-- <ion-input type="text" col-12 formControlName="data" (ionChange)="validar('data', $event)" placeholder="17/03/1993"
             [brmasker]="{mask:'17/03/1993', len:10}"></ion-input> -->
-          <strong col-5>Cidade:</strong>
-          <ion-input col-12 formControlName="cidade" type="text" placeholder="Brasilia"></ion-input>
+          <strong col-5>Municipio:</strong>
+          <ion-input col-12 formControlName="municipio" type="text" placeholder="Brasilia"></ion-input>
+          <strong col-5>Municipio:</strong>
           <ion-item color="transparent" no-lines>
-            <ion-label col-5>Estado:</ion-label>
+            <ion-label col-5 [hidden]="true">Estado:</ion-label>
             <ion-select formControlName="estado" cancelText="Cancelar" placeholder="{{perfil.estado}}" interface="alert">
               <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
             </ion-select>
