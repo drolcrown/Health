@@ -45,9 +45,12 @@
         </ion-item>
       </ion-row>
     </ion-row>
-    <ion-footer translucent no-border class="text-center">
+    <ion-row justify-content-center class="text-center">
+      <ion-item color="transparent" no-lines class="mt-5 mb-5">
+        <button ion-button block color="dark" (click)="openModalFilter()">Adicionar Filtros</button>
+      </ion-item>
       <button ion-button color="dark" type="reset" class="borda-circular">Limpar</button>
       <button ion-button color="dark" (click)="logIn()" type="button" class="borda-circular">Enviar</button>
-    </ion-footer>
+    </ion-row>
   </form>
 </ion-content>

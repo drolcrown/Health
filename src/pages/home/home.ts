@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController, MenuController, NavParams, Footer, Searchbar } from 'ionic-angular';
+import { NavController, MenuController, NavParams, Footer, Searchbar, ModalController } from 'ionic-angular';
 import { CacheProvider } from '../../providers/cache/cache';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { ap } from '../../models/ap';
 import { ModalPage } from '../modal/modal';
+import { ModalFiltrosComponent } from '../../components/modal-filtros/modal-filtros';
+import { anuncios } from '../../models/anuncios';
 
 @Component({
   selector: 'page-home',
@@ -15,12 +17,13 @@ export class HomePage {
   private objectList: Array<any>;
   private loadedObjectList: Array<any>;
   public activeSearch = false;
+  private filtros = anuncios.filtros;
   public usuario;
 
   @ViewChild('search') searchbar: Searchbar;
 
   constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
-    public providerCache: CacheProvider, public menuCtrl: MenuController) {
+    public providerCache: CacheProvider, public menuCtrl: MenuController, public modalCtrl: ModalController) {
     menuCtrl.enable(true);
   }
 
@@ -73,7 +76,7 @@ export class HomePage {
   }
 
   public receiverFeedback(scroll) {
-    if(scroll){
+    if (scroll) {
       this.footerOn = true;
     }
 
@@ -86,9 +89,35 @@ export class HomePage {
     // }
   }
 
-  public openModal(){
+  public openModal() {
     this.providerCache.get('usuario').then(resp => {
-      this.navCtrl.push(ModalPage, {usuario: resp});
+      this.navCtrl.push(ModalPage, { usuario: resp });
+    });
+  }
+
+  private openModalFilter() {
+    let modal = this.modalCtrl.create(ModalFiltrosComponent, { filtros: this.filtros })
+    modal.present();
+
+    modal.onDidDismiss(data => {
+      this.filtros = data;
+      let padrao = "Sem Resposta";
+      let listaFiltros = [data.idade, data.sexo, data.criancas, data.animais];
+      this.initializeItems();
+      if (data.idade === padrao && data.sexo === padrao && data.criancas === padrao && data.animais === padrao) {
+        return;
+      }
+      this.objectList = this.objectList.filter((el) => {
+        if (el.filtros) {
+          if ((data.idade === padrao || el.filtros.idade.indexOf(data.idade) > -1) &&
+            (data.sexo === padrao || el.filtros.sexo.indexOf(data.sexo) > -1) &&
+            (data.criancas === padrao || el.filtros.criancas.indexOf(data.criancas) > -1) &&
+            (data.animais === padrao || el.filtros.animais.indexOf(data.animais)) > -1) {
+            return true;
+          }
+          return false;
+        }
+      });
     });
   }
 }

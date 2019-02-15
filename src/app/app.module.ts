@@ -40,6 +40,7 @@ import { PerfilPage } from '../pages/perfil/perfil';
 import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { ModalPage } from '../pages/modal/modal';
 import { CadastroComponent } from '../components/cadastro/cadastro';
+import { ModalFiltrosComponent } from '../components/modal-filtros/modal-filtros';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CadastroComponent } from '../components/cadastro/cadastro';
     HomePage, ConversaPage, AcountPage,
     FormsComponent, ListComponent, CadastroComponent,
     ChatComponent, PerfilPage, ModalPage,
+    ModalFiltrosComponent,
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
@@ -65,6 +67,7 @@ import { CadastroComponent } from '../components/cadastro/cadastro';
     HomePage, ConversaPage, AcountPage,
     FormsComponent, ListComponent, CadastroComponent,
     ChatComponent, PerfilPage, ModalPage,
+    ModalFiltrosComponent,
   ],
   providers: [
     StatusBar,

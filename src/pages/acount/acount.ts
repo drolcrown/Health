@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { LoginPage } from '../login/login';
 import { CacheProvider } from '../../providers/cache/cache';
@@ -20,6 +20,7 @@ export class AcountPage {
   private PATH = 'usuario';
   private _estados = UFs;
   private _imageViewerCtrl;
+  private estadoSelecionadoMun = [];
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
     private menuCtrl: MenuController, private builder: FormBuilder,
@@ -30,15 +31,47 @@ export class AcountPage {
 
   async ionViewDidEnter() {
     let alerta = this.provider.loadingCtrl.presentLoadingDefault();
-    return await this.providerCache.get(this.PATH).then(response => {
-      this.form = this.builder.group(response);
-      this.perfil = response;
-      alerta.dismiss();
-      return;
+    this.providerCache.get(this.PATH).then(response => {
+      if (response) {
+        this.form = this.builder.group(response);
+        this.perfil = response;
+        this.getMunicipio(this.perfil.estado);
+        alerta.dismiss();
+      } else {
+        this.provider.getAll(this.PATH).subscribe((users: Array<any>) => {
+          users.filter(user => {
+            this.provider.findObject(this.PATH, 'email', user.email).subscribe(resp => {
+              this.perfil = resp;
+              this.getMunicipio(this.perfil.estado);
+              this.form = this.builder.group(resp);
+              this.providerCache.save(this.PATH, resp);
+              alerta.dismiss();
+            });
+          });
+        });
+      }
     });
   }
 
-  presentImage(myImage) {
+  private getMunicipio(value) {
+    if (value) {
+      if (this.perfil.estado !== value) {
+        let control = new FormControl('');
+        this.form.setControl('municipio', control);
+      }
+      this._estados.filter(el => {
+        if (el.nome == value) {
+          this.estadoSelecionadoMun = el.municipios;
+          return;
+        }
+      });
+    } else {
+      this.estadoSelecionadoMun = [];
+      return;
+    }
+  }
+
+  private presentImage(myImage) {
     const imageViewer = this._imageViewerCtrl.create(myImage);
     imageViewer.present();
   }
@@ -76,21 +109,21 @@ export class AcountPage {
     }).present();
   }
 
-  public trocarSenha(perfil) {
+  private trocarSenha(perfil) {
     this.perfil = this.provider.updatePassword(perfil);
     this.providerCache.remove(this.PATH);
     this.providerCache.save(this.PATH, perfil);
   }
 
 
-  public excluirConta(perfil) {
+  private excluirConta(perfil) {
     if (this.provider.excluirConta(perfil)) {
       this.providerCache.clear();
       this.navCtrl.setRoot(LoginPage);
     }
   }
 
-  public toggle() {
+  private toggle() {
     this.menuCtrl.toggle();
   }
 }

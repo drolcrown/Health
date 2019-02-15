@@ -16,7 +16,6 @@ export class ConversaPage {
 
   constructor(public navCtrl: NavController,
     public provider: AccessFirebaseProvider, public cache: CacheProvider) {
-    // this.teste()
   }
 
   ionViewDidEnter() {
@@ -26,6 +25,16 @@ export class ConversaPage {
           this.user = object.user;
           this.lista = object.list;
           this.noChats = (this.lista.length < 1 ? true : false);
+        });
+      } else {
+        this.provider.getAll('usuario').subscribe((users: Array<any>) => {
+          users.filter(user => {
+            this.provider.findObject('usuario', 'email', user.email).subscribe(object => {
+              this.user = object.user;
+              this.lista = object.list;
+              this.noChats = (this.lista.length < 1 ? true : false);
+            });
+          });
         });
       }
     });
@@ -42,21 +51,5 @@ export class ConversaPage {
 
   public goChat(conv) {
     this.navCtrl.push(ChatComponent, { user: this.user, conversa: conv });
-  }
-
-  teste() {
-    let data = new Date().toLocaleString();
-    this.provider.save('chat', {
-      user1: { email: "rafaelsoec@gmail.com", imagem: "../../assets/imgs/respect.svg", nome: "Rafael Souza" },
-      user2: { email: "rafa17@gmail.com", imagem: "../../assets/imgs/respect.svg", nome: "Rafael Silva" },
-      dataInicio: data,
-      mensagens: [
-        {
-          mensagem: "Olá, onde voce atende?",
-          data: data,
-          user: "user1"
-        }
-      ]
-    });
   }
 }

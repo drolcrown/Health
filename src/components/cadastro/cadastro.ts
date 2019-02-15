@@ -5,6 +5,7 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 import { initializeApp } from 'firebase';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { LoginPage } from '../../pages/login/login';
+import { usuarios } from '../../models/usuarios';
 
 /**
  * Generated class for the CadastroComponent component.
@@ -31,17 +32,7 @@ export class CadastroComponent {
 
   constructor(private navCtrl: NavController, private builder: FormBuilder,
     public provider: AccessFirebaseProvider) {
-    this.form = builder.group({
-      cpf: "",
-      email: "",
-      nome: "",
-      sobrenome: "",
-      data: "",
-      estado: "",
-      municipio: "",
-      senha: "",
-      confirmarSenha: ""
-    });
+    this.form = builder.group(usuarios);
     this.mensagens = [
       { mensagem: "Olá!!<br> Informe seu nome e sobrenome", inputs: [{ nome: "nome", label: "Nome", tipo: "text" }, { nome: "sobrenome", label: "Sobrenome", tipo: "text" }] },
       { mensagem: "Quando você nasceu?", inputs: [{ nome: "data", label: "Data de Nascimento", tipo: "date" }] },

@@ -1,10 +1,12 @@
 import { Component, Input } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { CacheProvider } from '../../providers/cache/cache';
 import { FormBuilder, FormGroup, AbstractControl, Validators, FormControl } from '@angular/forms';
 import { UFs } from '../../models/uf';
 import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
+import { ModalFiltrosComponent } from '../../components/modal-filtros/modal-filtros';
+import { anuncios } from '../../models/anuncios';
 
 /**
  * Generated class for the ModalPage page.
@@ -25,28 +27,14 @@ export class ModalPage {
   private _estados = UFs;
   private muniON = false;
   private _municipios = [];
-  private anuncio = {
-    estado: "",
-    municipio: "",
-    bairro: "",
-    data: new Date(),
-    email: "",
-    imagem: [
-      "../../assets/icon/photo-camera.svg",
-    ],
-    tipo: "",
-    filtros: {
-      sexo: null,
-      idade: null
-    },
-    preco: "",
-    nome: "",
-    telefone: ""
-  };
+  private anuncio = anuncios;
 
   constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
-    public builder: FormBuilder, public cache: CacheProvider, public navParams: NavParams) {
-    this.anuncio.email = navParams.get("usuario").email;
+    public modalCtrl: ModalController, public navParams: NavParams,
+    public builder: FormBuilder, public cache: CacheProvider, ) {
+    let user = navParams.get("usuario");
+    this.anuncio.email = user.email;
+    this.anuncio.telefone = user.telefone;
     this.form = builder.group(this.anuncio);
   }
 
@@ -62,6 +50,17 @@ export class ModalPage {
     } else {
       this.muniON = false;
     }
+  }
+
+
+  private openModalFilter() {
+    let modal = this.modalCtrl.create(ModalFiltrosComponent, { filtros: this.form.controls.filtros.value })
+    modal.present();
+
+    modal.onDidDismiss(data => {
+      let control = new FormControl(data);
+      this.form.setControl('filtros', control);
+    });
   }
 
   public logIn() {

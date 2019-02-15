@@ -7,7 +7,7 @@
     <ion-grid>
       <ion-row align-items-center>
         <ion-col col-4 *ngIf="perfil">
-          <img src="{{perfil.imagem}}" class="" #myImage (click)="presentImage(myImage)" />
+          <img src="{{perfil.imagem}} | ../../../../assets/imgs/usuario.png" class="" #myImage (click)="presentImage(myImage)" />
           <label col-12 for="selecao-arquivo" class="btn btn-dark">
             <!-- <img src="../../assets/icon/camera-with-external-flash.svg" alt="Alterar Imagem" /> -->
             Alterar Imagem
@@ -28,13 +28,19 @@
           </ion-col>
           <!-- <ion-input type="text" col-12 formControlName="data" (ionChange)="validar('data', $event)" placeholder="17/03/1993"
             [brmasker]="{mask:'17/03/1993', len:10}"></ion-input> -->
-          <strong col-5>Municipio:</strong>
-          <ion-input col-12 formControlName="municipio" type="text" placeholder="Brasilia"></ion-input>
+          <strong col-5>Estado:</strong>
+          <ion-item color="transparent" no-lines>
+            <ion-label col-5 [hidden]="true">Estado:</ion-label >
+            <ion-select formControlName="estado" cancelText="Cancelar" interface="alert" #slt (ionChange)="getMunicipio(slt.value)">
+              <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
+            </ion-select>
+          </ion-item>
           <strong col-5>Municipio:</strong>
           <ion-item color="transparent" no-lines>
-            <ion-label col-5 [hidden]="true">Estado:</ion-label>
-            <ion-select formControlName="estado" cancelText="Cancelar" placeholder="{{perfil.estado}}" interface="alert">
-              <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
+            <ion-label col-5 [hidden]="true">Municipio:</ion-label>
+            <ion-select formControlName="municipio" cancelText="Cancelar" interface="alert">
+              <ion-option>Todas as Regiões</ion-option>
+              <ion-option *ngFor="let mun of estadoSelecionadoMun" [value]="mun">{{mun}}</ion-option>
             </ion-select>
           </ion-item>
         </ion-col>

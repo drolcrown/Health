@@ -1,0 +1,46 @@
+<ion-content padding class="bg-principal">
+  <form *ngIf="form" [formGroup]="form">
+    <ion-navbar color="transparent">
+      <ion-title>
+        Filtros
+      </ion-title>
+      <ion-buttons end>
+        <button ion-button tappable (click)="AddFilters()">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+    <ion-list col-12 radio-group formControlName="idade">
+      <ion-list-header>{{_filtros[0].label}}</ion-list-header>
+      <ion-item col-12 *ngFor="let entry of _filtros[0].inputs" color="transparent" no-lines>
+        <ion-label class="text-white">{{entry.val}}</ion-label>
+        <ion-radio color="light" slot="end" [value]="entry.val"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list col-12 radio-group formControlName="sexo">
+      <ion-list-header>{{ _filtros[1].label}}</ion-list-header>
+      <ion-item col-12 *ngFor="let entry of _filtros[1].inputs" color="transparent" no-lines>
+        <ion-label class="text-white">{{entry.val}}</ion-label>
+        <ion-radio color="light" slot="end" [value]="entry.val"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list col-12 radio-group formControlName="criancas">
+      <ion-list-header>{{ _filtros[2].label}}</ion-list-header>
+      <ion-item col-12 *ngFor="let entry of _filtros[2].inputs" color="transparent" no-lines>
+        <ion-label class="text-white">{{entry.val}}</ion-label>
+        <ion-radio color="light" slot="end" [value]="entry.val"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-list col-12 radio-group formControlName="animais">
+      <ion-list-header>{{ _filtros[3].label}}</ion-list-header>
+      <ion-item col-12 *ngFor="let entry of _filtros[3].inputs" color="transparent" no-lines>
+        <ion-label class="text-white">{{entry.val}}</ion-label>
+        <ion-radio color="light" slot="end" [value]="entry.val"></ion-radio>
+      </ion-item>
+    </ion-list>
+    <ion-row justify-content-center class="text-center">
+      <button ion-button color="dark" (click)="AddFilters()" type="reset" class="borda-circular">Limpar</button>
+      <button ion-button color="dark" (click)="AddFilters()" type="button" class="borda-circular">Enviar</button>
+    </ion-row>
+  </form>
+</ion-content>
