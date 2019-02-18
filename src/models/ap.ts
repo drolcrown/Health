@@ -2,12 +2,9 @@ export const ap = [
     {
         estado: "Distrito Federal",
         municipio: "Brasilia",
-        bairro: "Asa Norte",
         data: "17/03/1993",
         email: "rafaelsoec@gmail.com",
-        imagem: [
-            "../assets/icon/photo-camera.svg",
-        ],
+        imagem: new Array().push("../assets/icon/photo-camera.svg"),
         tipo: "Republica",
         filtros: {
             sexo: "homens",
@@ -20,12 +17,9 @@ export const ap = [
     {
         estado: "Distrito Federal",
         municipio: "Brasilia",
-        bairro: "Guará",
         data: "13/02/2019",
         email: "rafaelsoec@gmail.com",
-        imagem: [
-            "../assets/icon/photo-camera.svg",
-        ],
+        imagem: new Array().push("../assets/icon/photo-camera.svg"),
         tipo: "Apartamento",
         filtros: {
             sexo: null,
@@ -38,12 +32,9 @@ export const ap = [
     {
         estado: "Distrito Federal",
         municipio: "Brasilia",
-        bairro: "Aguas Claras",
         data: "17/03/1993",
         email: "rafa18@gmail.com",
-        imagem: [
-            "../assets/icon/photo-camera.svg",
-        ],
+        imagem: Array("../assets/icon/photo-camera.svg"),
         tipo: "Casa",
         filtros: {
             sexo: "homens",
@@ -56,12 +47,9 @@ export const ap = [
     {
         estado: "Distrito Federal",
         municipio: "Brasilia",
-        bairro: "Asa Norte",
         data: "17/03/1993",
         email: "rafa17@gmail.com",
-        imagem: [
-            "../assets/icon/photo-camera.svg",
-        ],
+        imagem: new Array().push("../assets/icon/photo-camera.svg"),
         tipo: "Republica",
         filtros: {
             sexo: "Mulheres",
@@ -74,13 +62,9 @@ export const ap = [
     {
         estado: "Distrito Federal",
         municipio: "Brasilia",
-        bairro: "Asa Norte",
         data: "17/03/1993",
         email: "rafa17@gmail.com",
-        imagem: [
-            "../assets/icon/photo-camera.svg",
-        ],
-        tipo: "Apartamento",
+        imagem: new Array().push("../assets/icon/photo-camera.svg"),
         filtros: {
             sexo: "homens",
             idade: "18 a 29 anos"

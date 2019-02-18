@@ -9,6 +9,7 @@ import { AcountPage } from '../pages/acount/acount';
 import { CacheProvider } from '../providers/cache/cache';
 import { AccessFirebaseProvider } from '../providers/access-firebase/access-firebase';
 import { ConversaPage } from '../pages/conversa/conversa';
+import { MeusAnunciosPage } from '../pages/meus-anuncios/meus-anuncios';
 
 @Component({
   templateUrl: 'app.html'
@@ -27,8 +28,8 @@ export class MyApp {
     this.pages = [
       { title: 'Home', component: HomePage, icon: "home", name: "HomePage" },
       { title: 'Conta', component: AcountPage, icon: "person", name: "AcountPage" },
-      // { title: 'Mensagens', component: ListComponent, icon: "list",name: "ListComponent" },
-      { title: 'Mensagens', component: ConversaPage, icon: "chatboxes", name: "ListPage" },
+      { title: 'Mensagens', component: ConversaPage, icon: "chatboxes", name: "ConversaPage" },
+      { title: 'Meus Anuncios', component: MeusAnunciosPage, icon: "list", name: "MeusAnunciosPage" },
       { title: 'Sair', component: LoginPage, icon: "log-out", name: "LoginPage" }
     ];
     this.initializeApp();

@@ -22,12 +22,15 @@ export class HomePage {
 
   @ViewChild('search') searchbar: Searchbar;
 
-  constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
+  constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider, public params: NavParams,
     public providerCache: CacheProvider, public menuCtrl: MenuController, public modalCtrl: ModalController) {
     menuCtrl.enable(true);
   }
 
   ionViewDidEnter() {
+    if(this.params.get('atualizarAnuncios')){
+      this.providerCache.remove('anuncio');
+    }
     this.providerCache.updateCache('anuncio').subscribe(resp => {
       this.loadedObjectList = resp;
       this.objectList = resp;

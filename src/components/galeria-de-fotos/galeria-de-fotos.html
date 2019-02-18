@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar primary>
+    <ion-title>
+      Galeria de Fotos
+    </ion-title>
+
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="changeGrid()">
+        <ion-icon *ngIf="!grid" name="md-grid"></ion-icon>
+        <ion-icon *ngIf="grid" name="md-albums"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+
+  <ion-grid *ngIf="images">
+    <ion-row>
+      <ion-col *ngFor="let photo of images" [attr.col-6]="grid ? true : null" [attr.col-12]="!grid ? true : null">
+        <div>
+          <img src="{{photo.url}}" imageViewer>
+        </div>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

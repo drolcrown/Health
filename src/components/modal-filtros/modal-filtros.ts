@@ -27,7 +27,10 @@ export class ModalFiltrosComponent {
     }
   }
 
-  public AddFilters() {
+  public AddFilters(reset) {
+    if (reset) {
+      this.form.setValue(anuncios.filtros);
+    }
     this.viewCtrl.dismiss(this.form.value);
   }
 

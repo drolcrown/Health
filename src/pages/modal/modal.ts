@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { CacheProvider } from '../../providers/cache/cache';
-import { FormBuilder, FormGroup, AbstractControl, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { storage } from 'firebase';
 import { UFs } from '../../models/uf';
 import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
@@ -27,14 +28,15 @@ export class ModalPage {
   private _estados = UFs;
   private muniON = false;
   private _municipios = [];
+  private imgs = [];
+  private user;
   private anuncio = anuncios;
 
   constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
     public modalCtrl: ModalController, public navParams: NavParams,
     public builder: FormBuilder, public cache: CacheProvider, ) {
-    let user = navParams.get("usuario");
-    this.anuncio.email = user.email;
-    this.anuncio.telefone = user.telefone;
+    this.user = navParams.get("usuario");
+    this.anuncio.usuario = this.user.id;
     this.form = builder.group(this.anuncio);
   }
 
@@ -52,6 +54,23 @@ export class ModalPage {
     }
   }
 
+  private salvarArquivo(arq) {
+    // let PATH = '/Usuarios/' + usuario.email + '.jpg';
+    let arquivos = arq.target.files;
+    let reader = new FileReader();
+    console.log(arq.target.value)
+    console.log(arq)
+    reader.onload = (e: any) => {
+      console.log('to na globo')
+      console.log(e.target.result)
+      // let picture = storage().ref(PATH);
+      // picture.putString(e.target.result, 'data_url');
+    };
+    for (let i = 0; i < arquivos.length; i++) {
+      this.imgs.push(arquivos[i]);
+    }
+    console.log(this.imgs)
+  }
 
   private openModalFilter() {
     let modal = this.modalCtrl.create(ModalFiltrosComponent, { filtros: this.form.controls.filtros.value })
@@ -63,11 +82,18 @@ export class ModalPage {
     });
   }
 
-  public logIn() {
-    this.provider.save("anuncio", this.form.value).subscribe(() => {
-      this.navCtrl.push(HomePage);
+  public addAdverts() {
+    let anuncio = this.form.value;
+    anuncio.chats = [""];
+    this.provider.save("anuncio", anuncio).subscribe((resp) => {
+      if(!this.user.anuncios[0]){
+        this.user.anuncios[0] = resp;
+      }else{
+        this.user.anuncios.push(resp);
+      }
+      this.provider.update('usuario', this.user);
+      this.cache.save('usuario', this.user);
+      this.navCtrl.setRoot(HomePage, { atualizarAnuncios: true });
     });
   }
-
-
 }

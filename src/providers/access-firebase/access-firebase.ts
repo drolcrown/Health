@@ -40,11 +40,9 @@ export class AccessFirebaseProvider {
       .subscribe(
         (value) => {
           loading.dismiss();
-          observable.unsubscribe();
         },
         (err) => {
           loading.dismiss();
-          observable.unsubscribe();
         },
         () => { loading.dismiss(); }
       );
@@ -71,7 +69,7 @@ export class AccessFirebaseProvider {
     return this.db.list(PATH).valueChanges();
   }
 
-  get(PATH: any, key: string): any {
+  get(PATH: any, key: string): Subject<any> {
     return this.db.object(PATH + '/' + key).valueChanges();
   }
 
@@ -182,7 +180,7 @@ export class AccessFirebaseProvider {
         object.id = response.key
         this.db.list(PATH).update(object.id, object);
         loading.dismiss();
-        subject.next(response);
+        subject.next(object);
       });
     return subject;
   }
@@ -206,6 +204,18 @@ export class AccessFirebaseProvider {
     reader.readAsDataURL(arquivo);
     return storage().ref(PATH).getDownloadURL();
   }
+
+  // uploadPhotosAdverts(usuario, arq): any {
+  //   let PATH = '/Anucions/' + usuario. + usuario.email + '.jpg';
+  //   let arquivo = arq.target.files[0];
+  //   let reader = new FileReader();
+  //   reader.onload = (e: any) => {
+  //     let picture = storage().ref(PATH);
+  //     picture.putString(e.target.result, 'data_url');
+  //   };
+  //   reader.readAsDataURL(arquivo);
+  //   return storage().ref(PATH).getDownloadURL();
+  // }
 
   // async takePhoto() {
   //   try {
@@ -302,8 +312,8 @@ export class AccessFirebaseProvider {
     return perfil;
   }
 
-  excluirConta(perfil): any {
-    let response = false;
+  excluirConta(perfil): Subject<any> {
+    let response = new Subject();
     this.alert.newAlert().create({
       title: 'Excluir Conta',
       inputs: [
@@ -323,13 +333,16 @@ export class AccessFirebaseProvider {
               let loading = this.loadingCtrl.presentLoadingDefault();
               this.authorization.auth.currentUser.delete()
                 .then(() => {
-                  this.remove('perfil', perfil);
-                  response = true;
+                  this.remove('usuario', perfil);
+                  response.next(true);
                   loading.dismiss();
-                }).catch(() => {
+                }).catch((e) => {
                   loading.dismiss();
+                  response.next(false);
                   this.alert.showToast('Falha na Exclusão de Conta!! Tente Novamente!!');
                 });
+            }else{
+              this.alert.showToast('Senha Incorreta');
             }
           }
         },

@@ -2,14 +2,15 @@
   <ion-navbar color="transparent"></ion-navbar>
   <form *ngIf="form" [formGroup]="form">
     <ion-row align-items-center justify-content-center>
-      <ion-col col-8 *ngIf="anuncio">
-        <img src="{{anuncio.imagem}}" class="" #myImage (click)="presentImage(myImage)" />
+      <ion-col col-8 *ngIf="anuncio" class="bg-white ">
+        <img src="{{anuncio.imagem}}" class="" #myImage (click)="openGalery(myImage)" />
+        <!-- <galeria-de-fotos [imagens]="anuncio.imagem"></galeria-de-fotos> -->
         <!-- <label col-12 for="selecao-arquivo" class="btn btn-dark">
           Alterar Imagem
           <input readonly id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(anuncio, $event)" />
         </label> -->
       </ion-col>
-      <ion-col col-12 align-items-center>
+      <ion-col col-12 align-self-center>
         <ion-input formControlName="nome" type="text" readonly></ion-input>
         <ion-input readonly formControlName="tipo" type="text"></ion-input>
       </ion-col>

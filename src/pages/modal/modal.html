@@ -6,10 +6,16 @@
   <form *ngIf="form" [formGroup]="form">
     <ion-row align-items-center justify-content-center col-12>
       <ion-col col-12 class=" text-center">
-        <label col-10 for="selecao-arquivo" class="btn btn-white">
-          <img src="../../assets/icon/cam.svg" />
-          <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
-        </label>
+        <ion-row>
+          <ion-col col-3 *ngFor="let img of imgs">
+            <img src="{{img.name}}" />
+          </ion-col>
+          <label col-3 for="selecao-arquivo" class="btn btn-white">
+            <!-- <galeria-de-fotos []></galeria-de-fotos> -->
+            <img src="../../assets/icon/cam.svg" />
+            <input id='selecao-arquivo' class="form-group" type="file" multiple accept="image/*" (change)="salvarArquivo($event)" />
+          </label>
+        </ion-row>
       </ion-col>
       <ion-col col-12 align-self-items>
         <ion-item color="transparent">
@@ -50,7 +56,7 @@
         <button ion-button block color="dark" (click)="openModalFilter()">Adicionar Filtros</button>
       </ion-item>
       <button ion-button color="dark" type="reset" class="borda-circular">Limpar</button>
-      <button ion-button color="dark" (click)="logIn()" type="button" class="borda-circular">Enviar</button>
+      <button ion-button color="dark" (click)="addAdverts()" type="button" class="borda-circular">Enviar</button>
     </ion-row>
   </form>
 </ion-content>

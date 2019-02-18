@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ChatComponent } from '../../components/chat/chat';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { CacheProvider } from '../../providers/cache/cache';
+import { GaleriaDeFotosComponent } from '../../components/galeria-de-fotos/galeria-de-fotos';
 
 /**
  * Generated class for the PerfilPage page.
@@ -26,7 +27,7 @@ export class PerfilPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private builder: FormBuilder, public cache: CacheProvider, public provider: AccessFirebaseProvider) {
-    this.anuncio = navParams.get("perfil");
+    this.anuncio = navParams.get("anuncio");
     this.form = builder.group(this.anuncio);
   }
 
@@ -34,11 +35,29 @@ export class PerfilPage {
     this.cache.get("usuario").then(response => {
       if (response) {
         this.user1 = response;
-        this.provider.findObject('chat', 'idAnuncio', this.anuncio.id)
-          .subscribe((resp) => {
-            this.user = (resp.user1.email === this.user1.email ? 'user1' : 'user2');
-            this.conv = resp;
+        response.conversas.filter(el => {
+          if (el.idAnuncio == this.anuncio.id) {
+            console.log("entrei no perfil", el)
+
+            this.conv = el;
+            return;
+          }
+        });
+        // this.provider.findObject('chat', 'idAnuncio', this.anuncio.id)
+        //   .subscribe((resp) => {
+        //     this.user = (resp.user1.email === this.user1.email ? 'user1' : 'user2');
+        //     this.conv = resp;
+        //   });
+      } else {
+        this.provider.getAll("usuario").subscribe(users => {
+          users.filter(user => {
+            this.provider.findObject("usuario", 'email', user.email).subscribe(resp => {
+              this.user1 = resp;
+              this.cache.save("usuario", resp);
+              return;
+            });
           });
+        });
       }
     });
   }
@@ -47,15 +66,18 @@ export class PerfilPage {
     if (!this.conv) {
       let data = new Date().toLocaleString();
       this.conv = {
-        user1: { email: this.user1.email, imagem: this.user1.imagem, nome: this.user1.nome },
-        user2: { email: this.anuncio.email, imagem: this.anuncio.imagem, nome: this.anuncio.nome },
+        cliente: this.user1.id,
+        anunciante: this.anuncio.usuario,
         dataInicio: data,
         idAnuncio: this.anuncio.id,
         nomeAnuncio: this.anuncio.nome,
         mensagens: []
       };
     }
-    this.navCtrl.push(ChatComponent, { user: this.user, conversa: this.conv })
+    this.navCtrl.push(ChatComponent, { user: this.user1.id, conversa: this.conv })
+  }
 
+  openGalery(myImage) {
+    this.navCtrl.push(GaleriaDeFotosComponent)
   }
 }

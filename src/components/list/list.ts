@@ -34,6 +34,6 @@ export class ListComponent {
   }
 
   public goPerfil(perf) {
-    this.navCtrl.push(PerfilPage, { perfil: perf })
+    this.navCtrl.push(PerfilPage, { anuncio: perf })
   }
 }

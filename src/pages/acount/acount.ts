@@ -53,6 +53,11 @@ export class AcountPage {
     });
   }
 
+  private salvarAlteracao(){
+    this.provider.update(this.PATH, this.form.value);
+    this.providerCache.save(this.PATH, this.form.value);
+  }
+
   private getMunicipio(value) {
     if (value) {
       if (this.perfil.estado !== value) {
@@ -117,10 +122,12 @@ export class AcountPage {
 
 
   private excluirConta(perfil) {
-    if (this.provider.excluirConta(perfil)) {
-      this.providerCache.clear();
-      this.navCtrl.setRoot(LoginPage);
-    }
+    this.provider.excluirConta(perfil).subscribe(resp => {
+      if (resp) {
+        this.providerCache.clear();
+        this.navCtrl.setRoot(LoginPage);
+      }
+    });
   }
 
   private toggle() {

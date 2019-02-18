@@ -1,13 +1,12 @@
 export const anuncios = {
     estado: "",
     municipio: "",
-    bairro: "",
     data: new Date(),
-    email: "",
-    imagem: [
-        "../../assets/icon/photo-camera.svg",
-    ],
+    usuario: "",
+    imagem: ["../assets/icon/cam.svg"],
+    chats: [""],
     tipo: "",
+    descricao: "",
     filtros: {
         idade: "Sem Resposta",
         sexo: "Sem Resposta",
@@ -16,5 +15,5 @@ export const anuncios = {
     },
     preco: "",
     nome: "",
-    telefone: ""
 };
+

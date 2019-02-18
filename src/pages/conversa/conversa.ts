@@ -21,19 +21,22 @@ export class ConversaPage {
   ionViewDidEnter() {
     this.cache.get('usuario').then(perfil => {
       if (perfil) {
+        this.user = perfil;
+        console.log(perfil)
         this.provider.findListChat(this.PATH, perfil.email).subscribe(object => {
           this.user = object.user;
-          this.lista = object.list;
+          this.lista = perfil.conversas;
           this.noChats = (this.lista.length < 1 ? true : false);
         });
       } else {
         this.provider.getAll('usuario').subscribe((users: Array<any>) => {
           users.filter(user => {
-            this.provider.findObject('usuario', 'email', user.email).subscribe(object => {
-              this.user = object.user;
-              this.lista = object.list;
+            if(user.email == this.provider.authorization.auth.currentUser.email){
+              this.user = user;
+              this.lista = perfil.conversas;
               this.noChats = (this.lista.length < 1 ? true : false);
-            });
+              return;
+            }
           });
         });
       }

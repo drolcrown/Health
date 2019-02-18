@@ -1,0 +1,11 @@
+<ion-header>
+  <header [title]="'Meus Anúncios'" [hideButton]="true"></header>
+</ion-header>
+<ion-content padding class="text-center">
+  <list [lista]="objectList" (scrollOn)="receiverFeedback($event)"></list>
+  <ion-footer translucent no-border *ngIf="!footerOn">
+    <button ion-button color="main" (click)="openModal()" class="borda-circular">
+      <ion-icon name="add-circle" class="mr-3"></ion-icon>Anunciar agora
+    </button>
+  </ion-footer>
+</ion-content>

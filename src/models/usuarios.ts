@@ -1,6 +1,9 @@
 export const usuarios = {
-    cpf: "",
+    cpf:"",
     email: "",
+    imagem: "../../../assets/imgs/usuario.png",
+    // conversas: [],
+    // anuncios: [],
     nome: "",
     avaliacao: 5,
     sobrenome: "",
@@ -8,5 +11,6 @@ export const usuarios = {
     estado: "",
     municipio: "",
     senha: "",
+    sexo: "",
     confirmarSenha: ""
 };

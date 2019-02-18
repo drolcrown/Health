@@ -41,14 +41,17 @@ import { IonicImageViewerModule } from 'ionic-img-viewer';
 import { ModalPage } from '../pages/modal/modal';
 import { CadastroComponent } from '../components/cadastro/cadastro';
 import { ModalFiltrosComponent } from '../components/modal-filtros/modal-filtros';
+import { GaleriaDeFotosComponent } from '../components/galeria-de-fotos/galeria-de-fotos';
+import { MeusAnunciosPage } from '../pages/meus-anuncios/meus-anuncios';
 
 @NgModule({
   declarations: [
-    MyApp, LoginPage, HeaderComponent, 
+    MyApp, LoginPage, HeaderComponent,
     HomePage, ConversaPage, AcountPage,
     FormsComponent, ListComponent, CadastroComponent,
     ChatComponent, PerfilPage, ModalPage,
-    ModalFiltrosComponent,
+    ModalFiltrosComponent, GaleriaDeFotosComponent,
+    MeusAnunciosPage,
   ],
   imports: [
     BrowserModule, FormsModule, ReactiveFormsModule,
@@ -67,7 +70,8 @@ import { ModalFiltrosComponent } from '../components/modal-filtros/modal-filtros
     HomePage, ConversaPage, AcountPage,
     FormsComponent, ListComponent, CadastroComponent,
     ChatComponent, PerfilPage, ModalPage,
-    ModalFiltrosComponent,
+    ModalFiltrosComponent, GaleriaDeFotosComponent,
+    MeusAnunciosPage,
   ],
   providers: [
     StatusBar,

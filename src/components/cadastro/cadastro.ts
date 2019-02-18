@@ -42,9 +42,9 @@ export class CadastroComponent {
       { mensagem: "Ufa!! Demorou, mas está acabando.<br>Dê uma senha para sua nova conta!!", inputs: [{ nome: "senha", label: "Senha", tipo: "password" }, { nome: "confirmarSenha", label: "Confirme sua Senha", tipo: "password" }] }
     ];
     this.initialize();
-    this.conversa.inputs.forEach(el => {
-      this.gerarControl(el.nome);
-    })
+    // this.conversa.inputs.forEach(el => {
+    //   this.gerarControl(el.nome);
+    // })
   }
 
   public initialize() {
@@ -76,10 +76,16 @@ export class CadastroComponent {
     if (this.form.valid) {
       if (this.form.controls.senha.value === this.form.controls.confirmarSenha.value) {
         this.contador++;
+        let user = this.form.value;
+        user.conversas = [""];
+        user.anuncios = [""];
+        user.senha = this.provider.encripty(this.form.controls.senha.value);
+        user.confirmarSenha = user.senha;
         if (this.contador < this.mensagens.length) {
           this.initialize();
         } else {
-          this.provider.save('usuario', this.form.value);
+          this.provider.authorization.auth.createUserWithEmailAndPassword(user.email, user.senha);
+          this.provider.save('usuario', user);
           this.navCtrl.setRoot(LoginPage);
         }
       } else {

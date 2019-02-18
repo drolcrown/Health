@@ -5,6 +5,7 @@ import { ListComponent } from './list/list';
 import { ChatComponent } from './chat/chat';
 import { CadastroComponent } from './cadastro/cadastro';
 import { ModalFiltrosComponent } from './modal-filtros/modal-filtros';
+import { GaleriaDeFotosComponent } from './galeria-de-fotos/galeria-de-fotos';
 
 @NgModule({
 	declarations: [HeaderComponent,
@@ -14,6 +15,7 @@ import { ModalFiltrosComponent } from './modal-filtros/modal-filtros';
     ChatComponent,
     CadastroComponent,
     ModalFiltrosComponent,
+    GaleriaDeFotosComponent,
     ],
 	imports: [],
 	exports: [HeaderComponent,
@@ -23,6 +25,7 @@ import { ModalFiltrosComponent } from './modal-filtros/modal-filtros';
     ChatComponent,
     CadastroComponent,
     ModalFiltrosComponent,
+    GaleriaDeFotosComponent,
     ]
 })
 export class ComponentsModule {}
