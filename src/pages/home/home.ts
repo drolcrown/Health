@@ -94,7 +94,7 @@ export class HomePage {
 
   public openModal() {
     this.providerCache.get('usuario').then(resp => {
-      this.navCtrl.push(ModalPage, { usuario: resp });
+      this.navCtrl.push(ModalPage, { usuario: resp , page: HomePage });
     });
   }
 

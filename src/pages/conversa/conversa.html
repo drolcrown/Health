@@ -8,14 +8,14 @@
     <button ion-item *ngFor="let conversa of lista" (click)="goChat(conversa)" class="border-bottom border-secundary">
       <ion-row align-items-center>
         <ion-col col-2 align-self-items>
-          <img *ngIf="user !== 'user2'" src="{{conversa.user2.imagem}}" class="img-circular" />
-          <img *ngIf="user !== 'user1'" src="{{conversa.user1.imagem}}" class="img-circular" />
+          <!-- <img *ngIf="user !== 'user2'" src="{{conversa.user2.imagem}}" class="img-circular" /> -->
+          <!-- <img *ngIf="user !== 'user1'" src="{{conversa.user1.imagem}}" class="img-circular" /> -->
         </ion-col>
         <ion-col col-10 align-self-items>
           <strong class="text-center mb-5">{{conversa.nomeAnuncio}}</strong>
           <ion-row>
-            <h3 *ngIf="user !== 'user2'" class="mr-2">{{conversa.user2.nome}}</h3>
-            <h3 *ngIf="user !== 'user1'" class="mr-2">{{conversa.user1.nome}}</h3>
+            <!-- <h3 *ngIf="user !== 'user2'" class="mr-2">{{conversa.user2.nome}}</h3> -->
+            <!-- <h3 *ngIf="user !== 'user1'" class="mr-2">{{conversa.user1.nome}}</h3> -->
             <small>: {{recuperarUltimaConversa(conversa)}}</small>
           </ion-row>
         </ion-col>

@@ -4,7 +4,7 @@ export const anuncios = {
     data: new Date(),
     usuario: "",
     imagem: ["../assets/icon/cam.svg"],
-    chats: [""],
+    // chats: [""],
     tipo: "",
     descricao: "",
     filtros: {

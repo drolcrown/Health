@@ -32,13 +32,11 @@ export class LoginPage {
       if (login) {
         let loading = this.provider.loadingCtrl.presentLoadingDefault();
         login.then((success) => {
-          if (success) {
-            this.provider.findObject('usuario', 'email', this.account.email).subscribe(resp => {
-              this.providerCache.save('usuario', resp);
-            });
+          this.provider.findObject('usuario', 'email', this.account.email).subscribe(resp => {
+            this.providerCache.save('usuario', resp);
             loading.dismiss();
-            this.navCtrl.setRoot(HomePage, { atualizarAnuncios: true });
-          }
+          });
+          this.navCtrl.setRoot(HomePage, { atualizarAnuncios: true });
         }).catch(error => {
           this.loginErrorString = this.provider.alert.loginAlert(error.code);
           loading.dismiss();

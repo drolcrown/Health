@@ -69,7 +69,7 @@ export class AccessFirebaseProvider {
     return this.db.list(PATH).valueChanges();
   }
 
-  get(PATH: any, key: string): Subject<any> {
+  get(PATH: any, key: string): Observable<any> {
     return this.db.object(PATH + '/' + key).valueChanges();
   }
 

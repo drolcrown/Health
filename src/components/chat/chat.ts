@@ -22,7 +22,7 @@ export class ChatComponent {
 
   constructor(public provider: AccessFirebaseProvider, public navParam: NavParams, public cache: CacheProvider) {
     this.conversa = navParam.get('conversa');
-    this.user = navParam.get('user');
+    this.user = navParam.get('user'); // Recupera o id
   }
 
   ionViewDidEnter() {
@@ -35,32 +35,15 @@ export class ChatComponent {
       user: this.user
     }
     this.conversa.mensagens.push(msg);
+    //Salvar em chats
     if (this.conversa.id) {
-      await this.provider.update(this.PATH, this.conversa).then((conv) => {
-        this.provider.get("anuncio", this.conversa.idAnuncio)
-          .subscribe(resp => {
-            if (!resp.anuncios[0]) {
-              resp.anuncios[0] = conv;
-            } else {
-              resp.anuncios.push(conv);
-            }
-          });
-      });
+      await this.provider.update(this.PATH, this.conversa).then((conv) => { });
     } else {
       await this.provider.save(this.PATH, this.conversa).subscribe((conv) => {
-        this.provider.get("anuncio", this.conversa.idAnuncio)
-          .subscribe(resp => {
-            if (!resp.anuncios[0]) {
-              resp.anuncios[0] = conv;
-            } else {
-              resp.anuncios.push(conv);
-            }
-          });
+        this.conversa = conv;
       });
     }
-    // this.user.conversas
-    this.provider.update("usuario", this)
-    this.cache.save('usuario', this.user);
+
     this.mensagem = "";
   }
 

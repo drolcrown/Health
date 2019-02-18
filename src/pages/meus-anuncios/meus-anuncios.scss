@@ -1,4 +1,19 @@
 page-meus-anuncios {
+    .box-center{
+        position: fixed;
+        top:10%;
+        bottom: 10%;
+        left: 10%;
+        right: 10%;
+        align-items: center;
+        justify-content: center;
+        align-self: center;
+        text-align: center;
+    }
+
+    strong{
+        font-size: 18px;
+    }
 
     .footer{
         position: fixed;

@@ -77,8 +77,6 @@ export class CadastroComponent {
       if (this.form.controls.senha.value === this.form.controls.confirmarSenha.value) {
         this.contador++;
         let user = this.form.value;
-        user.conversas = [""];
-        user.anuncios = [""];
         user.senha = this.provider.encripty(this.form.controls.senha.value);
         user.confirmarSenha = user.senha;
         if (this.contador < this.mensagens.length) {

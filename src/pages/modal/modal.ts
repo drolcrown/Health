@@ -4,7 +4,6 @@ import { CacheProvider } from '../../providers/cache/cache';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { storage } from 'firebase';
 import { UFs } from '../../models/uf';
-import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { ModalFiltrosComponent } from '../../components/modal-filtros/modal-filtros';
 import { anuncios } from '../../models/anuncios';
@@ -13,7 +12,7 @@ import { anuncios } from '../../models/anuncios';
  * Generated class for the ModalPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Ionic pages and navigastion.
  */
 
 @IonicPage()
@@ -30,12 +29,14 @@ export class ModalPage {
   private _municipios = [];
   private imgs = [];
   private user;
+  private page;
   private anuncio = anuncios;
 
   constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
     public modalCtrl: ModalController, public navParams: NavParams,
     public builder: FormBuilder, public cache: CacheProvider, ) {
     this.user = navParams.get("usuario");
+    this.page = navParams.get("page");
     this.anuncio.usuario = this.user.id;
     this.form = builder.group(this.anuncio);
   }
@@ -84,16 +85,9 @@ export class ModalPage {
 
   public addAdverts() {
     let anuncio = this.form.value;
-    anuncio.chats = [""];
     this.provider.save("anuncio", anuncio).subscribe((resp) => {
-      if(!this.user.anuncios[0]){
-        this.user.anuncios[0] = resp;
-      }else{
-        this.user.anuncios.push(resp);
-      }
-      this.provider.update('usuario', this.user);
-      this.cache.save('usuario', this.user);
-      this.navCtrl.setRoot(HomePage, { atualizarAnuncios: true });
+      this.cache.save('usuario-anuncios', true);
+      this.navCtrl.setRoot(this.page, { atualizarAnuncios: true });
     });
   }
 }

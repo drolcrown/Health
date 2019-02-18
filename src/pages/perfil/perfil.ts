@@ -35,27 +35,28 @@ export class PerfilPage {
     this.cache.get("usuario").then(response => {
       if (response) {
         this.user1 = response;
-        response.conversas.filter(el => {
+        let conversas = (response.conversas[0] ? response.conversas : []);
+        conversas.filter(el => {
           if (el.idAnuncio == this.anuncio.id) {
-            console.log("entrei no perfil", el)
-
             this.conv = el;
             return;
           }
         });
-        // this.provider.findObject('chat', 'idAnuncio', this.anuncio.id)
-        //   .subscribe((resp) => {
-        //     this.user = (resp.user1.email === this.user1.email ? 'user1' : 'user2');
-        //     this.conv = resp;
-        //   });
       } else {
-        this.provider.getAll("usuario").subscribe(users => {
+        this.provider.getAll('usuario').subscribe((users: Array<any>) => {
           users.filter(user => {
-            this.provider.findObject("usuario", 'email', user.email).subscribe(resp => {
-              this.user1 = resp;
-              this.cache.save("usuario", resp);
+            if (user.email == this.provider.authorization.auth.currentUser.email) {
+              this.user1 = user;
+              let conversas = (response.conversas[0] ? response.conversas : []);
+              conversas.filter(el => {
+                if (el.idAnuncio == this.anuncio.id) {
+                  this.conv = el;
+                  return;
+                }
+              });
+              this.cache.save("usuario", user);
               return;
-            });
+            }
           });
         });
       }

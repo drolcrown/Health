@@ -2,10 +2,21 @@
   <header [title]="'Meus Anúncios'" [hideButton]="true"></header>
 </ion-header>
 <ion-content padding class="text-center">
-  <list [lista]="objectList" (scrollOn)="receiverFeedback($event)"></list>
+  <list *ngIf="objectList.length >= 1" [lista]="objectList" (scrollOn)="receiverFeedback($event)"></list>
   <ion-footer translucent no-border *ngIf="!footerOn">
     <button ion-button color="main" (click)="openModal()" class="borda-circular">
       <ion-icon name="add-circle" class="mr-3"></ion-icon>Anunciar agora
     </button>
   </ion-footer>
+  <div *ngIf="objectList.length < 1" class="box-center">
+    <ion-row justify-content-center>
+      <ion-col col-6 class="mb-5">
+        <img src="../../assets/icon/anuncio.png" />
+      </ion-col>
+      <ion-col col-12>
+        <h2>Você não tem anuncios ativos</h2>
+        <h4 class="text-center">Está precisando vender, comprar ou alugar? Não perca tempo!!</h4>
+      </ion-col>
+    </ion-row>
+  </div>
 </ion-content>

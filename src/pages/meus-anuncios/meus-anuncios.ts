@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { CacheProvider } from '../../providers/cache/cache';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
+import { ModalPage } from '../modal/modal';
 
 /**
  * Generated class for the MeusAnunciosPage page.
@@ -26,24 +27,29 @@ export class MeusAnunciosPage {
 
   ionViewDidLoad() {
     let alerta = this.provider.loadingCtrl.presentLoadingDefault();
-    this.providerCache.get(this.PATH).then(response => {
-      if (response) {
-        this.user = response;
-        this.objectList = response.anuncios;
+    this.providerCache.get('usuario').then(perfil => {
+      if (perfil) {
+        this.user = perfil;
+        this.objectList = (perfil.anuncios[0] ? perfil.anuncios : []);
         alerta.dismiss();
       } else {
-        this.provider.getAll(this.PATH).subscribe((users: Array<any>) => {
+        this.provider.getAll('usuario').subscribe((users: Array<any>) => {
           users.filter(user => {
-            this.provider.findObject(this.PATH, 'email', user.email).subscribe(resp => {
-              this.user = resp;
-              this.providerCache.save(this.PATH, resp);
-              this.objectList = response.anuncios;
+            if (user.email == this.provider.authorization.auth.currentUser.email) {
+              this.user = user;
+              this.providerCache.save(this.PATH, user);
+              this.objectList = (user.anuncios[0] ? user.anuncios : []);
               alerta.dismiss();
-            });
+              return;
+            }
           });
         });
       }
     });
+  }
+
+  public openModal() {
+    this.navCtrl.push(ModalPage, { usuario: this.user, page: MeusAnunciosPage });
   }
 
 }
