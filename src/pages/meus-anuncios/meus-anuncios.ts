@@ -31,7 +31,7 @@ export class MeusAnunciosPage {
         this.user = perfil;
         this.provider.getAll("anuncio").subscribe((list: Array<any>) => {
           list.filter(anuncio => {
-            if (anuncio.usuario == perfil.usuario) {
+            if (anuncio.usuario == perfil.id) {
               this.objectList.push(anuncio);
             }
           });

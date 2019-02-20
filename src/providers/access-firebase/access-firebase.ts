@@ -8,11 +8,9 @@ import * as firebase from 'firebase';
 import { AlertsProvider } from '../alerts/alerts';
 import { Subject, from, Observable } from 'rxjs';
 import { LoadsProvider } from '../loads/loads';
-import { timeout, catchError, retry } from 'rxjs/operators';
+import { timeout, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { sha256, sha224 } from 'js-sha256';
-import { read } from 'fs';
-// import { AlertController } from 'ionic-angular';
 
 @Injectable()
 export class AccessFirebaseProvider {
@@ -52,6 +50,7 @@ export class AccessFirebaseProvider {
           observable.unsubscribe();
         },
         () => {
+          if (loading) { loading.dismiss(); }
           observable.unsubscribe();
         }
       );
@@ -174,17 +173,43 @@ export class AccessFirebaseProvider {
             this.update("usuario", usuario);
             subject.next(img);
           },
-          (err) => {
-            this.alert.showToast(err);
-          },
-          () => {
-            loading.dismiss();
-            observable.unsubscribe();
-          });
+            (err) => {
+              this.alert.showToast(err);
+            },
+            () => {
+              loading.dismiss();
+              observable.unsubscribe();
+            });
       })
     };
     reader.readAsDataURL(arquivo);
 
+    return subject;
+  }
+
+  savePicturesAdverts(anuncio, usuario, images: Array<any>): Subject<any> {
+    let subject = new Subject();
+    let loading = this.loadingCtrl.presentLoadingDefault();
+    images.forEach(image => {
+      let PATH = '/Anuncios/' + usuario.email + '/' + image.name + '.jpg';
+      let picture = storage().ref(PATH);
+      picture.putString(image.url, 'data_url').then(() => {
+        let observable = from(picture.getDownloadURL())
+          .pipe(timeout(10000), catchError(error => of(this.alert.showToast('Falha na Conexão!'))))
+          .subscribe(
+            (img) => {
+              anuncio.imagens.push(img);
+              subject.next(anuncio);
+            },
+            (err) => {
+              this.alert.showToast(err);
+            },
+            () => {
+              loading.dismiss();
+              observable.unsubscribe();
+            });
+      });
+    });
     return subject;
   }
 

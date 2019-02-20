@@ -3,8 +3,8 @@ export const anuncios = {
     municipio: "",
     data: new Date(),
     usuario: "",
-    imagem: ["../assets/icon/cam.svg"],
-    // chats: [""],
+    imagem: "../assets/icon/cam.svg",
+    imagens: [""],
     tipo: "",
     descricao: "",
     filtros: {

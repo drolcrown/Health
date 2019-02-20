@@ -2,7 +2,7 @@
   <ion-content padding class="bg-principal">
     <ion-row justify-content-center *ngIf="perfil">
       <ion-col col-6 *ngIf="perfil.imagem">
-        <img class="img-circular" src="{{perfil.imagem}}" alt="Alterar Imagem" />
+        <img [ngStyle]="altura" class="img-circular" src="{{perfil.imagem}} | ../assets/imgs/usuario.png" alt="Alterar Imagem" />
       </ion-col>
       <ion-col col-12 class="text-center text-white mt-2">
         <h2>{{perfil.nome}} {{perfil.sobrenome}}</h2>

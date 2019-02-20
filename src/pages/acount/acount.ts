@@ -20,6 +20,7 @@ export class AcountPage {
   private PATH = 'usuario';
   private _estados = UFs;
   private _imageViewerCtrl;
+  private altura;
   private estadoSelecionadoMun = [];
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
@@ -27,6 +28,10 @@ export class AcountPage {
     private provider: AccessFirebaseProvider, private providerCache: CacheProvider,
     imageViewerCtrl: ImageViewerController) {
     this._imageViewerCtrl = imageViewerCtrl;
+    this.altura = {
+      height: window.screen.height * 0.2 + 'px',
+      width: window.screen.width + 'px'
+    };
   }
 
   async ionViewDidEnter() {

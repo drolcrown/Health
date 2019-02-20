@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { AccessFirebaseProvider } from '../access-firebase/access-firebase';
-import { Subject } from 'rxjs';
+import { Subject, of } from 'rxjs';
+import { timeout, catchError } from 'rxjs/operators';
 
 /*
   Generated class for the CacheProvider provider.
@@ -36,10 +37,26 @@ export class CacheProvider {
     let subject = new Subject();
     this.get(key).then(resp => {
       if (minutes == 30 || minutes == 59 || !resp) {
-        this.provider.getAll(key).subscribe((value) => {
-          this.save(key, value);
-          subject.next(value);
-        });
+        let loading = this.provider.loadingCtrl.presentLoadingDefault();
+        let observable = this.provider.getAll(key)
+          .pipe(timeout(10000), catchError(error => of(this.provider.alert.showToast('Falha na Conexão!'))))
+          .subscribe(
+            (value) => {
+              this.save(key, value);
+              subject.next(value);
+              loading.dismiss();
+              observable.unsubscribe();
+            },
+            (err) => {
+              loading.dismiss();
+              observable.unsubscribe();
+              subject.next(err);
+            },
+            () => {
+              if (loading) { loading.dismiss(); }
+              observable.unsubscribe();
+            }
+          );
       } else {
         subject.next(resp);
       }
@@ -48,7 +65,7 @@ export class CacheProvider {
     return subject;
   }
 
-  public recoverUser(): Subject<any>{
+  public recoverUser(): Subject<any> {
     let subject = new Subject();
     this.get('usuario').then(perfil => {
       if (perfil) {

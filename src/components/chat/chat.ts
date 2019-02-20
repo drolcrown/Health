@@ -18,11 +18,11 @@ export class ChatComponent {
   mensagem: string;
   conversa: any;
   PATH: string = 'chat';
-  user: string;
+  user: any;
 
   constructor(public provider: AccessFirebaseProvider, public navParam: NavParams, public cache: CacheProvider) {
     this.conversa = navParam.get('conversa');
-    this.user = navParam.get('user'); // Recupera o id
+    this.user = navParam.get('user'); 
   }
 
   ionViewDidEnter() {
@@ -34,17 +34,17 @@ export class ChatComponent {
       data: new Date(),
       user: this.user
     }
-    this.conversa.mensagens.push(msg);
-    //Salvar em chats
-    if (this.conversa.id) {
-      await this.provider.update(this.PATH, this.conversa).then((conv) => { });
-    } else {
-      await this.provider.save(this.PATH, this.conversa).subscribe((conv) => {
-        this.conversa = conv;
-      });
+    if (this.mensagem != "") {
+      this.conversa.mensagens.push(msg);
+      if (this.conversa.id) {
+        this.provider.update(this.PATH, this.conversa).then((conv) => { });
+      } else {
+        this.provider.save(this.PATH, this.conversa).subscribe((conv) => {
+          this.conversa = conv;
+        });
+      }
+      this.mensagem = "";
     }
-
-    this.mensagem = "";
   }
 
 }

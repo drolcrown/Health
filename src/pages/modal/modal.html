@@ -1,62 +1,66 @@
 <ion-header>
-  <header [title]="'Anuncie agora'" [hideButton]="false"></header>
-</ion-header>
-
-<ion-content padding class="bg-principal">
-  <form *ngIf="form" [formGroup]="form">
-    <ion-row align-items-center justify-content-center col-12>
-      <ion-col col-12 class=" text-center">
-        <ion-row>
-          <ion-col col-3 *ngFor="let img of imgs">
-            <img src="{{img.name}}" />
-          </ion-col>
-          <label col-3 for="selecao-arquivo" class="btn btn-white">
-            <!-- <galeria-de-fotos []></galeria-de-fotos> -->
-            <img src="../../assets/icon/cam.svg" />
-            <input id='selecao-arquivo' class="form-group" type="file" multiple accept="image/*" (change)="salvarArquivo($event)" />
-          </label>
-        </ion-row>
-      </ion-col>
-      <ion-col col-12 align-self-items>
-        <ion-item color="transparent">
-          <ion-label floating class="text-white">Nome</ion-label>
-          <ion-input formControlName="nome" type="text"></ion-input>
-        </ion-item>
+    <header [title]="'Anuncie agora'" [hideButton]="false"></header>
+  </ion-header>
+  
+  <ion-content padding class="bg-principal">
+    <form *ngIf="form" [formGroup]="form">
+      <ion-row align-items-center justify-content-center col-12>
+        <ion-col col-12 class=" text-center">
+          <ion-row>
+            <ion-col col-3 *ngFor="let img of imgs">
+              <img src="{{img}}" [ngStyle]="imgCirc" #myImage (click)="presentImage(myImage)"/>
+            </ion-col>
+            <label col-3 for="selecao-arquivo" class="btn btn-white">
+              <!-- <galeria-de-fotos []></galeria-de-fotos> -->
+              <img src="../../assets/icon/cam.svg" [ngStyle]="imgCirc"/>
+              <input id='selecao-arquivo' class="form-group" type="file" multiple accept="image/*" (change)="salvarArquivo($event)" />
+            </label>
+          </ion-row>
+          <ion-item align-self-center col-12 color="transparent" no-lines class="mt-5">
+            <button ion-button block color="dark" (click)="openModalFilter()">Adicionar Filtros</button>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12 align-self-center>
+          <ion-item color="transparent">
+            <ion-label floating class="text-white">Nome</ion-label>
+            <ion-input formControlName="nome" type="text"></ion-input>
+          </ion-item>
+          <ion-row align-items-center justify-content-center col-12>
+            <ion-item col-5 color="transparent">
+              <ion-label class="text-white" floating>Tipos</ion-label>
+              <ion-select formControlName="tipo" cancelText="Cancelar">
+                <ion-option *ngFor="let tipo of _tipos" [value]="tipo">{{tipo}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item col-5 color="transparent">
+              <ion-label floating class="text-white">Preço</ion-label>
+              <ion-input type="text" name="money" formControlName="preco" [brmasker]="{money: true, thousand: '.',  decimalCaracter: ',', decimal:2, len: 7}"></ion-input>
+            </ion-item>
+          </ion-row>
+        </ion-col>
         <ion-row align-items-center justify-content-center col-12>
           <ion-item col-5 color="transparent">
-            <ion-label class="text-white" floating>Tipos</ion-label>
-            <ion-select formControlName="tipo" cancelText="Cancelar">
-              <ion-option *ngFor="let tipo of _tipos" [value]="tipo">{{tipo}}</ion-option>
+            <ion-label class="text-white" floating>Estado</ion-label>
+            <ion-select formControlName="estado" cancelText="Cancelar" #slt (ionChange)="getMunicipio(slt.value)">
+              <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
             </ion-select>
           </ion-item>
-          <ion-item col-5 color="transparent">
-            <ion-label floating class="text-white">Preço</ion-label>
-            <ion-input type="text" name="money" formControlName="preco" [brmasker]="{money: true, thousand: '.',  decimalCaracter: ',', decimal:2, len: 7}"></ion-input>
+          <ion-item color="transparent" col-5 [hidden]="!muniON">
+            <ion-label class="text-white" floating>Município</ion-label>
+            <ion-select formControlName="municipio" cancelText="Cancelar" #muni>
+              <ion-option>Todas as regiões</ion-option>
+              <ion-option *ngFor="let mun of _municipios" [value]="mun">{{mun}}</ion-option>
+            </ion-select>
+          </ion-item>
+          <ion-item color="transparent" col-12>
+            <ion-label class="text-white mt-5" floating>Descrição do anúncio</ion-label>
+            <ion-textarea formControlName="descricao"></ion-textarea>
           </ion-item>
         </ion-row>
-      </ion-col>
-      <ion-row align-items-center justify-content-center col-12>
-        <ion-item col-5 color="transparent">
-          <ion-label class="text-white" floating>Estado</ion-label>
-          <ion-select formControlName="estado" cancelText="Cancelar" #slt (ionChange)="getMunicipio(slt.value)">
-            <ion-option *ngFor="let uf of _estados" [value]="uf.nome">{{uf.nome}}</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item color="transparent" col-5 [hidden]="!muniON">
-          <ion-label class="text-white" floating>Município</ion-label>
-          <ion-select formControlName="municipio" cancelText="Cancelar" #muni>
-            <ion-option>Todas as regiões</ion-option>
-            <ion-option *ngFor="let mun of _municipios" [value]="mun">{{mun}}</ion-option>
-          </ion-select>
-        </ion-item>
       </ion-row>
-    </ion-row>
-    <ion-row justify-content-center class="text-center">
-      <ion-item color="transparent" no-lines class="mt-5 mb-5">
-        <button ion-button block color="dark" (click)="openModalFilter()">Adicionar Filtros</button>
-      </ion-item>
-      <button ion-button color="dark" type="reset" class="borda-circular">Limpar</button>
-      <button ion-button color="dark" (click)="addAdverts()" type="button" class="borda-circular">Enviar</button>
-    </ion-row>
-  </form>
-</ion-content>
+      <ion-row justify-content-center class="text-center mt-5">
+        <button ion-button color="dark" type="reset" class="borda-circular">Limpar</button>
+        <button ion-button color="dark" (click)="addAdverts()" type="button" class="borda-circular">Enviar</button>
+      </ion-row>
+    </form>
+  </ion-content>

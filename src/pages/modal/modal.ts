@@ -2,11 +2,11 @@ import { Component, Input } from '@angular/core';
 import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { CacheProvider } from '../../providers/cache/cache';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
-import { storage } from 'firebase';
 import { UFs } from '../../models/uf';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { ModalFiltrosComponent } from '../../components/modal-filtros/modal-filtros';
 import { anuncios } from '../../models/anuncios';
+import { ImageViewerController } from 'ionic-img-viewer';
 
 /**
  * Generated class for the ModalPage page.
@@ -30,15 +30,30 @@ export class ModalPage {
   private imgs = [];
   private user;
   private page;
+  private imgCirc;
+  private _imageViewerCtrl;
   private anuncio = anuncios;
 
   constructor(public navCtrl: NavController, public provider: AccessFirebaseProvider,
     public modalCtrl: ModalController, public navParams: NavParams,
-    public builder: FormBuilder, public cache: CacheProvider, ) {
+    public builder: FormBuilder, public cache: CacheProvider,
+    imageViewerCtrl: ImageViewerController) {
+    this._imageViewerCtrl = imageViewerCtrl;
+    this.imgCirc = {
+      height: window.screen.height * 0.13 + 'px',
+      width: window.screen.width + 'px',
+      borderRadius: "50%"
+    };
     this.user = navParams.get("usuario");
     this.page = navParams.get("page");
+
     this.anuncio.usuario = this.user.id;
     this.form = builder.group(this.anuncio);
+  }
+
+  private presentImage(myImage) {
+    const imageViewer = this._imageViewerCtrl.create(myImage);
+    imageViewer.present();
   }
 
   public getMunicipio(value) {
@@ -56,21 +71,14 @@ export class ModalPage {
   }
 
   private salvarArquivo(arq) {
-    // let PATH = '/Usuarios/' + usuario.email + '.jpg';
     let arquivos = arq.target.files;
-    let reader = new FileReader();
-    console.log(arq.target.value)
-    console.log(arq)
-    reader.onload = (e: any) => {
-      console.log('to na globo')
-      console.log(e.target.result)
-      // let picture = storage().ref(PATH);
-      // picture.putString(e.target.result, 'data_url');
-    };
     for (let i = 0; i < arquivos.length; i++) {
-      this.imgs.push(arquivos[i]);
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imgs.push(e.target.result);
+      };
+      reader.readAsDataURL(arquivos[i]);
     }
-    console.log(this.imgs)
   }
 
   private openModalFilter() {
@@ -85,9 +93,12 @@ export class ModalPage {
 
   public addAdverts() {
     let anuncio = this.form.value;
-    this.provider.save("anuncio", anuncio).subscribe((resp) => {
-      this.cache.save('usuario-anuncios', true);
-      this.navCtrl.setRoot(this.page, { atualizarAnuncios: true });
+    anuncio.imagens = [];
+    this.provider.savePicturesAdverts(anuncio, this.user, this.imgs).subscribe((anun) => {
+      this.provider.save("anuncio", anun).subscribe(() => {
+        this.cache.save('usuario-anuncios', true);
+        this.navCtrl.setRoot(this.page, { atualizarAnuncios: true });
+      });
     });
   }
 }

@@ -16,15 +16,18 @@ import { MeusAnunciosPage } from '../pages/meus-anuncios/meus-anuncios';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
-
   rootPage: any;
+  altura;
   perfil;
   pages: Array<{ title: string, component: any, icon: string, name: string }>;
 
   constructor(public platform: Platform, private provider: AccessFirebaseProvider,
     public statusBar: StatusBar, public splashScreen: SplashScreen,
     public cache: CacheProvider, private menuCtrl: MenuController) {
+      this.altura = {
+        height: window.screen.height * 0.26 + 'px',
+        width: window.screen.width + 'px'
+      };
     this.pages = [
       { title: 'Home', component: HomePage, icon: "home", name: "HomePage" },
       { title: 'Conta', component: AcountPage, icon: "person", name: "AcountPage" },
@@ -50,8 +53,6 @@ export class MyApp {
       }
       this.cache.save('load-perfil', false);
     });
-    // this.rootPage = HomePage;
-    // this.rootPage = FormsComponent;
     this.platform.registerBackButtonAction(() => {
       if (this.nav.length() <= 1) {
         this.platform.exitApp();

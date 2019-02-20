@@ -3,27 +3,22 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-list *ngIf="!noChats">
-    <!-- <ion-scroll scrollY="true" style="width:100%; height:100%"> -->
-    <button ion-item *ngFor="let conversa of lista" (click)="goChat(conversa)" class="border-bottom border-secundary">
-      <ion-row align-items-center>
-        <ion-col col-2 align-self-items>
-          <!-- <img *ngIf="user !== 'user2'" src="{{conversa.user2.imagem}}" class="img-circular" /> -->
-          <!-- <img *ngIf="user !== 'user1'" src="{{conversa.user1.imagem}}" class="img-circular" /> -->
-        </ion-col>
-        <ion-col col-10 align-self-items>
-          <strong class="text-center mb-5">{{conversa.nomeAnuncio}}</strong>
-          <ion-row>
-            <!-- <h3 *ngIf="user !== 'user2'" class="mr-2">{{conversa.user2.nome}}</h3> -->
-            <!-- <h3 *ngIf="user !== 'user1'" class="mr-2">{{conversa.user1.nome}}</h3> -->
-            <small>: {{recuperarUltimaConversa(conversa)}}</small>
-          </ion-row>
-        </ion-col>
-      </ion-row>
-    </button>
-    <!-- </ion-scroll> -->
+  <ion-list *ngIf="lista.length >= 1" class="container">
+    <ion-row align-items-center justify-content-center *ngFor="let conversa of lista; let i = index;" (click)="goChat(conversa)"
+      class="border-bottom border-secundary">
+      <ion-col col-2 align-self-center>
+        <img *ngIf="conversa.imagem" src="{{conversa.imagem}}" class="img-circular" />
+      </ion-col>
+      <ion-col col-10 align-self-center>
+        <strong col-12 align-self-center>{{conversa.nomeAnuncio}}</strong>
+        <ion-item *ngIf="listMsg[i]">
+          <ion-note *ngIf="listMsg[i].data" item-right> {{listMsg[i].data | date:'h:mm a'}}</ion-note>
+          <ion-note *ngIf="listMsg[i].user" item-left> {{listMsg[i].user.nome}}</ion-note>
+        </ion-item>
+      </ion-col>
+    </ion-row>
   </ion-list>
-  <div *ngIf="noChats" class="box-center">
+  <div *ngIf="lista.length < 1" class="box-center">
     <ion-row justify-content-center>
       <ion-col col-6 class="mb-5">
         <img src="../../assets/icon/chat.svg" />

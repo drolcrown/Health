@@ -1,26 +1,44 @@
-<ion-content padding class="bg-principal">
-  <ion-navbar color="transparent"></ion-navbar>
-  <form *ngIf="form" [formGroup]="form">
-    <ion-row align-items-center justify-content-center>
-      <ion-col col-8 *ngIf="anuncio" class="bg-white ">
-        <img src="{{anuncio.imagem}}" class="" #myImage (click)="openGalery(myImage)" />
-        <!-- <galeria-de-fotos [imagens]="anuncio.imagem"></galeria-de-fotos> -->
-        <!-- <label col-12 for="selecao-arquivo" class="btn btn-dark">
+<ion-header class="bg-dark">
+  <ion-navbar color="transparent">
+    <h1 *ngIf="anuncio" class="text-white">{{anuncio.nome}}</h1>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <ion-grid *ngIf="anuncio">
+    <ion-row justify-content-center>
+      <img col-8 src="{{anuncio.imagem}}" class="text-center" #myImage (click)="openGalery(myImage)" />
+      <!-- <galeria-de-fotos [imagens]="anuncio.imagem"></galeria-de-fotos> -->
+      <!-- <label col-12 for="selecao-arquivo" class="btn btn-dark">
           Alterar Imagem
           <input readonly id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(anuncio, $event)" />
         </label> -->
-      </ion-col>
-      <ion-col col-12 align-self-center>
-        <ion-input formControlName="nome" type="text" readonly></ion-input>
-        <ion-input readonly formControlName="tipo" type="text"></ion-input>
-      </ion-col>
-      <ion-col col-12 align-items-center >
-        <ion-input readonly formControlName="estado" type="text"></ion-input>
-        <ion-input readonly formControlName="municipio" type="text"></ion-input>
-      </ion-col>
+      <!-- <galeria-de-fotos [imagens]="anuncio.imagens"></galeria-de-fotos> -->
+      <ion-item col-12 align-self-center>
+        <b>Preço:</b><br><br>
+        <p>R$ {{anuncio.preco}}</p>
+      </ion-item>
+      <ion-item col-12 align-self-center>
+        <b>Descrição:</b><br><br>
+        <p>{{anuncio.descricao}}</p>
+      </ion-item>
+      <ion-item col-12 align-self-center>
+        <b>Tipo: {{anuncio.tipo}}</b><br><br>
+        <p>Sexo: {{anuncio.filtros.sexo}}</p>
+        <p>Idade: {{anuncio.filtros.idade}}</p>
+        <p>Crianças: {{anuncio.filtros.criancas}}</p>
+        <p>Animais: {{anuncio.filtros.animais}}</p>
+      </ion-item>
+      <ion-item col-12 align-self-center>
+        <b>Anunciante:</b><br><br>
+        <!-- <p *ngIf="anunciante">{{anunciante.nome}} {{anunciante.sobrenome}}</p> -->
+      </ion-item>
     </ion-row>
-    <ion-row justify-content-center class="mt-4">
-      <button ion-button color="dark" (click)="goChat()">Enviar Mensagem</button>
-    </ion-row>
-  </form>
+    <div class="text-center">
+      <ion-footer translucent no-border>
+        <button ion-button color="dark" (click)="goChat()">
+          <ion-icon name="paper-plane" class="mr-3"></ion-icon>Enviar Mensagem
+        </button>
+      </ion-footer>
+    </div>
+  </ion-grid>
 </ion-content>
