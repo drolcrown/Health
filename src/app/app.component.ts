@@ -69,9 +69,11 @@ export class MyApp {
   loadPerfil() {
     this.cache.get('load-perfil').then(load => {
       if (!load) {
+        let loading = this.provider.loadingCtrl.presentLoadingDefault();
         this.cache.get("usuario").then(perfil => {
           this.perfil = perfil;
           this.cache.save('load-perfil', true);
+          loading.dismiss();
         });
       }
     });

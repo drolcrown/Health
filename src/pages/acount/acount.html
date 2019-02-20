@@ -7,11 +7,11 @@
     <ion-grid>
       <ion-row align-items-center>
         <ion-col col-4 *ngIf="perfil">
-          <img src="{{perfil.imagem.url}} | ../../../../assets/imgs/usuario.png" class="" #myImage (click)="presentImage(myImage)" />
+          <img src="{{perfil.imagem}}" class="" #myImage (click)="presentImage(myImage)" />
           <label col-12 for="selecao-arquivo" class="btn btn-dark">
             <!-- <img src="../../assets/icon/camera-with-external-flash.svg" alt="Alterar Imagem" /> -->
             Alterar Imagem
-            <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo(perfil, $event)" />
+            <input id='selecao-arquivo' class="form-group" type="file" accept="image/*" (change)="salvarArquivo($event)" />
           </label>
         </ion-col>
         <ion-col col-8 align-self-items>
@@ -24,7 +24,7 @@
           <ion-col col-12>
             <strong col-5>Data de Nascimento:</strong>
             <ion-datetime (ionChange)="salvarAlteracao()" min="1940" max="2080-10-31" displayFormat="DD/MM/YYYY" doneText="Confirmar" cancelText="Cancelar"
-              formControlName="data" placeholder="{{perfil.data}}"></ion-datetime>
+              formControlName="data"></ion-datetime>
           </ion-col>
           <!-- <ion-input type="text" col-12 formControlName="data" (ionChange)="validar('data', $event)" placeholder="17/03/1993"
             [brmasker]="{mask:'17/03/1993', len:10}"></ion-input> -->
@@ -44,7 +44,7 @@
             </ion-select>
           </ion-item>
         </ion-col>
-        <ion-col align-items-center col-12 class="text-center">
+        <ion-col align-items-center col-12 class="text-center" *ngIf="perfil">
           <ion-title>Avaliação</ion-title>
           <ionic3-star-rating activeIcon="ios-star" defaultIcon="ios-star-outline" activeColor="#4FD5EC" defaultColor="#f03d3d"
             readonly="true" [rating]="perfil.avaliacao">

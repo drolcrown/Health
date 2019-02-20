@@ -4,6 +4,8 @@ import { HomePage } from '../home/home';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
 import { FormsComponent } from '../../components/forms/forms';
 import { CacheProvider } from '../../providers/cache/cache';
+import { from, of } from 'rxjs';
+import { timeout, catchError } from 'rxjs/operators';
 
 @IonicPage()
 @Component({
@@ -28,20 +30,26 @@ export class LoginPage {
   doLogin() {
     this.loginErrorString = '';
     if (this.account.email != '' && this.account.password != '') {
-      let login = this.provider.doLogin(this.account);
-      if (login) {
-        let loading = this.provider.loadingCtrl.presentLoadingDefault();
-        login.then((success) => {
-          this.provider.findObject('usuario', 'email', this.account.email).subscribe(resp => {
-            this.providerCache.save('usuario', resp);
+      let loading = this.provider.loadingCtrl.presentLoadingDefault();
+      let password = this.provider.encripty(this.account.password);
+      let observable = from(this.provider.authorization.auth.signInWithEmailAndPassword(this.account.email, password))
+        .pipe(timeout(10000), catchError(error => of(this.provider.alert.showToast('Falha na Conexão!'))))
+        .subscribe(
+          (value) => {
+            if (value) {
+              this.provider.findObject('usuario', 'email', this.account.email).subscribe(resp => {
+                this.providerCache.save('usuario', resp);
+              });
+              this.navCtrl.setRoot(HomePage, { atualizarAnuncios: true });
+            }
+          },
+          (error) => {
+            this.loginErrorString = this.provider.alert.loginAlert(error.code);
+          },
+          () => {
             loading.dismiss();
+            observable.unsubscribe();
           });
-          this.navCtrl.setRoot(HomePage, { atualizarAnuncios: true });
-        }).catch(error => {
-          this.loginErrorString = this.provider.alert.loginAlert(error.code);
-          loading.dismiss();
-        });
-      }
     } else {
       this.loginErrorString = 'Preencha Todos Campos';
     }

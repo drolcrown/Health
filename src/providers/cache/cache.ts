@@ -31,7 +31,7 @@ export class CacheProvider {
     return this.storage.get(key);
   }
 
-  updateCache(key: string): Subject<any> {
+  public updateCache(key: string): Subject<any> {
     let minutes = new Date().getMinutes();
     let subject = new Subject();
     this.get(key).then(resp => {
@@ -45,6 +45,24 @@ export class CacheProvider {
       }
     })
 
+    return subject;
+  }
+
+  public recoverUser(): Subject<any>{
+    let subject = new Subject();
+    this.get('usuario').then(perfil => {
+      if (perfil) {
+        subject.next(perfil);
+      } else {
+        this.provider.getAll('usuario').subscribe((users: Array<any>) => {
+          users.filter(user => {
+            if (user.email == this.provider.authorization.auth.currentUser.email) {
+              subject.next(user);
+            }
+          });
+        });
+      }
+    });
     return subject;
   }
 

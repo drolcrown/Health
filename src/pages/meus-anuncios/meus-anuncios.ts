@@ -26,21 +26,13 @@ export class MeusAnunciosPage {
   }
 
   ionViewDidLoad() {
-    let alerta = this.provider.loadingCtrl.presentLoadingDefault();
-    this.providerCache.get('usuario').then(perfil => {
+    this.providerCache.recoverUser().subscribe((perfil) => {
       if (perfil) {
         this.user = perfil;
-        this.objectList = (perfil.anuncios[0] ? perfil.anuncios : []);
-        alerta.dismiss();
-      } else {
-        this.provider.getAll('usuario').subscribe((users: Array<any>) => {
-          users.filter(user => {
-            if (user.email == this.provider.authorization.auth.currentUser.email) {
-              this.user = user;
-              this.providerCache.save(this.PATH, user);
-              this.objectList = (user.anuncios[0] ? user.anuncios : []);
-              alerta.dismiss();
-              return;
+        this.provider.getAll("anuncio").subscribe((list: Array<any>) => {
+          list.filter(anuncio => {
+            if (anuncio.usuario == perfil.usuario) {
+              this.objectList.push(anuncio);
             }
           });
         });

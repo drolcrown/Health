@@ -11,6 +11,7 @@ import { LoadsProvider } from '../loads/loads';
 import { timeout, catchError, retry } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { sha256, sha224 } from 'js-sha256';
+import { read } from 'fs';
 // import { AlertController } from 'ionic-angular';
 
 @Injectable()
@@ -32,41 +33,29 @@ export class AccessFirebaseProvider {
     return ref.orderByValue().limitToLast(50);
   }
 
-  doLogin(account) {
-    let loading = this.loadingCtrl.presentLoadingDefault();
-    let password = this.encripty(account.password);
-    let observable = from(this.authorization.auth.signInWithEmailAndPassword(account.email, password))
-      .pipe(timeout(10000))
-      .subscribe(
-        (value) => {
-          loading.dismiss();
-        },
-        (err) => {
-          loading.dismiss();
-        },
-        () => { loading.dismiss(); }
-      );
-
-    return this.authorization.auth.signInWithEmailAndPassword(account.email, password);
-  }
-
   getAll(PATH): Observable<any> {
+    let subject = new Subject();
     let loading = this.loadingCtrl.presentLoadingDefault();
     let observable = this.db.list(PATH).valueChanges()
       .pipe(timeout(10000), catchError(error => of(this.alert.showToast('Falha na Conexão!'))))
       .subscribe(
         (value) => {
-          loading.dismiss();
-          observable.unsubscribe();
+          if (value) {
+            loading.dismiss();
+            subject.next(value);
+            observable.unsubscribe();
+          }
         },
         (err) => {
           loading.dismiss();
+          subject.next(err);
           observable.unsubscribe();
         },
-        () => { loading.dismiss(); }
+        () => {
+          observable.unsubscribe();
+        }
       );
-
-    return this.db.list(PATH).valueChanges();
+    return subject;
   }
 
   get(PATH: any, key: string): Observable<any> {
@@ -112,30 +101,6 @@ export class AccessFirebaseProvider {
 
     return subject;
   }
-
-
-  // getChat(path: string, user1: string, user2: string): Subject<any> {
-  //   let newObject = [];
-  //   let user;
-  //   let subject = new Subject();
-  //   this.getAll(path).subscribe((valor: any) => {
-  //     valor.filter((element: any) => {
-  //       if ((element.user2 == user2 && element.user1 == user1) || (element.user2 == user1 && element.user1 == user2)){
-  //         if (element.user2.email.indexOf(param) > -1 || element.user1.email.indexOf(param) > -1) {
-  //           if (element.user2.email.indexOf(param) > -1) {
-  //             user = "user2";
-  //           } else {
-  //             user = "user1";
-  //           }
-  //           newObject.push(element);
-  //         }
-  //       }
-  //     });
-  //     subject.next({ user: user, list: newObject });
-  //   });
-
-  //   return subject;
-  // }
 
   getKey(PATH: any, object: any): Subject<any> {
     let childData, idEncontrado = false;
@@ -193,16 +158,34 @@ export class AccessFirebaseProvider {
     });
   }
 
-  upload(usuario, arq): any {
+  upload(usuario, arq): Subject<any> {
     let PATH = '/Usuarios/' + usuario.email + '.jpg';
     let arquivo = arq.target.files[0];
+    let picture = storage().ref(PATH);
     let reader = new FileReader();
+    let subject = new Subject();
+    let loading = this.loadingCtrl.presentLoadingDefault();
     reader.onload = (e: any) => {
-      let picture = storage().ref(PATH);
-      picture.putString(e.target.result, 'data_url');
+      picture.putString(e.target.result, 'data_url').then(() => {
+        let observable = from(picture.getDownloadURL())
+          .pipe(timeout(10000), catchError(error => of(this.alert.showToast('Falha na Conexão!'))))
+          .subscribe(img => {
+            usuario.imagem = img;
+            this.update("usuario", usuario);
+            subject.next(img);
+          },
+          (err) => {
+            this.alert.showToast(err);
+          },
+          () => {
+            loading.dismiss();
+            observable.unsubscribe();
+          });
+      })
     };
     reader.readAsDataURL(arquivo);
-    return storage().ref(PATH).getDownloadURL();
+
+    return subject;
   }
 
   // uploadPhotosAdverts(usuario, arq): any {
@@ -341,7 +324,7 @@ export class AccessFirebaseProvider {
                   response.next(false);
                   this.alert.showToast('Falha na Exclusão de Conta!! Tente Novamente!!');
                 });
-            }else{
+            } else {
               this.alert.showToast('Senha Incorreta');
             }
           }

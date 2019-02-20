@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, MenuController } from 'ionic-angular';
 import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { AccessFirebaseProvider } from '../../providers/access-firebase/access-firebase';
@@ -30,30 +30,16 @@ export class AcountPage {
   }
 
   async ionViewDidEnter() {
-    let alerta = this.provider.loadingCtrl.presentLoadingDefault();
-    this.providerCache.get(this.PATH).then(response => {
+    this.providerCache.recoverUser().subscribe(response => {
       if (response) {
         this.form = this.builder.group(response);
         this.perfil = response;
         this.getMunicipio(this.perfil.estado);
-        alerta.dismiss();
-      } else {
-        this.provider.getAll(this.PATH).subscribe((users: Array<any>) => {
-          users.filter(user => {
-            this.provider.findObject(this.PATH, 'email', user.email).subscribe(resp => {
-              this.perfil = resp;
-              this.getMunicipio(this.perfil.estado);
-              this.form = this.builder.group(resp);
-              this.providerCache.save(this.PATH, resp);
-              alerta.dismiss();
-            });
-          });
-        });
       }
     });
   }
 
-  private salvarAlteracao(){
+  private salvarAlteracao() {
     this.provider.update(this.PATH, this.form.value);
     this.providerCache.save(this.PATH, this.form.value);
   }
@@ -81,7 +67,7 @@ export class AcountPage {
     imageViewer.present();
   }
 
-  private salvarArquivo(perfil, e) {
+  private salvarArquivo(event) {
     this.provider.alert.newAlert().create({
       title: 'Alterar Imagem',
       message: 'Confirme para alterar a imagem',
@@ -89,20 +75,15 @@ export class AcountPage {
         {
           text: 'Alterar',
           handler: () => {
-            this.providerCache.remove(this.PATH);
             let loading = this.provider.loadingCtrl.presentLoadingDefault();
-            this.provider.upload(perfil, e)
-              .then(response => {
-                perfil.imagem = response;
-                this.form = this.builder.group(perfil);
-                this.provider.update(this.PATH, perfil);
-                this.providerCache.save(this.PATH, perfil);
+            this.provider.upload(this.perfil, event)
+              .subscribe((response) => {
+                this.perfil.imagem = response;
+                this.providerCache.remove(this.PATH);
+                this.providerCache.remove("load-perfil");
+                this.providerCache.save(this.PATH, this.perfil);
                 this.providerCache.save("load-perfil", false);
                 loading.dismiss();
-              })
-              .catch((erro) => {
-                loading.dismiss();
-                this.provider.alert.showToast('Falha na Alteração da Imagem!!');
               });
           },
         },

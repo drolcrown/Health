@@ -18,26 +18,22 @@ export class ConversaPage {
     public provider: AccessFirebaseProvider, public cache: CacheProvider) {
   }
 
-  ionViewDidEnter() {
-    this.cache.get('usuario').then(perfil => {
+  async ionViewDidEnter() {
+    await this.cache.recoverUser().subscribe((perfil) => {
       if (perfil) {
-        this.provider.findListChat(this.PATH, perfil.email).subscribe(object => {
-          this.user = object.user;
-          this.lista = object.list;
-          this.noChats = (this.lista.length < 1 ? true : false);
-        });
-      } else {
-        this.provider.getAll('usuario').subscribe((users: Array<any>) => {
-          users.filter(user => {
-            this.provider.findObject('usuario', 'email', user.email).subscribe(object => {
-              this.user = object.user;
-              this.lista = object.list;
-              this.noChats = (this.lista.length < 1 ? true : false);
-            });
+        this.user = perfil;
+        this.provider.getAll(this.PATH).subscribe((list: Array<any>) => {
+          list.filter(conversa => {
+            if (conversa.anunciante && conversa.cliente) {
+              if (conversa.cliente.email.indexOf(perfil.email) > -1 || conversa.user1.email.indexOf(perfil.email) > -1) {
+                this.lista.push(conversa);
+              }
+            }
           });
         });
       }
     });
+    this.noChats = (this.lista.length < 1 ? true : false);
   }
 
   recuperarUltimaConversa(conversa) {

@@ -12,22 +12,50 @@ export class AlertsProvider {
   constructor(
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
-    private toastCtrl: ToastController) { 
-    }
+    private toastCtrl: ToastController) {
+  }
 
-  loginAlert(code){
-    if(code.indexOf('auth/invalid-email') >= 0){
-      return 'Email Invalido';
+  loginAlert(code) {
+    let error = "";
+    switch (code) {
+      // if (code.indexOf('auth/invalid-email') >= 0) {
+      //   return 'Email Invalido';
+      // }
+      // else if (code.indexOf('auth/user-not-found') >= 0) {
+      //   return 'Usuario Não encontrado';
+      // }
+      // else if (code.indexOf('auth/wrong-password') >= 0) {
+      //   return 'Email ou Senha Incorretos';
+      // }
+      // else if (code.indexOf('auth/network-request-failed') >= 0) {
+      //   return 'Falha no Login!! Tente Novamente';
+      // }
+      case 'auth/invalid-email':
+        error = "Email Invalido";
+        break;
+      case 'auth/user-not-found':
+        error = "Usuario Não encontrado";
+        break;
+      case 'auth/wrong-password':
+        error = 'Email ou Senha Incorretos';
+        break;
+      case 'auth/network-request-failed':
+        error = 'Falha no Login!! Tente Novamente';
+        break;
+      case 'storage/object-not-found':
+        error = 'Objeto não encontrado!!';
+        break;
+      case 'storage/unauthorized':
+        error = 'Usuario não autorizado';
+        break;
+      case 'storage/canceled':
+        error = 'Upload Cancelado';
+        break;
+      case 'storage/unknown':
+        error = 'Arquivo desconhecido';
+        break;
     }
-    else if(code.indexOf('auth/user-not-found') >= 0){
-      return 'Usuario Não encontrado';
-    }
-    else if(code.indexOf('auth/wrong-password') >= 0){
-      return 'Email ou Senha Incorretos';
-    }
-    else if(code.indexOf('auth/network-request-failed') >=  0){
-      return 'Falha no Login!! Tente Novamente';
-    }
+    return error;
   }
 
 
